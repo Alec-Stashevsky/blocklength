@@ -1,23 +1,8 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-
 ### HHJ Package
 
 optim.HHJ <- function(series, statistic, nb = 100L, n.iter = 10,
                 pilot.block.length = NULL,
-                pilot.block.number = NULL,
+                subsample.size = NULL,
                 bofb = 1,
                 search.grid = NULL) {
 
@@ -32,11 +17,11 @@ optim.HHJ <- function(series, statistic, nb = 100L, n.iter = 10,
 
   } else { l_star <- pilot.block.length }
 
-  if (is.null(pilot.block.number)) {
+  if (is.null(subsample.size)) {
 
     m <- round(n^(1/5)*n^(1/3))
 
-  } else { m <- pilot.block.number }
+  } else { m <- subsample.size }
 
   # Print pilot message
   message(" Pilot block length is: ", l_star)
@@ -59,15 +44,22 @@ optim.HHJ <- function(series, statistic, nb = 100L, n.iter = 10,
 
       search_grid <- list(1:m)
 
-    } else if (is.integer(search.grid)) {
+      } else if (is.integer(search.grid)) {
 
-      search_grid <- list(max(1, l_m - search.grid):min(m, l_m + search.grid))
+        search_grid <- list(max(1, l_m - search.grid):min(m, l_m + search.grid))
 
-    } else {
+        } else {
 
-      search_grid <- list(1:m)
+          search_grid <- list(1:m)
 
-    }
+          }
+
+    if (j == 1) {
+
+    # Output message to wait for gridSearch to process
+    message("Performing minimization may take some time")
+
+      }
 
     # Optimize MSE function over l
     sol <- NMOF::gridSearch(function(l) {
@@ -88,17 +80,18 @@ optim.HHJ <- function(series, statistic, nb = 100L, n.iter = 10,
         # Calculate Squared Error
         se[i] <- (mean(boot_temp$statistic) - v_star)^2
 
-      }
+        }
 
       # Calculate MSE
       return(mean(se))
 
-    },
+      },
 
-    levels = search_grid)
+      levels = search_grid)
 
     # Plot MSE over l
-    plot(x = (1:m)*((n/m)^(1/3)), y = sol$values, main = paste0("Iteration: ", j),
+    plot(x = (1:m)*((n/m)^(1/3)), y = sol$values,
+         main = paste0("Iteration: ", j),
          xlab = "Block Length (l)", ylab = "MSE")
 
     # Save l that minimizes MSE
@@ -110,6 +103,7 @@ optim.HHJ <- function(series, statistic, nb = 100L, n.iter = 10,
       # Print convergence message
       message(" Converged at block length (l): ", round(l_star))
 
+      # Compile Result list
       result <- list("Optimal Block Length" = l_star,
                      "Pilot Number of Blocks (m)" = m,
                      "Call" = call)
@@ -122,7 +116,7 @@ optim.HHJ <- function(series, statistic, nb = 100L, n.iter = 10,
     l_star <- round((n/m)^(1/3)*l_m)
 
     # Print iteration message
-    message(" Chosen block length: ", l_star, "  After iteration ", j)
+    message(" Chosen block length: ", l_star, "  After iteration: ", j)
 
   }
 
