@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.com/Alec-Stashevsky/hhjboot.svg?branch=master)](https://travis-ci.com/Alec-Stashevsky/hhjboot)
 <!-- badges: end -->
 
 The goal of hhjboot is to simplify and automate the process of selecting
@@ -30,6 +32,12 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("Alec-Stashevsky/hhjboot")
 ```
 
+## Notes
+
+  - change parallel package to suggest instead of import and add
+    requireNamespace()
+  - build test to make sure overlaping subsamples cover entire series
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
@@ -39,37 +47,29 @@ library(hhjboot)
 
 # Simulate AR(1) time series
 series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
-                                     n = 500, innov = rnorm(500))
+                                     n = 100, innov = rnorm(100))
 # Default
-HHJboot(series)
+hhjboot(series, sub.block.size = 45)
 #>  Pilot block length is: 3
 #> Registered S3 method overwritten by 'quantmod':
 #>   method            from
 #>   as.zoo.data.frame zoo
 #> Performing minimization may take some time
-#> Calculating MSE for each level in subsample: 28 function evaluations required.
-#>  Chosen block length: 10  After iteration: 1
+#> Calculating MSE for each level in subsample: 45 function evaluations required.
+#>  Chosen block length: 59  After iteration: 1
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-    #>  Chosen block length: 8  After iteration: 2
+    #>  Converged at block length (l): 59
 
 <img src="man/figures/README-example-2.png" width="100%" />
 
-    #>  Chosen block length: 5  After iteration: 3
-
-<img src="man/figures/README-example-3.png" width="100%" />
-
-    #>  Converged at block length (l): 5
-
-<img src="man/figures/README-example-4.png" width="100%" />
-
     #> $`Optimal Block Length`
-    #> [1] 5
+    #> [1] 59
     #> 
     #> $`Pilot Number of Blocks (m)`
-    #> [1] 28
+    #> [1] 45
     #> 
     #> $Call
-    #> HHJboot(series = series)
+    #> hhjboot(series = series, sub.block.size = 45)

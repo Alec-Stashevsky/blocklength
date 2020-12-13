@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # hhjboot
 
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.com/Alec-Stashevsky/hhjboot.svg?branch=master)](https://travis-ci.com/Alec-Stashevsky/hhjboot)
 <!-- badges: end -->
 
 The goal of hhjboot is to simplify and automate the process of selecting a block length to perform a moving block bootstrap (MBB). hhjboot takes its name from the Hall, Horowitz, and Jing (1995) method to algorithmically select the optimal block length for the moving block bootstrap on a given time series.
@@ -34,6 +35,11 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("Alec-Stashevsky/hhjboot")
 ```
+
+## Notes
+- change parallel package to suggest instead of import and add requireNamespace()
+- build test to make sure overlaping subsamples cover entire series
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
@@ -43,7 +49,7 @@ library(hhjboot)
 
 # Simulate AR(1) time series
 series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
-                                     n = 500, innov = rnorm(500))
+                                     n = 100, innov = rnorm(100))
 # Default
-HHJboot(series)
+hhjboot(series, sub.block.size = 45)
 ```
