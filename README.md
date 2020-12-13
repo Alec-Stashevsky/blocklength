@@ -5,8 +5,8 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.com/Alec-Stashevsky/hhjboot.svg?branch=main)](https://travis-ci.com/Alec-Stashevsky/hhjboot)
+[![Build
+Status](https://travis-ci.org/Alec-Stashevsky/hhjboot.svg?branch=main)](https://travis-ci.org/Alec-Stashevsky/hhjboot)
 <!-- badges: end -->
 
 The goal of hhjboot is to simplify and automate the process of selecting
@@ -56,49 +56,13 @@ hhjboot(series, sub.block.size = 45)
 #>   as.zoo.data.frame zoo
 #> Performing minimization may take some time
 #> Calculating MSE for each level in subsample: 45 function evaluations required.
-#>  Chosen block length: 10  After iteration: 1
+#>  Converged at block length (l): 3
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-    #>  Chosen block length: 9  After iteration: 2
-
-<img src="man/figures/README-example-2.png" width="100%" />
-
-    #>  Chosen block length: 10  After iteration: 3
-
-<img src="man/figures/README-example-3.png" width="100%" />
-
-    #>  Chosen block length: 7  After iteration: 4
-
-<img src="man/figures/README-example-4.png" width="100%" />
-
-    #>  Chosen block length: 10  After iteration: 5
-
-<img src="man/figures/README-example-5.png" width="100%" />
-
-    #>  Chosen block length: 8  After iteration: 6
-
-<img src="man/figures/README-example-6.png" width="100%" />
-
-    #>  Chosen block length: 7  After iteration: 7
-
-<img src="man/figures/README-example-7.png" width="100%" />
-
-    #>  Chosen block length: 25  After iteration: 8
-
-<img src="man/figures/README-example-8.png" width="100%" />
-
-    #>  Chosen block length: 40  After iteration: 9
-
-<img src="man/figures/README-example-9.png" width="100%" />
-
-    #>  Converged at block length (l): 40
-
-<img src="man/figures/README-example-10.png" width="100%" />
-
     #> $`Optimal Block Length`
-    #> [1] 40
+    #> [1] 3
     #> 
     #> $`Pilot Number of Blocks (m)`
     #> [1] 45
