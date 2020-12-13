@@ -13,7 +13,6 @@
 #' @param search.grid the range of solutions around l* to evaluate within the MSE function after 1st iteration.
 #' @param cl a cluster object, created by this package parallel or by package snow. If NULL, use the registered default cluster.
 #'
-#' @return
 #' @export
 #'
 #' @examples

@@ -32,9 +32,6 @@ hhjboot(
 
 \item{cl}{a cluster object, created by this package parallel or by package snow. If NULL, use the registered default cluster.}
 }
-\value{
-
-}
 \description{
 Perform the HHJ algorithm to select the optimal block length (l) for the
 moving block bootstrap.
