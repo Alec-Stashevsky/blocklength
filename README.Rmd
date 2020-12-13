@@ -1,0 +1,57 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# hhjboot
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of hhjboot is to simplify and automate the process of selecting a block length to perform a moving block bootstrap (MBB). hhjboot takes its name from the Hall, Horowitz, and Jing (1995) method to algorithmically select the optimal block length for the moving block bootstrap on a given time series.
+
+## Installation
+
+<!-- You can install the released version of hhjboot from [CRAN](https://CRAN.R-project.org) with: -->
+
+<!-- ``` r -->
+<!-- install.packages("hhjboot") -->
+<!-- ``` -->
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("Alec-Stashevsky/hhjboot")
+```
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(hhjboot)
+
+# Create AR(1) time series
+series <- as.vector(stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
+                                     n = 500, innov = rnorm(500)))
+# Default
+HHJboot(series)
+
+# With parallel grid-search
+cl <- parallel::makeCluster(parallel::detectCores())
+HHJboot(series, cl = cl)
+
+# With given pilot block length and size of overlapping subsample
+HHJboot(series, pilot.block.length = 15, sub.block.size = 60)
+
+```

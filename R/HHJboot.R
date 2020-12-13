@@ -4,21 +4,22 @@
 #' Perform the HHJ algorithm to select the optimal block length (l) for the
 #' moving block bootstrap.
 #'
-#' @param series
-#' @param nb
-#' @param n.iter
-#' @param pilot.block.length
-#' @param sub.block.size
-#' @param bofb
-#' @param search.grid
-#' @param cl
+#' @param series a numeric vector or time series giving the original data for which to find the optimal block length for.
+#' @param nb number of bootstrap series to compute.
+#' @param n.iter number of iterations for HHJ algorithm.
+#' @param pilot.block.length pilot block length (l\* __in HHJ__) for which to perform initial block bootstraps.
+#' @param sub.block.size length of each overlapping subsample (m __in HHJ__).
+#' @param bofb length of the basic blocks in the __block of blocks__ bootstrap.
+#' @param search.grid the range of solutions around l* to evaluate within the MSE function.
+#' @param cl a cluster object, created by this package parallel or by package snow. If NULL, use the registered default cluster.
 #'
 #' @return
 #' @export
 #'
 #' @examples
 #'
-#' HHJboot(arima.sim(list(order = c(1, 0, 0), ar = 0.5, n = 500, innov = rnorm(500))))
+#' HHJboot(as.vector(stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
+#'                                    n = 500, innov = rnorm(500))))
 #'
 HHJboot <- function(series, nb = 100L, n.iter = 10,
                     pilot.block.length = NULL,
@@ -84,7 +85,7 @@ HHJboot <- function(series, nb = 100L, n.iter = 10,
     if (!is.null(cl)){
 
       # Send internal MSE function parameters to each cluster
-      clusterExport(cl = cl, list("n", "m", "series.list", "nb", "bofb",
+      parallel::clusterExport(cl = cl, list("n", "m", "series.list", "nb", "bofb",
                                 "v_star", "l_star"), envir = environment())
     }
 
@@ -108,7 +109,7 @@ HHJboot <- function(series, nb = 100L, n.iter = 10,
     if (is.null(cl)){
 
       # Optimize MSE function over l
-      sol <- vapply(X = 1:m, FUN = function(l) {
+      sol <- sapply(X = 1:m, FUN = function(l) {
 
         # Initialize Squared Error Vector
         se <- rep(NA, (n - m + 1))
@@ -145,7 +146,7 @@ HHJboot <- function(series, nb = 100L, n.iter = 10,
          # Bootstrap each subsample, non-parallel computation
          output <- lapply(X = series.list,
                           FUN = tseries::tsbootstrap,
-                          statistic = var,
+                          statistic = stats::var,
                           type = "block",
                           nb = nb,
                           b = l,

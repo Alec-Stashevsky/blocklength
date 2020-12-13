@@ -1,6 +1,6 @@
 Package: hhjboot
 Type: Package
-Title: Perform Hall, Horowitz, and Jing (1995) method to algorithmically select the optimal block length for the moving block bootstrap on a given time series.
+Title: Perform Hall, Horowitz, and Jing (1995) method to algorithmically select the optimal block length for the moving block bootstrap on a given time series
 Version: 0.1.0
 Author: person("Alec", "Stashevsky", email = "alec@alecstashevsky.com",
         role = c("aut", "cre"))
