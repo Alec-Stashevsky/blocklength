@@ -15,3 +15,5 @@ Suggests:
 Imports: 
     tseries,
     stats
+URL: https://github.com/Alec-Stashevsky/hhjboot
+BugReports: https://github.com/Alec-Stashevsky/hhjboot/issues
