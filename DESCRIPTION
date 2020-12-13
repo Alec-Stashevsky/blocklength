@@ -14,7 +14,7 @@ Suggests:
     testthat
 Imports: 
     tseries (>= 0.10.48),
-    stats (>= 4.0.3),
-    parallel (>= 4.0.3)
+    stats,
+    parallel
 URL: https://github.com/Alec-Stashevsky/hhjboot
 BugReports: https://github.com/Alec-Stashevsky/hhjboot/issues
