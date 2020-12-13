@@ -18,7 +18,7 @@
 #'
 #' @examples
 #'
-#' HHJboot(as.vector(stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
+#' HHJboot(stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
 #'                                    n = 500, innov = rnorm(500))))
 #'
 HHJboot <- function(series, nb = 100L, n.iter = 10,

@@ -41,7 +41,7 @@ moving block bootstrap.
 }
 \examples{
 
-HHJboot(as.vector(stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
+HHJboot(stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
                                    n = 500, innov = rnorm(500))))
 
 }

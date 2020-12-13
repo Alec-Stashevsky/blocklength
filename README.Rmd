@@ -41,9 +41,9 @@ This is a basic example which shows you how to solve a common problem:
 ```{r example}
 library(hhjboot)
 
-# Create AR(1) time series
-series <- as.vector(stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
-                                     n = 500, innov = rnorm(500)))
+# Simulate AR(1) time series
+series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
+                                     n = 500, innov = rnorm(500))
 # Default
 HHJboot(series)
 
