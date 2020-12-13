@@ -7,11 +7,12 @@
 hhjboot(
   series,
   nb = 100L,
-  n.iter = 10,
+  n.iter = 10L,
   pilot.block.length = NULL,
   sub.block.size = NULL,
   bofb = 1,
   search.grid = NULL,
+  grid.step = 1,
   cl = NULL
 )
 }
@@ -29,6 +30,8 @@ hhjboot(
 \item{bofb}{length of the basic blocks in the __block of blocks__ bootstrap.}
 
 \item{search.grid}{the range of solutions around l* to evaluate within the MSE function after 1st iteration.}
+
+\item{grid.step}{if grid.step = 1 then each block length will be evaluated in the MSE function, if grid.step > 1, the the MSE function will search over all the sequence of block lengths from 1 to m by grid.step.}
 
 \item{cl}{a cluster object, created by this package parallel or by package snow. If NULL, use the registered default cluster.}
 }

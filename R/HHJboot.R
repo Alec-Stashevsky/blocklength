@@ -11,6 +11,7 @@
 #' @param sub.block.size length of each overlapping subsample (m __in HHJ__).
 #' @param bofb length of the basic blocks in the __block of blocks__ bootstrap.
 #' @param search.grid the range of solutions around l* to evaluate within the MSE function after 1st iteration.
+#' @param grid.step number to increment over subsample block lengths. If grid.step = 1 then each block length will be evaluated in the MSE function, if grid.step > 1, the the MSE function will search over the sequence of block lengths from 1 to m by grid.step.
 #' @param cl a cluster object, created by this package parallel or by package snow. If NULL, use the registered default cluster.
 #'
 #' @export
@@ -22,12 +23,23 @@
 #' ))
 hhjboot <- function(series,
                     nb = 100L,
-                    n.iter = 10,
+                    n.iter = 10L,
                     pilot.block.length = NULL,
                     sub.block.size = NULL,
                     bofb = 1,
                     search.grid = NULL,
+                    grid.step = 1,
                     cl = NULL) {
+
+  # Check arguments
+  stopifnot(class(series) %in% c("integer", "numeric", "ts"))
+  stopifnot(all.equal(nb %% 1, 0))
+  stopifnot(all.equal(n.iter %% 1, 0))
+  stopifnot(all.equal(grid.step %% 1, 0))
+
+  if (!is.null(search.grid)) {
+    stopifnot(all.equal(search.grid %% 1, 0))
+  }
 
   # Save function call
   call <- match.call()
@@ -70,11 +82,15 @@ hhjboot <- function(series,
 
     # Search total grid on first iteration then +/- search.grid over next
     if (j == 1) {
-      search_grid <- list(1:m)
-    } else if (is.integer(search.grid)) {
-      search_grid <- list(max(1, l_m - search.grid):min(m, l_m + search.grid))
+      search_grid <- list(seq(from = 1, to = m))
+    } else if (!is.null(search.grid)) {
+      search_grid <- list(seq(
+        from = max(1, l_m - search.grid),
+        to = min(m, l_m + search.grid),
+        by = grid.step
+      ))
     } else {
-      search_grid <- list(1:m)
+      search_grid <- list(seq(from = 1, to = m, by = grid.step))
     }
 
 
@@ -107,7 +123,7 @@ hhjboot <- function(series,
     if (is.null(cl)) {
 
       # Optimize MSE function over l
-      sol <- sapply(X = 1:m, FUN = function(l) {
+      sol <- sapply(X = search_grid[[1]], FUN = function(l) {
 
         # Initialize Squared Error Vector
         se <- rep(NA, (n - m + 1))
@@ -133,7 +149,7 @@ hhjboot <- function(series,
     } else {
 
       # Optimize MSE function over l
-      sol <- parallel::parSapply(cl = cl, X = 1:m, FUN = function(l) {
+      sol <- parallel::parSapply(cl = cl, X = search_grid[[1]], FUN = function(l) {
 
 
         # Initialize Squared Error and Bootstrap Vector
@@ -163,7 +179,7 @@ hhjboot <- function(series,
 
     # Plot MSE over l and color minimizing value red
     plot(
-      x = (1:m) * ((n / m)^(1 / 3)), y = sol,
+      x = search_grid[[1]] * ((n / m)^(1 / 3)), y = sol,
       main = paste0(
         "MSE Plot for: ", deparse(substitute(series)), "\n",
         "Iteration: ", j
