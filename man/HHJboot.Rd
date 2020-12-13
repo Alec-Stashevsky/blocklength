@@ -28,7 +28,7 @@ HHJboot(
 
 \item{bofb}{length of the basic blocks in the __block of blocks__ bootstrap.}
 
-\item{search.grid}{the range of solutions around l* to evaluate within the MSE function.}
+\item{search.grid}{the range of solutions around l* to evaluate within the MSE function after 1st iteration.}
 
 \item{cl}{a cluster object, created by this package parallel or by package snow. If NULL, use the registered default cluster.}
 }
@@ -42,6 +42,6 @@ moving block bootstrap.
 \examples{
 
 HHJboot(stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
-                                   n = 500, innov = rnorm(500))))
+                                   n = 500, innov = rnorm(500)))
 
 }

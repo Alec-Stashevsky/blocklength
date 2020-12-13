@@ -10,7 +10,7 @@
 #' @param pilot.block.length pilot block length (l\* __in HHJ__) for which to perform initial block bootstraps.
 #' @param sub.block.size length of each overlapping subsample (m __in HHJ__).
 #' @param bofb length of the basic blocks in the __block of blocks__ bootstrap.
-#' @param search.grid the range of solutions around l* to evaluate within the MSE function.
+#' @param search.grid the range of solutions around l* to evaluate within the MSE function after 1st iteration.
 #' @param cl a cluster object, created by this package parallel or by package snow. If NULL, use the registered default cluster.
 #'
 #' @return
@@ -19,7 +19,7 @@
 #' @examples
 #'
 #' HHJboot(stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
-#'                                    n = 500, innov = rnorm(500))))
+#'                                    n = 500, innov = rnorm(500)))
 #'
 HHJboot <- function(series, nb = 100L, n.iter = 10,
                     pilot.block.length = NULL,
