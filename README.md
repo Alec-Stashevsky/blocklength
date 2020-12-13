@@ -48,69 +48,28 @@ HHJboot(series)
 #>   as.zoo.data.frame zoo
 #> Performing minimization may take some time
 #> Calculating MSE for each level in subsample: 28 function evaluations required.
-#>  Chosen block length: 16  After iteration: 1
+#>  Chosen block length: 10  After iteration: 1
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-    #>  Chosen block length: 18  After iteration: 2
+    #>  Chosen block length: 8  After iteration: 2
 
 <img src="man/figures/README-example-2.png" width="100%" />
 
-    #>  Converged at block length (l): 18
+    #>  Chosen block length: 5  After iteration: 3
 
 <img src="man/figures/README-example-3.png" width="100%" />
 
+    #>  Converged at block length (l): 5
+
+<img src="man/figures/README-example-4.png" width="100%" />
+
     #> $`Optimal Block Length`
-    #> [1] 18
+    #> [1] 5
     #> 
     #> $`Pilot Number of Blocks (m)`
     #> [1] 28
     #> 
     #> $Call
     #> HHJboot(series = series)
-    
-    # With parallel grid-search
-    cl <- parallel::makeCluster(parallel::detectCores())
-    HHJboot(series, cl = cl)
-    #>  Pilot block length is: 3
-    #> Performing minimization may take some time
-    #> Calculating MSE for each level in subsample: 28 function evaluations required.
-    #>  Chosen block length: 18  After iteration: 1
-
-<img src="man/figures/README-example-4.png" width="100%" />
-
-    #>  Converged at block length (l): 18
-
-<img src="man/figures/README-example-5.png" width="100%" />
-
-    #> $`Optimal Block Length`
-    #> [1] 18
-    #> 
-    #> $`Pilot Number of Blocks (m)`
-    #> [1] 28
-    #> 
-    #> $Call
-    #> HHJboot(series = series, cl = cl)
-    
-    # With given pilot block length and size of overlapping subsample
-    HHJboot(series, pilot.block.length = 15, sub.block.size = 60)
-    #>  Pilot block length is: 15
-    #> Performing minimization may take some time
-    #> Calculating MSE for each level in subsample: 60 function evaluations required.
-    #>  Chosen block length: 2  After iteration: 1
-
-<img src="man/figures/README-example-6.png" width="100%" />
-
-    #>  Converged at block length (l): 2
-
-<img src="man/figures/README-example-7.png" width="100%" />
-
-    #> $`Optimal Block Length`
-    #> [1] 2
-    #> 
-    #> $`Pilot Number of Blocks (m)`
-    #> [1] 60
-    #> 
-    #> $Call
-    #> HHJboot(series = series, pilot.block.length = 15, sub.block.size = 60)

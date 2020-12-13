@@ -46,12 +46,4 @@ series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
                                      n = 500, innov = rnorm(500))
 # Default
 HHJboot(series)
-
-# With parallel grid-search
-cl <- parallel::makeCluster(parallel::detectCores())
-HHJboot(series, cl = cl)
-
-# With given pilot block length and size of overlapping subsample
-HHJboot(series, pilot.block.length = 15, sub.block.size = 60)
-
 ```
