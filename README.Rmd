@@ -16,9 +16,7 @@ knitr::opts_chunk$set(
 # hhjboot
 
 <!-- badges: start -->
-[![Build Status](https://travis-ci.org/Alec-Stashevsky/hhjboot.svg?branch=main)](https://travis-ci.org/Alec-Stashevsky/hhjboot)
-
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Build Status](https://travis-ci.org/Alec-Stashevsky/hhjboot.svg?branch=main)](https://travis-ci.org/Alec-Stashevsky/hhjboot) [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![GPL license](https://img.shields.io/badge/License-GPL-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 <!-- badges: end -->
 
 The goal of hhjboot is to simplify and automate the process of selecting a block length to perform a moving block bootstrap (MBB). hhjboot takes its name from the Hall, Horowitz, and Jing (1995) method to algorithmically select the optimal block length for the moving block bootstrap on a given time series.
@@ -48,10 +46,12 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(hhjboot)
+set.seed(32)
 
 # Simulate AR(1) time series
 series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
-                                     n = 500, innov = rnorm(500))
-# Default
-hhjboot(series, sub.block.size = 100, grid.step = 10)
+                           n = 500, rand.gen = rnorm)
+
+# Find optimal block length using overlapping subsamples of width 10
+hhjboot(series, sub.block.size = 10)
 ```
