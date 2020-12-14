@@ -17,31 +17,62 @@ hhjboot(
 )
 }
 \arguments{
-\item{series}{a numeric vector or time series giving the original data for which to find the optimal block length for.}
+\item{series}{a numeric vector or time series giving the original data for
+which to find the optimal block length for.}
 
 \item{nb}{number of bootstrap series to compute.}
 
-\item{n.iter}{number of iterations for HHJ algorithm.}
+\item{n.iter}{maximum number of iterations for HHJ algorithm.}
 
-\item{pilot.block.length}{pilot block length (l\* __in HHJ__) for which to perform initial block bootstraps.}
+\item{pilot.block.length}{pilot block length (\eqn{l*} \emph{in HHJ})
+for which to perform initial block bootstraps.}
 
-\item{sub.block.size}{length of each overlapping subsample (m __in HHJ__).}
+\item{sub.block.size}{length of each overlapping subsample
+(\eqn{m} \emph{in HHJ}).}
 
-\item{bofb}{length of the basic blocks in the __block of blocks__ bootstrap.}
+\item{bofb}{length of the basic blocks in the \emph{block of blocks}
+bootstrap.}
 
-\item{search.grid}{the range of solutions around l* to evaluate within the MSE function after 1st iteration.}
+\item{search.grid}{the range of solutions around l* to evaluate within the
+MSE function after 1st iteration.}
 
-\item{grid.step}{if grid.step = 1 then each block length will be evaluated in the MSE function, if grid.step > 1, the the MSE function will search over all the sequence of block lengths from 1 to m by grid.step.}
+\item{grid.step}{number to increment over subsample block lengths.
+If grid.step = 1 then each block length will be evaluated in the MSE
+function, if grid.step > 1, the the MSE function will search over the
+sequence of block lengths from 1 to m by grid.step.}
 
-\item{cl}{a cluster object, created by this package parallel or by package snow. If NULL, use the registered default cluster.}
+\item{cl}{a cluster object, created by package \pkg{parallel} or by
+package \pkg{snow}. If \code{NULL}, use the non-parallel method.}
 }
 \description{
-Perform the HHJ algorithm to select the optimal block length (l) for the
-moving block bootstrap.
+Perform the Hall, Horowitz, and Jing (1995) "HHJ" algorithm to select the
+optimal block length \eqn{(l)} for the moving block bootstrap.
 }
 \examples{
 
-hhjboot(stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
-  n = 500, innov = rnorm(500)
-))
+# Generate AR(1) time series
+sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
+  n = 500, innov = rnorm(500))
+
+# Calculate optimal block length for series
+hhjboot(sim)
+
+# Only evaluate every other block length after 1st iteration
+hhjboot(sim, grid.step = 2)
+
+# Only evaluate +/- 20 block length from 1st iteration's solution
+hhjboot(sim, search.grid = 20)
+
+\dontrun{
+ # Use parallel computing
+ library(parallel)
+
+ # Make cluster object with all cores available
+ cl <- makeCluster(detectCores())
+
+
+# Calculate optimal block length for series
+hhjboot(sim, cl = cl)
+}
+
 }
