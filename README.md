@@ -7,6 +7,9 @@
 
 [![Build
 Status](https://travis-ci.org/Alec-Stashevsky/hhjboot.svg?branch=main)](https://travis-ci.org/Alec-Stashevsky/hhjboot)
+
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
 The goal of hhjboot is to simplify and automate the process of selecting
@@ -36,7 +39,7 @@ devtools::install_github("Alec-Stashevsky/hhjboot")
 
   - change parallel package to suggest instead of import and add
     requireNamespace()
-  - build test to make sure overlaping subsamples cover entire series
+  - build test to make sure overlapping subsamples cover entire series
 
 ## Example
 
@@ -47,25 +50,33 @@ library(hhjboot)
 
 # Simulate AR(1) time series
 series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
-                                     n = 100, innov = rnorm(100))
+                                     n = 500, innov = rnorm(500))
 # Default
-hhjboot(series, sub.block.size = 45)
+hhjboot(series, sub.block.size = 100, grid.step = 10)
 #>  Pilot block length is: 3
 #> Registered S3 method overwritten by 'quantmod':
 #>   method            from
 #>   as.zoo.data.frame zoo
 #> Performing minimization may take some time
-#> Calculating MSE for each level in subsample: 45 function evaluations required.
-#>  Converged at block length (l): 3
+#> Calculating MSE for each level in subsample: 100 function evaluations required.
+#>  Chosen block length: 171  After iteration: 1
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
+    #>  Chosen block length: 2  After iteration: 2
+
+<img src="man/figures/README-example-2.png" width="100%" />
+
+    #>  Converged at block length (l): 2
+
+<img src="man/figures/README-example-3.png" width="100%" />
+
     #> $`Optimal Block Length`
-    #> [1] 3
+    #> [1] 2
     #> 
-    #> $`Pilot Number of Blocks (m)`
-    #> [1] 45
+    #> $`Subsample block size (m)`
+    #> [1] 100
     #> 
     #> $Call
-    #> hhjboot(series = series, sub.block.size = 45)
+    #> hhjboot(series = series, sub.block.size = 100, grid.step = 10)
