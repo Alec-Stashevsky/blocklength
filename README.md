@@ -10,6 +10,8 @@
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![License: GPL
 v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+[![Codecov test
+coverage](https://codecov.io/gh/Alec-Stashevsky/hhjboot/branch/main/graph/badge.svg)](https://codecov.io/gh/Alec-Stashevsky/hhjboot?branch=main)
 <!-- badges: end -->
 
 The goal of hhjboot is to simplify and automate the process of selecting
