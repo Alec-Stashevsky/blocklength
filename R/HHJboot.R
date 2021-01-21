@@ -72,7 +72,7 @@ hhjboot <- function(series,
 
 
   if (length(grid.step) < 2) {
-    stopifnot((grid.step) %% 1, 0)
+    stopifnot(all.equal(grid.step %% 1, 0))
     grid.step <- c(grid.step, grid.step)
   } else if (length(grid.step) > 2) {
     stop("grid.step must be a vector of at most length 2")
