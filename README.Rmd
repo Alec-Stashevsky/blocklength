@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # hhjboot
 
 <!-- badges: start -->
-[![Build Status](https://travis-ci.org/Alec-Stashevsky/hhjboot.svg?branch=main)](https://travis-ci.org/Alec-Stashevsky/hhjboot) [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![GPL license](https://img.shields.io/badge/License-GPL-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+[![R-CMD-check](https://github.com/Alec-Stashevsky/hhjboot/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/hhjboot/actions)[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![GPL license](https://img.shields.io/badge/License-GPL-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 <!-- badges: end -->
 
 The goal of hhjboot is to simplify and automate the process of selecting a block length to perform a moving block bootstrap (MBB). hhjboot takes its name from the Hall, Horowitz, and Jing (1995) method to algorithmically select the optimal block length for the moving block bootstrap on a given time series.
@@ -29,7 +29,7 @@ The goal of hhjboot is to simplify and automate the process of selecting a block
 <!-- install.packages("hhjboot") -->
 <!-- ``` -->
 
-And the development version from [GitHub](https://github.com/) with:
+Install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")

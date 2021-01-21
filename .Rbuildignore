@@ -3,7 +3,6 @@
 ^README\.Rmd$
 ^LICENSE\.md$
 ^cran-comments\.md$
-^\.travis\.yml$
 ^pkgdown$
 ^_pkgdown\.yml$
 ^\.github$

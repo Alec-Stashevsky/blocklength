@@ -5,9 +5,7 @@
 
 <!-- badges: start -->
 
-[![Build
-Status](https://travis-ci.org/Alec-Stashevsky/hhjboot.svg?branch=main)](https://travis-ci.org/Alec-Stashevsky/hhjboot)
-[![Lifecycle:
+[![R-CMD-check](https://github.com/Alec-Stashevsky/hhjboot/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/hhjboot/actions)[![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![GPL
 license](https://img.shields.io/badge/License-GPL-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
@@ -22,14 +20,11 @@ bootstrap on a given time series.
 ## Installation
 
 <!-- You can install the released version of hhjboot from [CRAN](https://CRAN.R-project.org) with: -->
-
 <!-- ``` r -->
-
 <!-- install.packages("hhjboot") -->
-
 <!-- ``` -->
 
-And the development version from [GitHub](https://github.com/) with:
+Install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -38,9 +33,9 @@ devtools::install_github("Alec-Stashevsky/hhjboot")
 
 ## Notes
 
-  - change parallel package to suggest instead of import and add
+-   change parallel package to suggest instead of import and add
     requireNamespace()
-  - build test to make sure overlapping subsamples cover entire series
+-   build test to make sure overlapping subsamples cover entire series
 
 ## Example
 

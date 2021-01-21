@@ -19,7 +19,9 @@
 #' @param grid.step number to increment over subsample block lengths.
 #'  If grid.step = 1 then each block length will be evaluated in the MSE
 #'  function, if grid.step > 1, the the MSE function will search over the
-#'  sequence of block lengths from 1 to m by grid.step.
+#'  sequence of block lengths from 1 to m by grid.step. If grid.step is supplied
+#'  as a vector of length 2, the the first iteration will step by the first
+#'  element and subsequent iterations will step by the second element.
 #' @param cl a cluster object, created by package \pkg{parallel} or by
 #'  package \pkg{snow}. If \code{NULL}, use the non-parallel method.
 #'
@@ -57,16 +59,24 @@ hhjboot <- function(series,
                     n.iter = 10L,
                     pilot.block.length = NULL,
                     sub.block.size = NULL,
-                    bofb = 1,
+                    bofb = 1L,
                     search.grid = NULL,
-                    grid.step = 1,
+                    grid.step = c(1L, 1L),
                     cl = NULL) {
 
   # Check arguments
   stopifnot(class(series) %in% c("integer", "numeric", "ts"))
   stopifnot(all.equal(nb %% 1, 0))
   stopifnot(all.equal(n.iter %% 1, 0))
-  stopifnot(all.equal(grid.step %% 1, 0))
+  stopifnot(class(grid.step) %in% c("integer", "numeric"))
+
+
+  if (length(grid.step) < 2) {
+    stopifnot((grid.step) %% 1, 0)
+    grid.step <- c(grid.step, grid.step)
+  } else if (length(grid.step) > 2) {
+    stop("grid.step must be a vector of at most length 2")
+  }
 
   if (!is.null(search.grid)) {
     stopifnot(all.equal(search.grid %% 1, 0))
@@ -82,7 +92,7 @@ hhjboot <- function(series,
   if (is.null(pilot.block.length)) {
     l_star <- round(n^(1 / 5))
   } else {
-    l_star <- pilot.block.length
+    l_star <- round(pilot.block.length)
   }
 
   # Print pilot message
@@ -113,15 +123,15 @@ hhjboot <- function(series,
 
     # Search total grid on first iteration then +/- search.grid over next
     if (j == 1) {
-      search_grid <- list(seq(from = 1, to = m))
+      search_grid <- list(seq(from = 1, to = m, by = grid.step[1]))
     } else if (!is.null(search.grid)) {
       search_grid <- list(seq(
         from = max(1, l_m - search.grid),
         to = min(m, l_m + search.grid),
-        by = grid.step
+        by = grid.step[2]
       ))
     } else {
-      search_grid <- list(seq(from = 1, to = m, by = grid.step))
+      search_grid <- list(seq(from = 1, to = m, by = grid.step[2]))
     }
 
 

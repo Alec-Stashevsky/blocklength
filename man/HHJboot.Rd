@@ -10,9 +10,9 @@ hhjboot(
   n.iter = 10L,
   pilot.block.length = NULL,
   sub.block.size = NULL,
-  bofb = 1,
+  bofb = 1L,
   search.grid = NULL,
-  grid.step = 1,
+  grid.step = c(1L, 1L),
   cl = NULL
 )
 }
@@ -39,7 +39,9 @@ MSE function after 1st iteration.}
 \item{grid.step}{number to increment over subsample block lengths.
 If grid.step = 1 then each block length will be evaluated in the MSE
 function, if grid.step > 1, the the MSE function will search over the
-sequence of block lengths from 1 to m by grid.step.}
+sequence of block lengths from 1 to m by grid.step. If grid.step is supplied
+as a vector of length 2, the the first iteration will step by the first
+element and subsequent iterations will step by the second element.}
 
 \item{cl}{a cluster object, created by package \pkg{parallel} or by
 package \pkg{snow}. If \code{NULL}, use the non-parallel method.}
