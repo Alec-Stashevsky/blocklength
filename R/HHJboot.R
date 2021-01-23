@@ -2,7 +2,7 @@
 #' HHJ Algorithm
 #'
 #' Perform the Hall, Horowitz, and Jing (1995) "HHJ" algorithm to select the
-#' optimal block length \eqn{(l)} for the moving block bootstrap.
+#' optimal block-length \eqn{(l)} for a block bootstrap.
 #'
 #' @param series a numeric vector or time series giving the original data for
 #'  which to find the optimal block length for.

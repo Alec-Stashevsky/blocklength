@@ -48,7 +48,7 @@ package \pkg{snow}. If \code{NULL}, use the non-parallel method.}
 }
 \description{
 Perform the Hall, Horowitz, and Jing (1995) "HHJ" algorithm to select the
-optimal block length \eqn{(l)} for the moving block bootstrap.
+optimal block-length \eqn{(l)} for a block bootstrap.
 }
 \examples{
 
