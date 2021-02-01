@@ -181,7 +181,7 @@ hhjboot <- function(series,
         for (i in 1:length(output)) {
 
           # Calculate Squared Error
-          se[i] <- mean(output[[i]]$statistic - v_star)^2
+          se[i] <- (mean(output[[i]]$statistic) - v_star)^2
         }
 
         # Calculate MSE
@@ -210,7 +210,7 @@ hhjboot <- function(series,
         for (i in 1:length(output)) {
 
           # Calculate Squared Error
-          se[i] <- mean(output[[i]]$statistic - v_star)^2
+          se[i] <- (mean(output[[i]]$statistic) - v_star)^2
         }
 
         # Calculate MSE

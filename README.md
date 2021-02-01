@@ -63,9 +63,9 @@ devtools::install_github("Alec-Stashevsky/hhjboot")
 
 ## Upcoming changes
 
--   change parallel package to suggest instead of import and add
-    requireNamespace()
+-   change parallel to `{foreach}`
 -   build test to make sure overlapping subsamples cover entire series
+-   add verbose option to turn off plots and message intra-function
 
 ## Example
 

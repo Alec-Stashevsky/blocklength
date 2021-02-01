@@ -47,13 +47,13 @@ devtools::install_github("Alec-Stashevsky/hhjboot")
 ```
 
 ## Upcoming changes
-- change parallel package to suggest instead of import and add requireNamespace()
+- change parallel to `{foreach}`
 - build test to make sure overlapping subsamples cover entire series
+- add verbose option to turn off plots and message intra-function
 
 ## Example
 
-We want to select the optimal block-length to perform a block bootstrap on a
-simulated autoregressive AR(1) time series: 
+We want to select the optimal block-length to perform a block bootstrap on a simulated autoregressive AR(1) time series: 
 
 ```{r example}
 library(hhjboot)
