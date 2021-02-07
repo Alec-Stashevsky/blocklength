@@ -87,7 +87,7 @@ hhjboot(series, sub.block.size = 10, verbose = F)
 #>   as.zoo.data.frame zoo
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" /><img src="man/figures/README-example-2.png" width="100%" />
+<img src="man/figures/README-example-1.svg" width="100%" /><img src="man/figures/README-example-2.svg" width="100%" />
 
     #> $`Optimal Block Length`
     #> [1] 11
