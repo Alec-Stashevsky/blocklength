@@ -63,7 +63,7 @@ devtools::install_github("Alec-Stashevsky/hhjboot")
 
 ## Upcoming changes
 
--   change parallel to `{foreach}` (pending feedback)
+-   change parallel to `{foreach}` (Pending feedback)
 -   Build tests
     -   Overlapping subsamples cover entire series
 

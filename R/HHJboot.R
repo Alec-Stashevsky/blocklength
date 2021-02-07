@@ -24,14 +24,18 @@
 #'  element and subsequent iterations will step by the second element.
 #' @param cl a cluster object, created by package \pkg{parallel} or by
 #'  package \pkg{snow}. If \code{NULL}, use the non-parallel method.
+#' @param verbose a logical value, if set to \code{FALSE} then no interim
+#'  messages are output to the console. Error messages will still be output.
+#'  Default is \code{TRUE}.
+#' @param plots a logical value, if set to \code{FALSE} then no interim
+#'  plots are output to the console. Default is \code{TRUE}.
 #'
 #' @export
 #'
 #' @examples
-#'
 #' # Generate AR(1) time series
-#'sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
-#'   n = 500, innov = rnorm(500))
+#' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
+#'                         n = 500, innov = rnorm(500))
 #'
 #' # Calculate optimal block length for series
 #' hhjboot(sim)
@@ -43,12 +47,11 @@
 #' hhjboot(sim, search.grid = 20)
 #'
 #' \dontrun{
-#'  # Use parallel computing
-#'  library(parallel)
+#' # Use parallel computing
+#' library(parallel)
 #'
-#'  # Make cluster object with all cores available
-#'  cl <- makeCluster(detectCores())
-#'
+#' # Make cluster object with all cores available
+#' cl <- makeCluster(detectCores())
 #'
 #' # Calculate optimal block length for series
 #' hhjboot(sim, cl = cl)

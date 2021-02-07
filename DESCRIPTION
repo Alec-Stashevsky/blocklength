@@ -1,11 +1,11 @@
 Package: hhjboot
 Type: Package
 Title: Hall, Horowitz, and Jing (1995) Algorithm to Select Optimal Block-length for Block Bootstrap
-Version: 0.0.0.9003
+Version: 0.0.0.9004
 Authors@R: person("Alec", "Stashevsky", email = "alec@alecstashevsky.com",
            role = c("aut", "cre"))
 Maintainer: Alec Stashevsky <alec@alecstashevsky.com>
-Description: Select the optimal block length for the moving block bootstrap procedure proposed by Kuensch (1989). The algorithm was proposed by Hall, Horowitz, and Jing (1995).
+Description: Select the optimal block-length for dependent (block) bootstrap. The algorithm is based on Hall, Horowitz, and Jing (1995).
 License: LGPL (>= 2.1)
 Encoding: UTF-8
 LazyData: true
