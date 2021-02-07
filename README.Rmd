@@ -39,7 +39,7 @@ Under the hood, `hhjboot` uses the moving block bootstrap (MBB) procedure accord
 <!-- install.packages("hhjboot") -->
 <!-- ``` -->
 
-Install the development version from [GitHub](https://github.com/) with:
+Install the development version from [GitHub](https://github.com) with:
 
 ``` r
 # install.packages("devtools")
@@ -50,6 +50,7 @@ devtools::install_github("Alec-Stashevsky/hhjboot")
 - change parallel to `{foreach}`
 - build test to make sure overlapping subsamples cover entire series
 - add verbose option to turn off plots and message intra-function
+- add authors of dependencies as contributors
 
 ## Example
 

@@ -34,18 +34,18 @@ into.
 The goal of `hhjboot` is to simplify and automate the process of
 selecting a block-length to perform a block bootstrap. `hhjboot` takes
 its name from the [Hall, Horowitz, and Jing
-(1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext/)
+(1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext)
 method to algorithmically select the optimal block-length for a given
 stationary time series.
 
 Under the hood, `hhjboot` uses the moving block bootstrap (MBB)
-procedure according to [Kuensch
-(1989)](https://projecteuclid.org/euclid.aos/1176347265/) which
-resamples blocks from a set of overlapping sub-samples with a fixed
-block-length. However, the results of `hhjboot` may be generalized to
-other block bootstrap procedures such as the *stationary bootstrap* of
-[Politis and Romano
-(1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870/)
+procedure according to [Künsch
+(1989)](https://projecteuclid.org/euclid.aos/1176347265) which resamples
+blocks from a set of overlapping sub-samples with a fixed block-length.
+However, the results of `hhjboot` may be generalized to other block
+bootstrap procedures such as the *stationary bootstrap* of [Politis and
+Romano
+(1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870)
 
 ## Installation
 
@@ -54,7 +54,7 @@ other block bootstrap procedures such as the *stationary bootstrap* of
 <!-- install.packages("hhjboot") -->
 <!-- ``` -->
 
-Install the development version from [GitHub](https://github.com/) with:
+Install the development version from [GitHub](https://github.com) with:
 
 ``` r
 # install.packages("devtools")
@@ -63,14 +63,14 @@ devtools::install_github("Alec-Stashevsky/hhjboot")
 
 ## Upcoming changes
 
--   change parallel to `{foreach}`
--   build test to make sure overlapping subsamples cover entire series
--   add verbose option to turn off plots and message intra-function
+-   change parallel to `{foreach}` (pending feedback)
+-   Build tests
+    -   Overlapping subsamples cover entire series
 
 ## Example
 
 We want to select the optimal block-length to perform a block bootstrap
-on a simulated autoregressive AR(1) time series:
+on a simulated autoregressive *AR(1)* time series:
 
 ``` r
 library(hhjboot)
@@ -81,21 +81,13 @@ series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
                            n = 500, rand.gen = rnorm)
 
 # Find optimal block length using overlapping subsamples of width 10
-hhjboot(series, sub.block.size = 10)
-#>  Pilot block length is: 3
+hhjboot(series, sub.block.size = 10, verbose = F)
 #> Registered S3 method overwritten by 'quantmod':
 #>   method            from
 #>   as.zoo.data.frame zoo
-#> Performing minimization may take some time
-#> Calculating MSE for each level in subsample: 10 function evaluations required.
-#>  Chosen block length: 11  After iteration: 1
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
-
-    #>  Converged at block length (l): 11
-
-<img src="man/figures/README-example-2.png" width="100%" />
+<img src="man/figures/README-example-1.png" width="100%" /><img src="man/figures/README-example-2.png" width="100%" />
 
     #> $`Optimal Block Length`
     #> [1] 11
@@ -104,4 +96,4 @@ hhjboot(series, sub.block.size = 10)
     #> [1] 10
     #> 
     #> $Call
-    #> hhjboot(series = series, sub.block.size = 10)
+    #> hhjboot(series = series, sub.block.size = 10, verbose = F)

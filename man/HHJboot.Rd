@@ -13,7 +13,9 @@ hhjboot(
   bofb = 1L,
   search.grid = NULL,
   grid.step = c(1L, 1L),
-  cl = NULL
+  cl = NULL,
+  verbose = TRUE,
+  plots = TRUE
 )
 }
 \arguments{
@@ -45,16 +47,22 @@ element and subsequent iterations will step by the second element.}
 
 \item{cl}{a cluster object, created by package \pkg{parallel} or by
 package \pkg{snow}. If \code{NULL}, use the non-parallel method.}
+
+\item{verbose}{a logical value, if set to \code{FALSE} then no interim
+messages are output to the console. Error messages will still be output.
+Default is \code{TRUE}.}
+
+\item{plots}{a logical value, if set to \code{FALSE} then no interim
+plots are output to the console. Default is \code{TRUE}.}
 }
 \description{
 Perform the Hall, Horowitz, and Jing (1995) "HHJ" algorithm to select the
 optimal block-length \eqn{(l)} for a block bootstrap.
 }
 \examples{
-
 # Generate AR(1) time series
 sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
-  n = 500, innov = rnorm(500))
+                        n = 500, innov = rnorm(500))
 
 # Calculate optimal block length for series
 hhjboot(sim)
@@ -66,12 +74,11 @@ hhjboot(sim, grid.step = 2)
 hhjboot(sim, search.grid = 20)
 
 \dontrun{
- # Use parallel computing
- library(parallel)
+# Use parallel computing
+library(parallel)
 
- # Make cluster object with all cores available
- cl <- makeCluster(detectCores())
-
+# Make cluster object with all cores available
+cl <- makeCluster(detectCores())
 
 # Calculate optimal block length for series
 hhjboot(sim, cl = cl)

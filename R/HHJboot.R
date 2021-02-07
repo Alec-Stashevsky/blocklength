@@ -62,14 +62,15 @@ hhjboot <- function(series,
                     bofb = 1L,
                     search.grid = NULL,
                     grid.step = c(1L, 1L),
-                    cl = NULL) {
+                    cl = NULL,
+                    verbose = TRUE,
+                    plots = TRUE) {
 
   # Check arguments
   stopifnot(class(series) %in% c("integer", "numeric", "ts"))
   stopifnot(all.equal(nb %% 1, 0))
   stopifnot(all.equal(n.iter %% 1, 0))
   stopifnot(class(grid.step) %in% c("integer", "numeric"))
-
 
   if (length(grid.step) < 2) {
     stopifnot(all.equal(grid.step %% 1, 0))
@@ -96,8 +97,11 @@ hhjboot <- function(series,
   }
 
   # Print pilot message
-  message(" Pilot block length is: ", l_star)
+  if (isTRUE(verbose)) {
+    message(" Pilot block length is: ", l_star)
+  }
 
+  # Check block-length of subsamples
   if (is.null(sub.block.size)) {
     m <- round(n^(1 / 5) * n^(1 / 3))
   } else {
@@ -134,8 +138,13 @@ hhjboot <- function(series,
       search_grid <- list(seq(from = 1, to = m, by = grid.step[2]))
     }
 
-
+    # Setup environment for cluster workers
     if (!is.null(cl)) {
+
+      if (!requireNamespace("parallel", quietly = TRUE)) {
+        stop("Package \"parallel\" needed for this function to work. Please install it.",
+          call. = FALSE)
+      }
 
       # Send internal MSE function parameters to each cluster
       parallel::clusterExport(cl = cl, list(
@@ -144,23 +153,22 @@ hhjboot <- function(series,
       ), envir = environment())
     }
 
-
-    if (j == 1) {
+    # Minimization message
+    if (j == 1 & isTRUE(verbose)) {
 
       # Output message to wait for gridSearch to process
       message("Performing minimization may take some time")
-      message(
-        "Calculating MSE for each level in subsample: ",
-        lengths(search_grid), " function evaluations required."
-      )
+      message("Calculating MSE for each level in subsample: ",
+        lengths(search_grid), " function evaluations required.")
     }
 
-    for (i in 1:(n - m + 1)) {
+    for (i in seq_len(length.out = (n - m + 1))) {
 
       # Create sub-blocks of length m = sub.block.size
-      series.list[[i]] <- series[i:(i + m - 1)]
+      series.list[[i]] <- series[seq(from = i, to = (i + m - 1), by = 1)]
     }
 
+    # Run optimization process
     if (is.null(cl)) {
 
       # Optimize MSE function over l
@@ -170,7 +178,9 @@ hhjboot <- function(series,
         se <- rep(NA, (n - m + 1))
 
         # Bootstrap each subsample, non-parallel computation
-        output <- lapply(series.list, tseries::tsbootstrap,
+        output <- lapply(
+          series.list,
+          tseries::tsbootstrap,
           statistic = stats::var,
           type = "block",
           nb = nb,
@@ -178,7 +188,7 @@ hhjboot <- function(series,
           m = bofb
         )
 
-        for (i in 1:length(output)) {
+        for (i in seq_len(length.out = length(output))) {
 
           # Calculate Squared Error
           se[i] <- (mean(output[[i]]$statistic) - v_star)^2
@@ -186,57 +196,71 @@ hhjboot <- function(series,
 
         # Calculate MSE
         return(mean(se))
+
       })
     } else {
 
       # Optimize MSE function over l
-      sol <- parallel::parSapply(cl = cl, X = search_grid[[1]], FUN = function(l) {
+      sol <- parallel::parSapply(
+        cl = cl,
+        X = search_grid[[1]],
+        FUN = function(l) {
 
+          # Initialize Squared Error and Bootstrap Vector
+          se <- rep(NA, (n - m + 1))
 
-        # Initialize Squared Error and Bootstrap Vector
-        se <- rep(NA, (n - m + 1))
+          # Bootstrap each subsample, non-parallel computation
+          output <- lapply(
+            X = series.list,
+            FUN = tseries::tsbootstrap,
+            statistic = stats::var,
+            type = "block",
+            nb = nb,
+            b = l,
+            m = bofb
+          )
 
-        # Bootstrap each subsample, non-parallel computation
-        output <- lapply(
-          X = series.list,
-          FUN = tseries::tsbootstrap,
-          statistic = stats::var,
-          type = "block",
-          nb = nb,
-          b = l,
-          m = bofb
-        )
+          for (i in seq_len(length.out = length(output))) {
 
-        for (i in 1:length(output)) {
+            # Calculate Squared Error
+            se[i] <- (mean(output[[i]]$statistic) - v_star)^2
+          }
 
-          # Calculate Squared Error
-          se[i] <- (mean(output[[i]]$statistic) - v_star)^2
-        }
+          # Calculate MSE
+          return(mean(se))
 
-        # Calculate MSE
-        return(mean(se))
-      })
+        })
     }
 
     # Plot MSE over l and color minimizing value red
-    plot(
-      x = search_grid[[1]] * ((n / m)^(1 / 3)), y = sol,
-      main = paste0(
-        "MSE Plot for: ", deparse(substitute(series)), "\n",
-        "Iteration: ", j
-      ),
-      xlab = "Block Length (l)", ylab = "MSE",
-      col = ifelse(sol == min(sol), "red", "black")
-    )
+    if (isTRUE(plots)) {
+      plot(
+        x = search_grid[[1]] * ((n / m)^(1 / 3)),
+        y = sol,
+        main = paste0(
+          "MSE Plot for: ",
+          deparse(substitute(series)),
+          "\n",
+          "Iteration: ",
+          j
+        ),
+
+        xlab = "Block Length (l)",
+        ylab = "MSE",
+        col = ifelse(sol == min(sol), "red", "black")
+      )
+    }
 
     # Save l that minimizes MSE of subsample blocks
     l_m <- round(which.min(sol))
 
-    # Break if l_m equal to previous l*
+    # Break if l_m converges to previous l*
     if (l_star == round((n / m)^(1 / 3) * l_m)) {
 
       # Print convergence message
-      message(" Converged at block length (l): ", round(l_star))
+      if (isTRUE(verbose)) {
+        message(" Converged at block length (l): ", round(l_star))
+      }
 
       # Compile Result list
       result <- list(
@@ -253,6 +277,8 @@ hhjboot <- function(series,
     l_star <- round(((n / m)^(1 / 3)) * l_m)
 
     # Print iteration message
-    message(" Chosen block length: ", l_star, "  After iteration: ", j)
+    if (isTRUE(verbose)) {
+      message(" Chosen block length: ", l_star, "  After iteration: ", j)
+    }
   }
 }
