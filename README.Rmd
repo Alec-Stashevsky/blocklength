@@ -65,5 +65,5 @@ series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
                            n = 500, rand.gen = rnorm)
 
 # Find optimal block length using overlapping subsamples of width 10
-hhjboot(series, sub.block.size = 10, verbose = F)
+hhjboot(series, sub.block.size = 10)
 ```

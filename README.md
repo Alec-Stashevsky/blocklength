@@ -81,13 +81,21 @@ series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
                            n = 500, rand.gen = rnorm)
 
 # Find optimal block length using overlapping subsamples of width 10
-hhjboot(series, sub.block.size = 10, verbose = F)
+hhjboot(series, sub.block.size = 10)
+#>  Pilot block length is: 3
 #> Registered S3 method overwritten by 'quantmod':
 #>   method            from
 #>   as.zoo.data.frame zoo
+#> Performing minimization may take some time
+#> Calculating MSE for each level in subsample: 10 function evaluations required.
+#>  Chosen block length: 11  After iteration: 1
 ```
 
-<img src="man/figures/README-example-1.svg" width="100%" /><img src="man/figures/README-example-2.svg" width="100%" />
+<img src="man/figures/README-example-1.svg" width="100%" />
+
+    #>  Converged at block length (l): 11
+
+<img src="man/figures/README-example-2.svg" width="100%" />
 
     #> $`Optimal Block Length`
     #> [1] 11
@@ -96,4 +104,4 @@ hhjboot(series, sub.block.size = 10, verbose = F)
     #> [1] 10
     #> 
     #> $Call
-    #> hhjboot(series = series, sub.block.size = 10, verbose = F)
+    #> hhjboot(series = series, sub.block.size = 10)
