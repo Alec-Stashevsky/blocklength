@@ -228,12 +228,15 @@ hhjboot <- function(series,
       }
 
       # Compile results list with custom class
-      result <- structure(list(
+      result <- structure(
+        list(
         "Optimal Block Length" = l_star,
         "Subsample block size (m)" = m,
         "MSE Data" = p.data,
+        "Iterations" = j,
         "Call" = call
-        ), class = "hhjboot")
+          ),
+        class = "hhjboot")
 
       # Return list of results
       return(result)
