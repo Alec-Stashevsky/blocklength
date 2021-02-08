@@ -145,9 +145,8 @@ hhjboot <- function(series,
 
       # Send internal MSE function parameters to each cluster
       parallel::clusterExport(cl = cl, list(
-        "n", "m", "series.list", "nb", "bofb",
-        "v_star", "l_star"
-      ), envir = environment())
+        "n", "m", "series.list", "nb", "bofb", "v_star"
+        ), envir = environment())
     }
 
     # Minimization message
