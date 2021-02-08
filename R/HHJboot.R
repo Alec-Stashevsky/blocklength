@@ -86,7 +86,7 @@ hhjboot <- function(series,
   # Length of whole series
   n <- length(series)
 
-  # Function argument tests
+  # Set pilot block-length
   if (is.null(pilot.block.length)) {
     l_star <- round(n^(1 / 5))
   } else {
@@ -168,8 +168,8 @@ hhjboot <- function(series,
     if (is.null(cl)) {
 
       # Optimize MSE function over l in serial
-      sol <- sapply(X = search_grid[[1]], FUN = hhj.mse,
-        # Bootstrap parameters for hhj.mse
+      sol <- sapply(X = search_grid[[1]], FUN = hhjMSE,
+        # Bootstrap parameters for hhjMSE
         n = n,
         m = m,
         series.list = series.list,
@@ -180,8 +180,8 @@ hhjboot <- function(series,
     } else {
 
       # Optimize MSE function over l in parallel
-      sol <- parallel::parSapply(cl = cl, X = search_grid[[1]], FUN = hhj.mse,
-        # Bootstrap parameters for hhj.mse
+      sol <- parallel::parSapply(cl = cl, X = search_grid[[1]], FUN = hhjMSE,
+        # Bootstrap parameters for hhjMSE
         n = n,
         m = m,
         series.list = series.list,
@@ -243,7 +243,7 @@ hhjboot <- function(series,
 
 # Helper Functions --------------------------------------------------------
 
-hhj.mse <- function(l, n, m, series.list, nb, bofb, v_star) {
+hhjMSE <- function(l, n, m, series.list, nb, bofb, v_star) {
 
   # Initialize Squared Error Vector
   se <- rep(NA, (n - m + 1))
