@@ -190,11 +190,18 @@ hhjboot <- function(series,
         v_star = v_star)
     }
 
+    # Save plot data
+    p.data <- data.frame(
+      Iteration = j,
+      Grid = round(search_grid[[1]] * ((n / m)^(1 / 3))),
+      MSE = sol
+      )
+
     # Plot MSE over l and color minimizing value red
     if (isTRUE(plots)) {
       plot(
-        x = search_grid[[1]] * ((n / m)^(1 / 3)),
-        y = sol,
+        x = p.data$Grid,
+        y = p.data$MSE,
         main = paste0(
           "MSE Plot for: ",
           deparse(substitute(series)),
@@ -205,7 +212,7 @@ hhjboot <- function(series,
 
         xlab = "Block Length (l)",
         ylab = "MSE",
-        col = ifelse(sol == min(sol), "red", "black")
+        col = ifelse(p.data$MSE == min(p.data$MSE), "red", "black")
       )
     }
 
@@ -220,12 +227,13 @@ hhjboot <- function(series,
         message(" Converged at block length (l): ", round(l_star))
       }
 
-      # Compile Result list
-      result <- list(
+      # Compile results list with custom class
+      result <- structure(list(
         "Optimal Block Length" = l_star,
         "Subsample block size (m)" = m,
+        "MSE Data" = p.data,
         "Call" = call
-      )
+        ), class = "hhjboot")
 
       # Return list of results
       return(result)
