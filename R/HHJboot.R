@@ -168,65 +168,27 @@ hhjboot <- function(series,
     # Run optimization process
     if (is.null(cl)) {
 
-      # Optimize MSE function over l
-      sol <- sapply(X = search_grid[[1]], FUN = function(l) {
+      # Optimize MSE function over l in serial
+      sol <- sapply(X = search_grid[[1]], FUN = hhj.mse,
+        # Bootstrap parameters for hhj.mse
+        n = n,
+        m = m,
+        series.list = series.list,
+        nb = nb,
+        bofb = bofb,
+        v_star = v_star)
 
-        # Initialize Squared Error Vector
-        se <- rep(NA, (n - m + 1))
-
-        # Bootstrap each subsample, non-parallel computation
-        output <- lapply(
-          series.list,
-          tseries::tsbootstrap,
-          statistic = stats::var,
-          type = "block",
-          nb = nb,
-          b = l,
-          m = bofb
-        )
-
-        for (i in seq_len(length.out = length(output))) {
-
-          # Calculate Squared Error
-          se[i] <- (mean(output[[i]]$statistic) - v_star)^2
-        }
-
-        # Calculate MSE
-        return(mean(se))
-
-      })
     } else {
 
-      # Optimize MSE function over l
-      sol <- parallel::parSapply(
-        cl = cl,
-        X = search_grid[[1]],
-        FUN = function(l) {
-
-          # Initialize Squared Error and Bootstrap Vector
-          se <- rep(NA, (n - m + 1))
-
-          # Bootstrap each subsample, non-parallel computation
-          output <- lapply(
-            X = series.list,
-            FUN = tseries::tsbootstrap,
-            statistic = stats::var,
-            type = "block",
-            nb = nb,
-            b = l,
-            m = bofb
-          )
-
-          for (i in seq_len(length.out = length(output))) {
-
-            # Calculate Squared Error
-            se[i] <- (mean(output[[i]]$statistic) - v_star)^2
-          }
-
-          # Calculate MSE
-          return(mean(se))
-
-        })
+      # Optimize MSE function over l in parallel
+      sol <- parallel::parSapply(cl = cl, X = search_grid[[1]], FUN = hhj.mse,
+        # Bootstrap parameters for hhj.mse
+        n = n,
+        m = m,
+        series.list = series.list,
+        nb = nb,
+        bofb = bofb,
+        v_star = v_star)
     }
 
     # Plot MSE over l and color minimizing value red
@@ -278,4 +240,33 @@ hhjboot <- function(series,
       message(" Chosen block length: ", l_star, "  After iteration: ", j)
     }
   }
+}
+
+# Helper Functions --------------------------------------------------------
+
+hhj.mse <- function(l, n, m, series.list, nb, bofb, v_star) {
+
+  # Initialize Squared Error Vector
+  se <- rep(NA, (n - m + 1))
+
+  # Bootstrap each subsample, non-parallel computation
+  output <- lapply(
+    X = series.list,
+    FUN = tseries::tsbootstrap,
+    statistic = stats::var,
+    type = "block",
+    nb = nb,
+    b = l,
+    m = bofb
+  )
+
+  for (i in seq_len(length.out = length(output))) {
+
+    # Calculate Squared Error
+    se[i] <- (mean(output[[i]]$statistic) - v_star)^2
+  }
+
+  # Calculate MSE
+  return(mean(se))
+
 }
