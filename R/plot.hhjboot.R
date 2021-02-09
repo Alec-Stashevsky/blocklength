@@ -1,9 +1,9 @@
 #' Plot MSE Function for HHJ Algorithm
 #'
 #' @param x an object of class "hhjboot"
-#' @param iter a vector of \code{hhjboot()} iterations to plot. \code{NULL}, by
+#' @param ... Arguments to be passed to methods
+#' @param iter a vector of \code{hhjboot()} iterations to plot. \pkg{NULL}, by
 #'  default will plot all iterations
-#' @inheritParams base::plot
 #'
 #' @export
 plot.hhjboot <- function(x, ..., iter = NULL) {
