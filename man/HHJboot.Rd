@@ -65,13 +65,7 @@ sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
                         n = 500, innov = rnorm(500))
 
 # Calculate optimal block length for series
-hhjboot(sim)
-
-# Only evaluate every other block length after 1st iteration
-hhjboot(sim, grid.step = 2)
-
-# Only evaluate +/- 20 block length from 1st iteration's solution
-hhjboot(sim, search.grid = 20)
+hhjboot(sim, sub.block.size = 10)
 
 \dontrun{
 # Use parallel computing

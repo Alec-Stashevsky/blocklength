@@ -191,17 +191,26 @@ hhjboot <- function(series,
     }
 
     # Save plot data
-    p.data <- data.frame(
-      Iteration = j,
-      Grid = round(search_grid[[1]] * ((n / m)^(1 / 3))),
-      MSE = sol
-      )
+    if (j == 1) {
+      p.data <- data.frame(
+        Iteration = j,
+        BlockLength = round(search_grid[[1]] * ((n / m)^(1 / 3))),
+        MSE = sol
+        )
+    } else {
+      p.data <- rbind(p.data, data.frame(
+        Iteration = j,
+        BlockLength = round(search_grid[[1]] * ((n / m)^(1 / 3))),
+        MSE = sol
+        ))
+    }
+
 
     # Plot MSE over l and color minimizing value red
     if (isTRUE(plots)) {
       plot(
-        x = p.data$Grid,
-        y = p.data$MSE,
+        x = round(search_grid[[1]] * ((n / m)^(1 / 3))),
+        y = sol,
         main = paste0(
           "MSE Plot for: ",
           deparse(substitute(series)),
@@ -212,7 +221,7 @@ hhjboot <- function(series,
 
         xlab = "Block Length (l)",
         ylab = "MSE",
-        col = ifelse(p.data$MSE == min(p.data$MSE), "red", "black")
+        col = ifelse(sol == min(sol), "red", "black")
       )
     }
 
@@ -230,13 +239,14 @@ hhjboot <- function(series,
       # Compile results list with custom class
       result <- structure(
         list(
-        "Optimal Block Length" = l_star,
-        "Subsample block size (m)" = m,
-        "MSE Data" = p.data,
-        "Iterations" = j,
-        "Call" = call
+          "Optimal Block Length" = l_star,
+          "Subsample block size (m)" = m,
+          "MSE Data" = p.data,
+          "Iterations" = j,
+          "Series" = deparse(substitute(series)),
+          "Call" = call
           ),
-        class = "hhjboot")
+        class = c("hhjboot", "list"))
 
       # Return list of results
       return(result)
