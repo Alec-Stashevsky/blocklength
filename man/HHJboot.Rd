@@ -7,12 +7,12 @@
 hhjboot(
   series,
   nb = 100L,
-  n.iter = 10L,
-  pilot.block.length = NULL,
-  sub.block.size = NULL,
+  n_iter = 10L,
+  pilot_block_length = NULL,
+  sub_block_length = NULL,
   bofb = 1L,
-  search.grid = NULL,
-  grid.step = c(1L, 1L),
+  search_grid = NULL,
+  grid_step = c(1L, 1L),
   cl = NULL,
   verbose = TRUE,
   plots = TRUE
@@ -24,24 +24,24 @@ which to find the optimal block length for.}
 
 \item{nb}{number of bootstrap series to compute.}
 
-\item{n.iter}{maximum number of iterations for HHJ algorithm.}
+\item{n_iter}{maximum number of iterations for HHJ algorithm.}
 
-\item{pilot.block.length}{pilot block length (\eqn{l*} \emph{in HHJ})
+\item{pilot_block_length}{pilot block length (\eqn{l*} \emph{in HHJ})
 for which to perform initial block bootstraps.}
 
-\item{sub.block.size}{length of each overlapping subsample
+\item{sub_block_length}{length of each overlapping subsample
 (\eqn{m} \emph{in HHJ}).}
 
 \item{bofb}{length of the basic blocks in the \emph{block of blocks}
 bootstrap.}
 
-\item{search.grid}{the range of solutions around l* to evaluate within the
+\item{search_grid}{the range of solutions around l* to evaluate within the
 MSE function after 1st iteration.}
 
-\item{grid.step}{number to increment over subsample block lengths.
-If grid.step = 1 then each block length will be evaluated in the MSE
-function, if grid.step > 1, the the MSE function will search over the
-sequence of block lengths from 1 to m by grid.step. If grid.step is supplied
+\item{grid_step}{number to increment over subsample block lengths.
+If grid_step = 1 then each block length will be evaluated in the MSE
+function, if grid_step > 1, the the MSE function will search over the
+sequence of block lengths from 1 to m by grid_step. If grid_step is supplied
 as a vector of length 2, the the first iteration will step by the first
 element and subsequent iterations will step by the second element.}
 
@@ -65,7 +65,7 @@ sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
                         n = 500, innov = rnorm(500))
 
 # Calculate optimal block length for series
-hhjboot(sim, sub.block.size = 10)
+hhjboot(sim, sub_block_length = 10)
 
 \dontrun{
 # Use parallel computing

@@ -7,19 +7,19 @@
 #' @param series a numeric vector or time series giving the original data for
 #'  which to find the optimal block length for.
 #' @param nb number of bootstrap series to compute.
-#' @param n.iter maximum number of iterations for HHJ algorithm.
-#' @param pilot.block.length pilot block length (\eqn{l*} \emph{in HHJ})
+#' @param n_iter maximum number of iterations for HHJ algorithm.
+#' @param pilot_block_length pilot block length (\eqn{l*} \emph{in HHJ})
 #'  for which to perform initial block bootstraps.
-#' @param sub.block.size length of each overlapping subsample
+#' @param sub_block_length length of each overlapping subsample
 #'  (\eqn{m} \emph{in HHJ}).
 #' @param bofb length of the basic blocks in the \emph{block of blocks}
 #'  bootstrap.
-#' @param search.grid the range of solutions around l* to evaluate within the
+#' @param search_grid the range of solutions around l* to evaluate within the
 #'  MSE function after 1st iteration.
-#' @param grid.step number to increment over subsample block lengths.
-#'  If grid.step = 1 then each block length will be evaluated in the MSE
-#'  function, if grid.step > 1, the the MSE function will search over the
-#'  sequence of block lengths from 1 to m by grid.step. If grid.step is supplied
+#' @param grid_step number to increment over subsample block lengths.
+#'  If grid_step = 1 then each block length will be evaluated in the MSE
+#'  function, if grid_step > 1, the the MSE function will search over the
+#'  sequence of block lengths from 1 to m by grid_step. If grid_step is supplied
 #'  as a vector of length 2, the the first iteration will step by the first
 #'  element and subsequent iterations will step by the second element.
 #' @param cl a cluster object, created by package \pkg{parallel} or by
@@ -38,7 +38,7 @@
 #'                         n = 500, innov = rnorm(500))
 #'
 #' # Calculate optimal block length for series
-#' hhjboot(sim, sub.block.size = 10)
+#' hhjboot(sim, sub_block_length = 10)
 #'
 #' \dontrun{
 #' # Use parallel computing
@@ -53,12 +53,12 @@
 #'
 hhjboot <- function(series,
                     nb = 100L,
-                    n.iter = 10L,
-                    pilot.block.length = NULL,
-                    sub.block.size = NULL,
+                    n_iter = 10L,
+                    pilot_block_length = NULL,
+                    sub_block_length = NULL,
                     bofb = 1L,
-                    search.grid = NULL,
-                    grid.step = c(1L, 1L),
+                    search_grid = NULL,
+                    grid_step = c(1L, 1L),
                     cl = NULL,
                     verbose = TRUE,
                     plots = TRUE) {
@@ -66,18 +66,18 @@ hhjboot <- function(series,
   # Check arguments
   stopifnot(class(series) %in% c("integer", "numeric", "ts"))
   stopifnot(all.equal(nb %% 1, 0))
-  stopifnot(all.equal(n.iter %% 1, 0))
-  stopifnot(class(grid.step) %in% c("integer", "numeric"))
+  stopifnot(all.equal(n_iter %% 1, 0))
+  stopifnot(class(grid_step) %in% c("integer", "numeric"))
 
-  if (length(grid.step) < 2) {
-    stopifnot(all.equal(grid.step %% 1, 0))
-    grid.step <- c(grid.step, grid.step)
-  } else if (length(grid.step) > 2) {
-    stop("grid.step must be a vector of at most length 2")
+  if (length(grid_step) < 2) {
+    stopifnot(all.equal(grid_step %% 1, 0))
+    grid_step <- c(grid_step, grid_step)
+  } else if (length(grid_step) > 2) {
+    stop("grid_step must be a vector of at most length 2")
   }
 
-  if (!is.null(search.grid)) {
-    stopifnot(all.equal(search.grid %% 1, 0))
+  if (!is.null(search_grid)) {
+    stopifnot(all.equal(search_grid %% 1, 0))
   }
 
   # Save function call
@@ -87,10 +87,10 @@ hhjboot <- function(series,
   n <- length(series)
 
   # Set pilot block-length
-  if (is.null(pilot.block.length)) {
+  if (is.null(pilot_block_length)) {
     l_star <- round(n^(1 / 5))
   } else {
-    l_star <- round(pilot.block.length)
+    l_star <- round(pilot_block_length)
   }
 
   # Print pilot message
@@ -99,16 +99,16 @@ hhjboot <- function(series,
   }
 
   # Check block-length of subsamples
-  if (is.null(sub.block.size)) {
+  if (is.null(sub_block_length)) {
     m <- round(n^(1 / 5) * n^(1 / 3))
   } else {
-    m <- sub.block.size
+    m <- sub_block_length
   }
 
   # Initialize overlapping sub samples list
   series.list <- vector(mode = "list", length = length((n - m + 1)))
 
-  for (j in 1:n.iter) {
+  for (j in 1:n_iter) {
 
     # Bootstrap variance of whole series
     boot_temp <- tseries::tsbootstrap(series,
@@ -122,17 +122,17 @@ hhjboot <- function(series,
     # Save updated variance of whole series
     v_star <- mean(boot_temp$statistic)
 
-    # Search total grid on first iteration then +/- search.grid over next
+    # Search total grid on first iteration then +/- search_grid over next
     if (j == 1) {
-      search_grid <- list(seq(from = 1, to = m, by = grid.step[1]))
-    } else if (!is.null(search.grid)) {
-      search_grid <- list(seq(
-        from = max(1, l_m - search.grid),
-        to = min(m, l_m + search.grid),
-        by = grid.step[2]
+      grid <- list(seq(from = 1, to = m, by = grid_step[1]))
+    } else if (!is.null(search_grid)) {
+      grid <- list(seq(
+        from = max(1, l_m - search_grid),
+        to = min(m, l_m + search_grid),
+        by = grid_step[2]
       ))
     } else {
-      search_grid <- list(seq(from = 1, to = m, by = grid.step[2]))
+      grid <- list(seq(from = 1, to = m, by = grid_step[2]))
     }
 
     # Setup environment for cluster workers
@@ -155,12 +155,11 @@ hhjboot <- function(series,
       # Output message to wait for gridSearch to process
       message("Performing minimization may take some time")
       message("Calculating MSE for each level in subsample: ",
-        lengths(search_grid), " function evaluations required.")
+        lengths(grid), " function evaluations required.")
     }
 
+    # Create sub-blocks of length m = sub_block_length
     for (i in seq_len(length.out = (n - m + 1))) {
-
-      # Create sub-blocks of length m = sub.block.size
       series.list[[i]] <- series[seq(from = i, to = (i + m - 1), by = 1)]
     }
 
@@ -168,7 +167,7 @@ hhjboot <- function(series,
     if (is.null(cl)) {
 
       # Optimize MSE function over l in serial
-      sol <- sapply(X = search_grid[[1]], FUN = hhjMSE,
+      sol <- sapply(X = grid[[1]], FUN = hhjMSE,
         # Bootstrap parameters for hhjMSE
         n = n,
         m = m,
@@ -180,7 +179,7 @@ hhjboot <- function(series,
     } else {
 
       # Optimize MSE function over l in parallel
-      sol <- parallel::parSapply(cl = cl, X = search_grid[[1]], FUN = hhjMSE,
+      sol <- parallel::parSapply(cl = cl, X = grid[[1]], FUN = hhjMSE,
         # Bootstrap parameters for hhjMSE
         n = n,
         m = m,
@@ -194,22 +193,21 @@ hhjboot <- function(series,
     if (j == 1) {
       p.data <- data.frame(
         Iteration = j,
-        BlockLength = round(search_grid[[1]] * ((n / m)^(1 / 3))),
+        BlockLength = round(grid[[1]] * ((n / m)^(1 / 3))),
         MSE = sol
         )
     } else {
       p.data <- rbind(p.data, data.frame(
         Iteration = j,
-        BlockLength = round(search_grid[[1]] * ((n / m)^(1 / 3))),
+        BlockLength = round(grid[[1]] * ((n / m)^(1 / 3))),
         MSE = sol
         ))
     }
 
-
     # Plot MSE over l and color minimizing value red
     if (isTRUE(plots)) {
       plot(
-        x = round(search_grid[[1]] * ((n / m)^(1 / 3))),
+        x = round(grid[[1]] * ((n / m)^(1 / 3))),
         y = sol,
         main = paste0(
           "MSE Plot for: ",
