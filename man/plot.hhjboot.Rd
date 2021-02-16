@@ -7,17 +7,23 @@
 \method{plot}{hhjboot}(x, iter = NULL, ...)
 }
 \arguments{
-\item{x}{an object of class "hhjboot"}
+\item{x}{an object of class 'hhjboot'}
 
-\item{iter}{a vector of \code{hhjboot()} iterations to plot. \pkg{NULL}, by
-default will plot all iterations}
+\item{iter}{a vector of \code{hhjboot()} iterations to plot. \code{NULL}. All
+iterations are plotted by default.}
 
-\item{...}{Arguments to be passed to methods}
+\item{...}{
+  Arguments passed on to \code{\link[base:plot]{base::plot}}
+  \describe{
+    \item{\code{y}}{the y coordinates of points in the plot, \emph{optional}
+    if \code{x} is an appropriate structure.}
+  }}
 }
 \description{
-Plot MSE Function for HHJ Algorithm
+S3 Method for objects of class 'hhjboot'
 }
 \examples{
+
 \dontrun{
 # Generate AR(1) time series
 sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),

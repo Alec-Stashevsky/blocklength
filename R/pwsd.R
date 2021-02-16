@@ -1,31 +1,71 @@
-#' Politis and White (2004) Spectral Density Automatic Block-Length Selection
+#' Politis and White (2004) Spectral Density "PWSD" Automatic Block-Length Selection
 #'
 #' Run the Automatic Block-Length selection method proposed by Politis and White
 #'  (2004) and corrected in Patton, Politis, and White (2009). The method is
-#'  based on spectral density estimate via flat-top lag windows of Politis and
-#'  Romano (1995).
+#'  based on spectral density estimation via flat-top lag windows of Politis and
+#'  Romano (1995). This code was adapted from \code{\link[np]{b.star}} to add
+#'  correlogram support including an S3 method, \emph{see} Hayfield and Racine
+#'  (2008).
 #'
-#'
-#' @param data an \eqn{n x k} data.frame or matrix where the optimal block-length
-#'  will be computed for each of the \eqn{k} columns.
-#' @param K_N the maximum lags for which to apply the \emph{implied hypothesis} testing
-#'  of the autocorrelations \eqn{rho_k}. See Politis and White (2004) <INSERT>
-#' @param M_max the upper bound for the optimal number of lags \eqn{M} to
-#'  compute the auto-covariance. \emph{See} Theorem 3.3 (ii) of Politis and White
-#' @param b_max the upper bound for the optimal block-length. Defaults to
-#'  \code{ceiling(min(3 * sqrt(n), n / 3))} per Politis and White (2004).
-#' @param c constant which acts as the significance level for implied
-#'  hypothesis test. Defaults to \code{qnorm(0.975)} for a 95% confidence level.
-#'  Politis and  White (2004) suggest \code{c=2}.
-#' @param round logical. Set to \code{FALSE} by default. Setting to \code{TRUE}
-#'  will round the final estimates for the optimal block-length.
-#' @param correlogram logical. Setting \code{TRUE} will output a plot
-#'  of the correlogram (\emph{i.e.} a plot of \eqn{R(k)} vs. \eqn{k}) to the console.
+#' @param data an \eqn{n x k} data.frame, matrix, or vector (if \eqn{k = 1})
+#'  where the optimal block-length will be computed for each of the \eqn{k} columns.
+#' @param K_N an integer value, the maximum lags for the auto-correlation,
+#'  \eqn{rho_k}, which to apply the \emph{implied hypothesis} test. Defaults to
+#'  \code{max(5, log(N))}. \emph{See} Politis and White (2004) footnote c.
+#' @param M_max an integer value, the upper-bound for the optimal number of lags,
+#'  \eqn{M}, to compute the auto-covariance for. \emph{See} Theorem 3.3 (ii) of
+#'  Politis and White (2004).
+#' @param b_max a numeric value, the upper-bound for the optimal block-length.
+#'  Defaults to \code{ceiling(min(3 * sqrt(n), n / 3))} per Politis and White (2004).
+#' @param c a numeric value, the constant which acts as the significance level
+#'  for the implied hypothesis test. Defaults to \code{qnorm(0.975)} for a 95\%
+#'  confidence level. Politis and  White (2004) suggest \code{c = 2}.
+#' @param round a logical value, if set to \code{FALSE} then the final block-length
+#'  output will not be rounded, the default. If set to \code{TRUE} the final
+#'  estimates for the optimal block-length will be rounded to whole numbers.
+#' @param correlogram a logical value, if set to \code{TRUE} a plot of the
+#'  correlogram (\emph{i.e.} a plot of \eqn{R(k)} vs. \eqn{k}) will be output to
+#'  the console. If set to \code{FALSE}, no interim plots will be output to the
+#'  console, but may be plotting later using the corresponding S3 method,
+#'  \link{plot.pwsd}.
 #'
 #' @return an object of class 'pwsd'
+#'
+#' @section References:
+#'
+#' Andrew Patton, Dimitris N. Politis & Halbert White (2009) Correction to
+#'  “Automatic Block-Length Selection for the Dependent Bootstrap” by D. Politis
+#'  and H. White, Econometric Reviews, 28:4, 372-375, DOI:
+#'  \url{https://doi.org/10.1080/07474930802459016}
+#'
+#' Dimitris N. Politis & Halbert White (2004) Automatic Block-Length Selection
+#'  for the Dependent Bootstrap, Econometric Reviews, 23:1, 53-70, DOI:
+#'  \url{https://doi.org/10.1081/ETC-120028836}
+#'
+#' Politis, D.N. and Romano, J.P. (1995), BIAS‐CORRECTED NONPARAMETRIC SPECTRAL
+#'  ESTIMATION. Journal of Time Series Analysis, 16: 67-103.
+#'  \url{https://doi.org/10.1111/j.1467-9892.1995.tb00223.x}
+#'
+#' Tristen Hayfield and Jeffrey S. Racine (2008). Nonparametric Econometrics:
+#'  The np Package. Journal of Statistical Software 27(5). URL
+#'  \url{http://www.jstatsoft.org/v27/i05/}
+#'
 #' @export
 #'
 #' @examples
+#' # Generate AR(1) time series
+#' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
+#'                         n = 500, innov = rnorm(500))
+#'
+#' # Calculate optimal block length for series
+#' pwsd(sim, round = TRUE)
+#'
+#' \dontrun{
+#' # Use S3 Method
+#' b <- pwsd(sim, round = TRUE, correlogram = FALSE)
+#' plot(b)
+#' }
+#'
 pwsd <- function(
   data,
   K_N = NULL,
@@ -36,9 +76,7 @@ pwsd <- function(
   correlogram = TRUE
   ){
 
-  ## Convert the data object to a data frame to handle both vectors
-  ## and matrices.
-
+  # Set PW parameters and coerce to dataframe
   data <- data.frame(data)
   n <- nrow(data)
   k <- ncol(data)
@@ -60,10 +98,10 @@ pwsd <- function(
   b_SB_star <- rep(NA, k)
   b_CB_star <- rep(NA, k)
 
-  ## Now we loop through each variable in data (i.e., column,
-  ## data[,i]).
+  ## Now we loop through each variable in series (i.e., column,
+  ## series[,i]).
 
-  # Initialize list to hold correlogram data
+  # Initialize list to hold correlogram series
   autocorrelation <- vector(mode = "list", length = k)
 
   for(i in seq_len(length.out = k)) {
@@ -75,7 +113,8 @@ pwsd <- function(
     ## M_max observations, while we instead use the acf to obtain
     ## rho(k).
 
-    autocorrelation[[i]] <- stats::acf(data[, i],
+    autocorrelation[[i]] <- stats::acf(
+      data[, i],
       lag.max = M_max,
       type = "correlation",
       plot = FALSE)
@@ -133,39 +172,7 @@ pwsd <- function(
         } else {
           m_hat <- 1
         }
-
-# OLD ---------------------------------------------------------------------
-
-
-        #if(numSig == 1) {
-
-          ## When only one lag is significant, m_hat is the sole
-          ## significant rho(k).
-
-          #m_hat <- sigLags
-
-      #  } else {
-
-          ## If there are more than one significant lags but no runs
-          ## of length K_N, take the largest value of rho(k) that is
-          ## significant.
-
-       #   m_hat <- max(sigLags)
-
-      #  }
-
-    #  } else {
-
-        ## When there are no significant lags, m_hat must be the
-        ## smallest positive integer (footnote c), hence m_hat is set
-        ## to one.
-
-     #   m_hat <- 1
-
-
-
       }
-
     }
 
     ## Compute M (m_hat is at least one).
@@ -212,16 +219,24 @@ pwsd <- function(
       ifelse(b_SB_star < 1, 1, round(b_SB_star)))
 
     b_CB_star <- ifelse(b_CB_star > b_max, b_max,
-      ifelse(b_CB_star < 1, 1, max(1,round(b_CB_star))))
+      ifelse(b_CB_star < 1, 1, max(1, round(b_CB_star))))
 
   }
 
+  # Collect Block-Lengths and Name rows
+  blocklengths <- cbind("b_Stationary" = b_SB_star,"b_Circular" = b_CB_star)
+  rownames(blocklengths) <- colnames(data)
+
+  # Name autocorrelation list
+  names(autocorrelation) <- colnames(data)
+
   # Collect results
   result <- structure(list(
-    "Block-Length" = cbind("b_Stationary" = b_SB_star,"b_Circular" = b_CB_star),
+    "BlockLength" = blocklengths,
     "Acf" = autocorrelation,
+    "parameters" = cbind(n, k, c, K_N, M_max, b_max, m_hat, M, rho.k.critical),
     "Call" = call
-    ), class = c("pwsd", "list"))
+    ), class = "pwsd")
 
   return(result)
 
@@ -250,33 +265,26 @@ pwsd <- function(
 ## for the stationary bootstrap and circular bootstrap (b_SB_star,
 ## b_CB_star).
 
+
+
+
+# Helper Functions --------------------------------------------------------
+
 ## The function lambda() is used to construct a "flat-top" lag window for
 ## spectral estimation based on Politis, D.N. and J.P. Romano (1995),
 ## "Bias-Corrected Nonparametric Spectral Estimation", Journal of Time
 ## Series Analysis, vol. 16, No. 1.
 
-
-# Helper Functions --------------------------------------------------------
-
-# “flat-top” lag-window of Politis and Romano (1995) - Trapazoidal Shape symmetric about zero.
+# Function to construct "flat-top" lag window for spectral density estimation
 lambda <- function(t) {
   return((abs(t) >= 0) * (abs(t) < 0.5) + 2 *
       (1 - abs(t)) * (abs(t) >= 0.5) * (abs(t)<=1))
 }
 
+# Function to count the number of significant auto-correlations or given K_N
 sigTest <- function(j, rho.k, rho.k.critical, K_N) {
   sum((abs(rho.k) < rho.k.critical)[j:(j + K_N - 1)])
 }
-
-
-## The function b.star() returns the optimal bootstrap block
-## lengths. Note that an example for usage appears at the bottom of
-## this file. If you use this function as input into a routine such as
-## tsboot() in the boot library (Angelo Canty and Brian Ripley
-## (2008). boot: Bootstrap R (S-Plus) Functions. R package version
-## 1.2-34.) you ought to use the option round=TRUE.
-
-
 
 # ALEC NOTES:
 

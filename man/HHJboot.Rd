@@ -2,7 +2,7 @@
 % Please edit documentation in R/hhjboot.R
 \name{hhjboot}
 \alias{hhjboot}
-\title{HHJ Algorithm}
+\title{Hall, Horowitz, and Jing (1995) "HHJ" Algorithm to Select Optimal Block-Length}
 \usage{
 hhjboot(
   series,
@@ -22,31 +22,34 @@ hhjboot(
 \item{series}{a numeric vector or time series giving the original data for
 which to find the optimal block length for.}
 
-\item{nb}{number of bootstrap series to compute.}
+\item{nb}{an integer value, number of bootstrap series to compute.}
 
-\item{n_iter}{maximum number of iterations for HHJ algorithm.}
+\item{n_iter}{an integer value, maximum number of iterations for HHJ algorithm.}
 
-\item{pilot_block_length}{pilot block length (\eqn{l*} \emph{in HHJ})
-for which to perform initial block bootstraps.}
+\item{pilot_block_length}{a numeric value, pilot block length (\eqn{l*}
+\emph{in HHJ}) for which to perform initial block bootstraps.}
 
-\item{sub_block_length}{length of each overlapping subsample
-(\eqn{m} \emph{in HHJ}).}
+\item{sub_block_length}{a numeric value, the length of each overlapping
+subsample (\eqn{m} \emph{in HHJ}).}
 
-\item{bofb}{length of the basic blocks in the \emph{block of blocks}
-bootstrap.}
+\item{bofb}{a numeric value, length of the basic blocks in the
+\emph{block-of-blocks} bootstrap. \emph{See} \code{m =} for
+\code{\link[tseries]{tsbootstrap}}.}
 
-\item{search_grid}{the range of solutions around l* to evaluate within the
-MSE function after 1st iteration.}
+\item{search_grid}{a numeric value, the range of solutions around l* to
+evaluate within the MSE function \emph{after} 1st iteration.}
 
-\item{grid_step}{number to increment over subsample block lengths.
-If grid_step = 1 then each block length will be evaluated in the MSE
-function, if grid_step > 1, the the MSE function will search over the
-sequence of block lengths from 1 to m by grid_step. If grid_step is supplied
-as a vector of length 2, the the first iteration will step by the first
-element and subsequent iterations will step by the second element.}
+\item{grid_step}{a numeric value, the number to increment over subsample block
+lengths. If \code{grid_step = 1} then each block length will be evaluated in
+the MSE function, if \code{grid_step > 1}, the the MSE function will search
+over the sequence of block-lengths from \code{1} to \code{m} by
+\code{grid_step}. If \code{grid_step} is supplied as a vector of length 2,
+the the first iteration will step by the first element and subsequent
+iterations will step by the second element.}
 
-\item{cl}{a cluster object, created by package \pkg{parallel} or by
-package \pkg{snow}. If \code{NULL}, use the non-parallel method.}
+\item{cl}{a cluster object, created by package \pkg{parallel},
+\pkg{doParallel} or by package \pkg{snow}. If \code{NULL}, no parallelization
+will be used.}
 
 \item{verbose}{a logical value, if set to \code{FALSE} then no interim
 messages are output to the console. Error messages will still be output.
@@ -55,10 +58,33 @@ Default is \code{TRUE}.}
 \item{plots}{a logical value, if set to \code{FALSE} then no interim
 plots are output to the console. Default is \code{TRUE}.}
 }
+\value{
+an object of class 'hhjboot'
+}
 \description{
 Perform the Hall, Horowitz, and Jing (1995) "HHJ" algorithm to select the
-optimal block-length \eqn{(l)} for a block bootstrap.
+optimal block-length \eqn{(l)} for a block bootstrap. Dependent data such as
+stationary time series are suitable for usage with the HHJ algorithm.
+Under-the-hood, \code{hhjboot} makes use of \code{\link[tseries]{tsbootstrap}}
+(\emph{See} Trapletti and Hornik (2020)) to perform the moving block-bootstrap
+(or the \emph{block-of-blocks} bootstrap by setting \code{bofb > 1}) according
+to Künsch (1989).
 }
+\section{References}{
+
+
+Adrian Trapletti and Kurt Hornik (2020). tseries: Time Series Analysis and
+ Computational Finance. R package version 0.10-48.
+
+Künsch, H. (1989). The Jackknife and the Bootstrap for General Stationary
+ Observations. The Annals of Statistics, 17(3), 1217-1241. Retrieved
+ February 16, 2021, from \url{http://www.jstor.org/stable/2241719}
+
+Peter Hall, Joel L. Horowitz, Bing-Yi Jing, On blocking rules for the
+ bootstrap with dependent data, Biometrika, Volume 82, Issue 3, September
+ 1995, Pages 561–574, \url{https://doi.org/10.1093/biomet/82.3.561#'}
+}
+
 \examples{
 # Generate AR(1) time series
 sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),

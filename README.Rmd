@@ -51,19 +51,40 @@ devtools::install_github("Alec-Stashevsky/hhjboot")
 - change parallel to `{foreach}` (Pending feedback)
 - Build tests
   - Overlapping subsamples cover entire series
+  
 
 ## Example
 
-We want to select the optimal block-length to perform a block bootstrap on a simulated autoregressive *AR(1)* time series: 
+We want to select the optimal block-length to perform a block bootstrap on a 
+simulated autoregressive *AR(1)* time series.
 
-```{r example}
+First we will generate the time series:
+```{r series}
 library(hhjboot)
 set.seed(32)
 
 # Simulate AR(1) time series
 series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
                            n = 500, rand.gen = rnorm)
-
-# Find optimal block length using overlapping subsamples of width 10
-hhjboot(series, sub.block.size = 10)
 ```
+
+Now, we can find the optimal block-length to perform a block-bootstrap. We do 
+this using two methods.
+
+#### 1. The Hall, Horowitz, and Jing (1995) "HHJ" Method
+
+```{r hhj}
+## Using the HHJ Algorithm with overlapping subsamples of width 10
+hhjboot(series, sub_block_length = 10)
+```
+
+
+#### 2. The Politis and White (2004) Spectral Density Estimation "PWSD" Method
+
+```{r pwsd}
+# Using Politis and White (2004) Spectral Density Estimation
+pwsd(series) 
+```
+
+We can see that both methods produce similar results for a block-length of 10-11
+depending on the type of bootstrap method used.

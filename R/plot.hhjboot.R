@@ -1,12 +1,16 @@
 #' Plot MSE Function for HHJ Algorithm
 #'
-#' @param x an object of class "hhjboot"
-#' @param iter a vector of \code{hhjboot()} iterations to plot. \pkg{NULL}, by
-#'  default will plot all iterations
-#' @param ... Arguments to be passed to methods
+#' S3 Method for objects of class 'hhjboot'
+#'
+#' @param x an object of class 'hhjboot'
+#' @param iter a vector of \code{hhjboot()} iterations to plot. \code{NULL}. All
+#'  iterations are plotted by default.
+#'
+#' @inheritDotParams base::plot
 #'
 #' @export
 #' @examples
+#'
 #' \dontrun{
 #' # Generate AR(1) time series
 #' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
