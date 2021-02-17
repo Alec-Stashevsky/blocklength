@@ -90,7 +90,7 @@ We do this using two methods.
 
 ``` r
 ## Using the HHJ Algorithm with overlapping subsamples of width 10
-hhjboot(series, sub_block_length = 10)
+hhj(series, sub_block_length = 10)
 #>  Pilot block length is: 3
 #> Registered S3 method overwritten by 'quantmod':
 #>   method            from
@@ -142,10 +142,10 @@ hhjboot(series, sub_block_length = 10)
     #> [1] "series"
     #> 
     #> $Call
-    #> hhjboot(series = series, sub_block_length = 10)
+    #> hhj(series = series, sub_block_length = 10)
     #> 
     #> attr(,"class")
-    #> [1] "hhjboot"
+    #> [1] "hhj"
 
 #### 2. The Politis and White (2004) Spectral Density Estimation “PWSD” Method
 

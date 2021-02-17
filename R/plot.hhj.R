@@ -1,9 +1,9 @@
 #' Plot MSE Function for HHJ Algorithm
 #'
-#' S3 Method for objects of class 'hhjboot'
+#' S3 Method for objects of class 'hhj'
 #'
-#' @param x an object of class 'hhjboot'
-#' @param iter a vector of \code{hhjboot()} iterations to plot. \code{NULL}. All
+#' @param x an object of class 'hhj'
+#' @param iter a vector of \code{hhj()} iterations to plot. \code{NULL}. All
 #'  iterations are plotted by default.
 #'
 #' @inheritDotParams base::plot
@@ -16,17 +16,17 @@
 #' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
 #'                         n = 500, innov = rnorm(500))
 #'
-#' # Generate 'hhjboot' class object of optimal block length for series
-#' hhj <- hhjboot(sim, sub.block.size = 10)
+#' # Generate 'hhj' class object of optimal block length for series
+#' hhj <- hhj(sim, sub.block.size = 10)
 #'
-#' ## S3 method for class 'hhjboot'
+#' ## S3 method for class 'hhj'
 #' plot(hhj)
 #' }
 #'
-plot.hhjboot <- function(x, iter = NULL, ...) {
+plot.hhj <- function(x, iter = NULL, ...) {
 
-  if (!inherits(x, "hhjboot")) {
-    stop("use only with \"hhjboot\" objects")
+  if (!inherits(x, "hhj")) {
+    stop("use only with \"hhj\" objects")
   }
 
   p.data <- x$`MSE Data`

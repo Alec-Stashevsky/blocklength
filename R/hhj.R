@@ -9,7 +9,7 @@
 #' process using a type of subsampling to estimate the mean squared error,
 #' (\eqn{MSE}), incurred by the bootstrap at various block-lengths.
 #'
-#' Under-the-hood, \code{hhjboot} makes use of \code{\link[tseries]{tsbootstrap}}
+#' Under-the-hood, \code{hhj} makes use of \code{\link[tseries]{tsbootstrap}}
 #' (\emph{See} Trapletti and Hornik (2020)) to perform the moving block-bootstrap
 #' (or the \emph{block-of-blocks} bootstrap by setting \code{bofb > 1}) according
 #' to Künsch (1989).
@@ -43,7 +43,7 @@
 #' @param plots a logical value, if set to \code{FALSE} then no interim
 #'  plots are output to the console. Default is \code{TRUE}.
 #'
-#' @return an object of class 'hhjboot'
+#' @return an object of class 'hhj'
 #'
 #' @section References:
 #'
@@ -66,7 +66,7 @@
 #'                         n = 500, innov = rnorm(500))
 #'
 #' # Calculate optimal block length for series
-#' hhjboot(sim, sub_block_length = 10)
+#' hhj(sim, sub_block_length = 10)
 #'
 #' \dontrun{
 #' # Use parallel computing
@@ -76,20 +76,22 @@
 #' cl <- makeCluster(detectCores())
 #'
 #' # Calculate optimal block length for series
-#' hhjboot(sim, cl = cl)
+#' hhj(sim, cl = cl)
 #' }
 #'
-hhjboot <- function(series,
-                    nb = 100L,
-                    n_iter = 10L,
-                    pilot_block_length = NULL,
-                    sub_block_length = NULL,
-                    bofb = 1L,
-                    search_grid = NULL,
-                    grid_step = c(1L, 1L),
-                    cl = NULL,
-                    verbose = TRUE,
-                    plots = TRUE) {
+hhj <- function(
+  series,
+  nb = 100L,
+  n_iter = 10L,
+  pilot_block_length = NULL,
+  sub_block_length = NULL,
+  bofb = 1L,
+  search_grid = NULL,
+  grid_step = c(1L, 1L),
+  cl = NULL,
+  verbose = TRUE,
+  plots = TRUE
+  ) {
 
   # Check arguments
   stopifnot(class(series) %in% c("integer", "numeric", "ts"))
@@ -272,7 +274,7 @@ hhjboot <- function(series,
           "Series" = deparse(substitute(series)),
           "Call" = call
           ),
-        class = "hhjboot")
+        class = "hhj")
 
       # Return list of results
       return(result)
