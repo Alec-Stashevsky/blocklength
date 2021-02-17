@@ -37,14 +37,14 @@ available:
 
 1.  `hhj()` takes its name from the [Hall, Horowitz, and
     Jing (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext)
-    method to select the optimal block-length using a cross-validation
-    algorithm which minimizes the mean squared error *(MSE)* incurred by
-    the bootstrap at various block-lengths.
+    “HHJ” method to select the optimal block-length using a
+    cross-validation algorithm which minimizes the mean squared error
+    *(MSE)* incurred by the bootstrap at various block-lengths.
 
 2.  `pwsd()` takes its name from the [Politis and
-    White (2004)](https://doi.org/10.1081/ETC-120028836) Non-parametric
-    Plug-in (NPPI) method to automatically select the optimal
-    block-length using Spectral Density estimation via “flat-top” lag
+    White (2004)](https://doi.org/10.1081/ETC-120028836) Spectral
+    Density “PWSD” Plug-in method to automatically select the optimal
+    block-length using spectral density estimation via “flat-top” lag
     windows of [Politis and Romano
     (1995).](https://doi.org/10.1111/j.1467-9892.1995.tb00223.x)
 

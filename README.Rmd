@@ -30,9 +30,9 @@ The problem with the block bootstrap is the high sensitivity to the choice of bl
 The goal of `{blocklength}` is to simplify and automate the process of selecting a block-length to perform a bootstrap on dependent data. `{blocklength}` has several functions that take their name from the authors who have proposed them. Currently, 
 there are two methods available:
 
- 1. `hhj()` takes its name from the [Hall, Horowitz, and Jing (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext) method to select the optimal block-length using a cross-validation algorithm which minimizes the mean squared error *(MSE)* incurred by the bootstrap at various block-lengths.
+ 1. `hhj()` takes its name from the [Hall, Horowitz, and Jing (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext) "HHJ" method to select the optimal block-length using a cross-validation algorithm which minimizes the mean squared error *(MSE)* incurred by the bootstrap at various block-lengths.
 
- 2. `pwsd()` takes its name from the [Politis and White (2004)](https://doi.org/10.1081/ETC-120028836) Non-parametric Plug-in (NPPI) method to automatically select the optimal block-length using Spectral Density estimation via "flat-top" lag windows of [Politis and Romano (1995).](https://doi.org/10.1111/j.1467-9892.1995.tb00223.x)
+ 2. `pwsd()` takes its name from the [Politis and White (2004)](https://doi.org/10.1081/ETC-120028836) Spectral Density "PWSD" Plug-in method to automatically select the optimal block-length using spectral density estimation via "flat-top" lag windows of [Politis and Romano (1995).](https://doi.org/10.1111/j.1467-9892.1995.tb00223.x)
 
 Under the hood, `hhj()` uses the moving block bootstrap (MBB) procedure according to [Künsch (1989)](https://projecteuclid.org/euclid.aos/1176347265) which resamples blocks from a set of overlapping sub-samples with a fixed block-length. However, the results of `hhj()` may be generalized to other block bootstrap procedures such as the *stationary bootstrap* of [Politis and Romano (1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870)
 
