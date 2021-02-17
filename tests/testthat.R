@@ -1,4 +1,4 @@
 library(testthat)
-library(hhjboot)
+library(blocklength)
 
-test_check("hhjboot")
+test_check("blocklength")

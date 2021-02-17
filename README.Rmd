@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# hhjboot
+# blocklength
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Alec-Stashevsky/hhjboot/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/hhjboot/actions) [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
@@ -27,24 +27,24 @@ To get around this problem, we can retain some of this *time-dependence* by brea
 
 The problem with the block bootstrap is the high sensitivity to the choice of block-length, or the number of blocks to break the time series into. 
 
-The goal of `hhjboot` is to simplify and automate the process of selecting a block-length to perform a block bootstrap. `hhjboot` takes its name from the [Hall, Horowitz, and Jing (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext) method to algorithmically select the optimal block-length for a given stationary time series.
+The goal of `{blocklength}` is to simplify and automate the process of selecting a block-length to perform a block bootstrap. `{blocklength}` takes its name from the [Hall, Horowitz, and Jing (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext) method to algorithmically select the optimal block-length for a given stationary time series.
 
-Under the hood, `hhjboot` uses the moving block bootstrap (MBB) procedure according to [Künsch (1989)](https://projecteuclid.org/euclid.aos/1176347265) which resamples blocks from a set of overlapping sub-samples with a fixed block-length. However, the results of `hhjboot` may be generalized to other block bootstrap procedures such as the *stationary bootstrap* of [Politis and Romano (1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870)
+Under the hood, `hhj` uses the moving block bootstrap (MBB) procedure according to [Künsch (1989)](https://projecteuclid.org/euclid.aos/1176347265) which resamples blocks from a set of overlapping sub-samples with a fixed block-length. However, the results of `hhj` may be generalized to other block bootstrap procedures such as the *stationary bootstrap* of [Politis and Romano (1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870)
 
 
 ## Installation
 
-<!-- You can install the released version of hhjboot from [CRAN](https://CRAN.R-project.org) with: -->
+<!-- You can install the released version of blocklength from [CRAN](https://CRAN.R-project.org) with: -->
 
 <!-- ``` r -->
-<!-- install.packages("hhjboot") -->
+<!-- install.packages("blocklength") -->
 <!-- ``` -->
 
 Install the development version from [GitHub](https://github.com) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("Alec-Stashevsky/hhjboot")
+devtools::install_github("Alec-Stashevsky/blocklength")
 ```
 
 ## Upcoming changes
@@ -60,7 +60,7 @@ simulated autoregressive *AR(1)* time series.
 
 First we will generate the time series:
 ```{r series}
-library(hhjboot)
+library(blocklength)
 set.seed(32)
 
 # Simulate AR(1) time series

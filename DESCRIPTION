@@ -1,4 +1,4 @@
-Package: hhjboot
+Package: blocklength
 Type: Package
 Title: Hall, Horowitz, and Jing (1995) Algorithm to Select Optimal Block-Length for Block Bootstrap
 Version: 0.0.0.9004
