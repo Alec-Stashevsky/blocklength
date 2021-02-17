@@ -5,11 +5,11 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/Alec-Stashevsky/hhjboot/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/hhjboot/actions)
+[![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions)
 [![License: GPL
 v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-[![Codecov test
-coverage](https://codecov.io/gh/Alec-Stashevsky/hhjboot/branch/main/graph/badge.svg)](https://codecov.io/gh/Alec-Stashevsky/hhjboot?branch=main)
+[![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://codecov.io/gh/Alec-Stashevsky/blocklength)
+
 <!-- badges: end -->
 
 Regular bootstrap methods rely on assumptions that observations are
