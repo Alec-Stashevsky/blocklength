@@ -62,9 +62,15 @@ plots are output to the console. Default is \code{TRUE}.}
 an object of class 'hhjboot'
 }
 \description{
-Perform the Hall, Horowitz, and Jing (1995) "HHJ" algorithm to select the
-optimal block-length \eqn{(l)} for a block bootstrap. Dependent data such as
-stationary time series are suitable for usage with the HHJ algorithm.
+Perform the Hall, Horowitz, and Jing (1995) "HHJ" cross-validation algorithm
+to select the optimal block-length \eqn{(l)} for a block bootstrap. Dependent
+data such as stationary time series are suitable for usage with the HHJ algorithm.
+}
+\details{
+The HHJ algorithm is computationally intensive as it relies on a cross-validation
+process using a type of subsampling to estimate the mean squared error,
+(\eqn{MSE}), incurred by the bootstrap at various block-lengths.
+
 Under-the-hood, \code{hhjboot} makes use of \code{\link[tseries]{tsbootstrap}}
 (\emph{See} Trapletti and Hornik (2020)) to perform the moving block-bootstrap
 (or the \emph{block-of-blocks} bootstrap by setting \code{bofb > 1}) according
