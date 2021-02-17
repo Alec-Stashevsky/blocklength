@@ -51,8 +51,8 @@ Run the Automatic Block-Length selection method proposed by Politis and White
  (2004) and corrected in Patton, Politis, and White (2009). The method is
  based on spectral density estimation via flat-top lag windows of Politis and
  Romano (1995). This code was adapted from \code{\link[np]{b.star}} to add
- correlogram support including an S3 method, \emph{see} Hayfield and Racine
- (2008).
+ functionality and include correlogram support including an S3 method,
+ \emph{see} Hayfield and Racine (2008).
 }
 \section{References}{
 

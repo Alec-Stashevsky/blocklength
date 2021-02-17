@@ -4,8 +4,8 @@
 #'  (2004) and corrected in Patton, Politis, and White (2009). The method is
 #'  based on spectral density estimation via flat-top lag windows of Politis and
 #'  Romano (1995). This code was adapted from \code{\link[np]{b.star}} to add
-#'  correlogram support including an S3 method, \emph{see} Hayfield and Racine
-#'  (2008).
+#'  functionality and include correlogram support including an S3 method,
+#'  \emph{see} Hayfield and Racine (2008).
 #'
 #' @param data an \eqn{n x k} data.frame, matrix, or vector (if \eqn{k = 1})
 #'  where the optimal block-length will be computed for each of the \eqn{k} columns.
