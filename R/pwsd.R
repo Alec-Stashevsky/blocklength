@@ -126,6 +126,7 @@ pwsd <- function(
       plot(
         autocorrelation[[i]],
         ci = stats::pnorm(c),
+        ci.col =  "darkmagenta",
         xlab = "Lag (k)",
         main = paste0("Correlogram for: ", colnames(data)[i])
         )

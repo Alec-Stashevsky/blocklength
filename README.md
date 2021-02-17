@@ -6,8 +6,6 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions)
-[![License: GPL
-v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://codecov.io/gh/Alec-Stashevsky/blocklength)
 
 <!-- badges: end -->
@@ -19,7 +17,7 @@ observation in the previous period to have some explanatory power over
 the current observation. This could occur in any time series from
 unemployment rates, stock prices, biological data, etc. A time series
 that is *i.i.d.* would look like white noise, since the following
-observation would be totally independent of the previous one.
+observation would be totally independent of the previous one (random).
 
 To get around this problem, we can retain some of this *time-dependence*
 by breaking-up a time series into a number of blocks with length *l*.
@@ -32,20 +30,39 @@ choice of block-length, or the number of blocks to break the time series
 into.
 
 The goal of `{blocklength}` is to simplify and automate the process of
-selecting a block-length to perform a block bootstrap. `{blocklength}`
-takes its name from the [Hall, Horowitz, and Jing
-(1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext)
-method to algorithmically select the optimal block-length for a given
-stationary time series.
+selecting a block-length to perform a bootstrap on dependent data.
+`{blocklength}` has several functions that take their name from the
+authors who have proposed them. Currently, there are two methods
+available:
 
-Under the hood, `hhj` uses the moving block bootstrap (MBB) procedure
+1.  `hhj()` takes its name from the [Hall, Horowitz, and
+    Jing (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext)
+    method to select the optimal block-length using a cross-validation
+    algorithm which minimizes the mean squared error *(MSE)* incurred by
+    the bootstrap at various block-lengths.
+
+2.  `pwsd()` takes its name from the [Politis and
+    White (2004)](https://doi.org/10.1081/ETC-120028836) Non-parametric
+    Plug-in (NPPI) method to automatically select the optimal
+    block-length using Spectral Density estimation via “flat-top” lag
+    windows of [Politis and Romano
+    (1995).](https://doi.org/10.1111/j.1467-9892.1995.tb00223.x)
+
+Under the hood, `hhj()` uses the moving block bootstrap (MBB) procedure
 according to [Künsch
 (1989)](https://projecteuclid.org/euclid.aos/1176347265) which resamples
 blocks from a set of overlapping sub-samples with a fixed block-length.
-However, the results of `hhj` may be generalized to other block
+However, the results of `hhj()` may be generalized to other block
 bootstrap procedures such as the *stationary bootstrap* of [Politis and
 Romano
 (1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870)
+
+Compared to `pwsd()`, `hhj()` is more computationally intensive as it
+relies on iterative resampling processes that optimize the MSE function
+over each possible block-length (or a select grid of block-lengths),
+while `pwsd()` is a simpler “plug-in” rule that uses auto-correlations,
+auto-covariance, and the spectral density of the series to optimize the
+choice of block-length.
 
 ## Installation
 
@@ -150,18 +167,21 @@ hhj(series, sub_block_length = 10)
 #### 2. The Politis and White (2004) Spectral Density Estimation “PWSD” Method
 
 ``` r
+# Coerce time series to data.frame
+data <- data.frame("AR1" = series)
+
 # Using Politis and White (2004) Spectral Density Estimation
-pwsd(series) 
+pwsd(data) 
 ```
 
 <img src="man/figures/README-pwsd-1.svg" width="100%" />
 
     #> $BlockLength
-    #>      b_Stationary b_Circular
-    #> data     10.24828   11.73136
+    #>     b_Stationary b_Circular
+    #> AR1     10.24828   11.73136
     #> 
     #> $Acf
-    #> $Acf$data
+    #> $Acf$AR1
     #> 
     #> Autocorrelations of series 'data[, i]', by lag
     #> 
@@ -178,7 +198,7 @@ pwsd(series)
     #> [1,] 500 1 1.959964   5    28    68     4 8      0.1439999
     #> 
     #> $Call
-    #> pwsd(data = series)
+    #> pwsd(data = data)
     #> 
     #> attr(,"class")
     #> [1] "pwsd"
