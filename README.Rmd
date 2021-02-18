@@ -55,10 +55,12 @@ devtools::install_github("Alec-Stashevsky/blocklength")
 ```
 
 ## Upcoming changes
+
+- add support to estimate 1 and 2-sided distribution functions w/ hhj
 - change parallel to `{foreach}` (Pending feedback)
 - Build tests
   - Overlapping subsamples cover entire series
-  
+
 
 ## Example
 
