@@ -1,6 +1,6 @@
 Package: blocklength
 Type: Package
-Title: Hall, Horowitz, and Jing (1995) Algorithm to Select Optimal Block-Length for Block Bootstrap
+Title: Select Optimal Block-Length to Bootstrap Dependent Data (Block Bootstrap)
 Version: 0.0.0.9004
 Authors@R: c(
              person("Alec", "Stashevsky",
@@ -13,7 +13,7 @@ Maintainer: Alec Stashevsky <alec@alecstashevsky.com>
 Description: A set of functions to select the optimal block-length for a 
     dependent bootstrap (block-bootstrap). Includes the Hall, Horowitz, and Jing
     (1995) cross-validation method and the Politis and White (2004) Spectral 
-    Density Plug-in method. 
+    Density Plug-in method with a corresponding set of S3 plot methods.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
