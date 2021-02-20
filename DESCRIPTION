@@ -2,11 +2,19 @@ Package: blocklength
 Type: Package
 Title: Hall, Horowitz, and Jing (1995) Algorithm to Select Optimal Block-Length for Block Bootstrap
 Version: 0.0.0.9004
-Authors@R: person("Alec", "Stashevsky", email = "alec@alecstashevsky.com",
-           role = c("aut", "cre"))
+Authors@R: c(
+             person("Alec", "Stashevsky",
+                    email = "alec@alecstashevsky.com",
+                    role = c("aut", "cre")),
+             person("Sergio", "Armella",
+                    role = "ctb")
+            )
 Maintainer: Alec Stashevsky <alec@alecstashevsky.com>
-Description: This package provides an algorithm based on Hall, Horowitz, and Jing (1995) <https://doi.org/10.1093/biomet/82.3.561> to select the optimal block-length for dependent (block) bootstrap.
-License: LGPL (>= 2.1)
+Description: A set of functions to select the optimal block-length for a 
+    dependent bootstrap (block-bootstrap). Includes the Hall, Horowitz, and Jing
+    (1995) cross-validation method and the Politis and White (2004) Spectral 
+    Density Plug-in method. 
+License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
@@ -17,5 +25,5 @@ Suggests:
 Imports: 
     tseries,
     stats
-URL: https://github.com/Alec-Stashevsky/hhjboot
-BugReports: https://github.com/Alec-Stashevsky/hhjboot/issues
+URL: https://github.com/Alec-Stashevsky/blocklength
+BugReports: https://github.com/Alec-Stashevsky/blocklength/issues
