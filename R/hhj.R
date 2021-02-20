@@ -22,6 +22,15 @@
 #'  \emph{in HHJ}) for which to perform initial block bootstraps.
 #' @param sub_block_length a numeric value, the length of each overlapping
 #'  subsample (\eqn{m} \emph{in HHJ}).
+#' @param k a character string, either \code{"bias/variance"}, \code{"one-sided"},
+#'  or \code{"two-sided"} depending on the desired object of estimation. If the
+#'  desired bootstrap statistic is bias or variance then select
+#'  \code{"bias/variance"} which sets \eqn{k = 3} per HHJ. If the object of
+#'  estimation is the one-sided or two-sided distribution function, then set
+#'  \code{k = "one-sided"} or \code{k = "two-sided"}, which set \eqn{k = 4} or
+#'  \eqn{k = 5}, respectively. For the purpose of generating symmetric confidence
+#'  intervals for an unknown parameter, \code{k = "two-sided"} (the default)
+#'  should be used.
 #' @param bofb a numeric value, length of the basic blocks in the
 #'  \emph{block-of-blocks} bootstrap. \emph{See} \code{m =} for
 #'  \code{\link[tseries]{tsbootstrap}}.
@@ -85,6 +94,7 @@ hhj <- function(
   n_iter = 10L,
   pilot_block_length = NULL,
   sub_block_length = NULL,
+  k = "two-sided",
   bofb = 1L,
   search_grid = NULL,
   grid_step = c(1L, 1L),
@@ -130,9 +140,20 @@ hhj <- function(
 
   # Check block-length of subsamples
   if (is.null(sub_block_length)) {
-    m <- round(n^(1 / 5) * n^(1 / 3))
+    m <- round(n^(1 / 5) * n^(1 / k))
   } else {
     m <- sub_block_length
+  }
+
+  # Set estimation type (k)
+  if (k == "bias/variance") {
+    k <- 3
+  } else if (k == "one-sided") {
+    k <- 4
+  } else if (k == "two-sided") {
+    k <- 5
+  } else {
+    stop("k must be in c('bias/variance', 'one-sided', 'two-sided')")
   }
 
   # Initialize overlapping sub samples list
@@ -223,13 +244,13 @@ hhj <- function(
     if (j == 1) {
       p.data <- data.frame(
         Iteration = j,
-        BlockLength = round(grid[[1]] * ((n / m)^(1 / 3))),
+        BlockLength = round(grid[[1]] * ((n / m)^(1 / k))),
         MSE = sol
         )
     } else {
       p.data <- rbind(p.data, data.frame(
         Iteration = j,
-        BlockLength = round(grid[[1]] * ((n / m)^(1 / 3))),
+        BlockLength = round(grid[[1]] * ((n / m)^(1 / k))),
         MSE = sol
         ))
     }
@@ -237,7 +258,7 @@ hhj <- function(
     # Plot MSE over l and color minimizing value red
     if (isTRUE(plots)) {
       plot(
-        x = round(grid[[1]] * ((n / m)^(1 / 3))),
+        x = round(grid[[1]] * ((n / m)^(1 / k))),
         y = sol,
         main = paste0(
           "MSE Plot for: ",
@@ -257,7 +278,7 @@ hhj <- function(
     l_m <- round(which.min(sol))
 
     # Break if l_m converges to previous l*
-    if (l_star == round((n / m)^(1 / 3) * l_m)) {
+    if (l_star == round((n / m)^(1 / k) * l_m)) {
 
       # Print convergence message
       if (isTRUE(verbose)) {
@@ -281,7 +302,7 @@ hhj <- function(
     }
 
     # Scale l_m back to l_n for next iteration
-    l_star <- round(((n / m)^(1 / 3)) * l_m)
+    l_star <- round(((n / m)^(1 / k)) * l_m)
 
     # Print iteration message
     if (isTRUE(verbose)) {

@@ -10,6 +10,7 @@ hhj(
   n_iter = 10L,
   pilot_block_length = NULL,
   sub_block_length = NULL,
+  k = "two-sided",
   bofb = 1L,
   search_grid = NULL,
   grid_step = c(1L, 1L),
@@ -31,6 +32,16 @@ which to find the optimal block length for.}
 
 \item{sub_block_length}{a numeric value, the length of each overlapping
 subsample (\eqn{m} \emph{in HHJ}).}
+
+\item{k}{a character string, either \code{"bias/variance"}, \code{"one-sided"},
+or \code{"two-sided"} depending on the desired object of estimation. If the
+desired bootstrap statistic is bias or variance then select
+\code{"bias/variance"} which sets \eqn{k = 3} per HHJ. If the object of
+estimation is the one-sided or two-sided distribution function, then set
+\code{k = "one-sided"} or \code{k = "two-sided"}, which set \eqn{k = 4} or
+\eqn{k = 5}, respectively. For the purpose of generating symmetric confidence
+intervals for an unknown parameter, \code{k = "two-sided"} (the default)
+should be used.}
 
 \item{bofb}{a numeric value, length of the basic blocks in the
 \emph{block-of-blocks} bootstrap. \emph{See} \code{m =} for

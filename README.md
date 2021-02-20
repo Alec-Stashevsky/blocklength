@@ -108,7 +108,7 @@ We do this using two methods.
 
 ``` r
 ## Using the HHJ Algorithm with overlapping subsamples of width 10
-hhj(series, sub_block_length = 10)
+hhj(series, sub_block_length = 10, k = "bias/variance")
 #>  Pilot block length is: 3
 #> Registered S3 method overwritten by 'quantmod':
 #>   method            from
@@ -160,7 +160,7 @@ hhj(series, sub_block_length = 10)
     #> [1] "series"
     #> 
     #> $Call
-    #> hhj(series = series, sub_block_length = 10)
+    #> hhj(series = series, sub_block_length = 10, k = "bias/variance")
     #> 
     #> attr(,"class")
     #> [1] "hhj"
