@@ -4,12 +4,14 @@
 * macOS-latest (GitHub Actions)
 * win-builder (devel and release)
 
+
 ## R CMD check results
 
 There were no ERRORs, WARNINGs or NOTEs
 
 * This is a new release.
-* This is a first time submission
+* This is a first time submission.
+
 
 ## Downstream dependencies
 
