@@ -60,19 +60,19 @@ Run the Automatic Block-Length selection method proposed by Politis and White
 Andrew Patton, Dimitris N. Politis & Halbert White (2009) Correction to
  “Automatic Block-Length Selection for the Dependent Bootstrap” by D. Politis
  and H. White, Econometric Reviews, 28:4, 372-375, DOI:
- \url{https://doi.org/10.1080/07474930802459016}
+ \doi{10.1080/07474930802459016}
 
 Dimitris N. Politis & Halbert White (2004) Automatic Block-Length Selection
  for the Dependent Bootstrap, Econometric Reviews, 23:1, 53-70, DOI:
- \url{https://doi.org/10.1081/ETC-120028836}
+ \doi{10.1081/ETC-120028836}
 
 Politis, D.N. and Romano, J.P. (1995), BIAS‐CORRECTED NONPARAMETRIC SPECTRAL
- ESTIMATION. Journal of Time Series Analysis, 16: 67-103.
- \url{https://doi.org/10.1111/j.1467-9892.1995.tb00223.x}
+ ESTIMATION. Journal of Time Series Analysis, 16: 67-103, DOI:
+ \doi{10.1111/j.1467-9892.1995.tb00223.x}
 
 Tristen Hayfield and Jeffrey S. Racine (2008). Nonparametric Econometrics:
- The np Package. Journal of Statistical Software 27(5). URL
- \url{http://www.jstatsoft.org/v27/i05/}
+ The np Package. Journal of Statistical Software 27(5). DOI:
+ \doi{10.18637/jss.v027.i05}
 }
 
 \examples{
