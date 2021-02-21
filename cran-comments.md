@@ -33,6 +33,14 @@ LaTeX errors found:
 (inputenc)                not set up for use with LaTeX.
 ```
 
+### R-hub
+
+No ERRORs or WARNINGs, 3 NOTEs
+
+  1. This is a new submisions
+  2. This run time on example for `hhj()` is >5s
+  3. Package unavailable to check Rd xrefs: 'np'
+     - There is a reference to package {np} in the .Rd file for pwsd, but there are no other dependencies in the package.
 
 ## Downstream dependencies
 
