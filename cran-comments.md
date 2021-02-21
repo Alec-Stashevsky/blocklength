@@ -5,6 +5,9 @@
 * win-builder (devel and release)
 
 
+CHANGES: Updated .Rd files to remove unicode characters
+
+
 ## R CMD check results
 
 * This is a new release.
@@ -17,16 +20,10 @@ There were no ERRORs, WARNINGs or NOTEs
 
 ### Win-builder
 
-1 ERROR and 1 WARNING due to failed pdf latex compilation. This is a well known issue and I believe it is due to the pdflatex engine used on the win-builder server, because there is unicode (hyphens only) contained in .Rd files. It would be nice to be able to keep the hyphens in there for readability but I can remove if needed. Output included below:
+No ERRORs or WARNINGs
 
-```
-* checking PDF version of manual ... WARNING
-LaTeX errors when creating PDF version.
-This typically indicates Rd problems.
-LaTeX errors found:
-! Package inputenc Error: Unicode char ‐ (U+2010)
-(inputenc)                not set up for use with LaTeX.
-```
+One NOTE:
+  1. This is a new submission
 
 ### R-hub
 

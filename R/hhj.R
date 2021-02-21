@@ -1,73 +1,75 @@
-
-#' Hall, Horowitz, and Jing (1995) "HHJ" Algorithm to Select Optimal Block-Length
+#' Hall, Horowitz, and Jing (1995) "HHJ" Algorithm to Select the Optimal Block-Length
 #'
 #' Perform the Hall, Horowitz, and Jing (1995) "HHJ" cross-validation algorithm
-#' to select the optimal block-length \eqn{(l)} for a block bootstrap. Dependent
-#' data such as stationary time series are suitable for usage with the HHJ algorithm.
+#' to select the optimal block-length for a bootstrap on dependent data
+#' (block-bootstrap). Dependent data such as stationary time series are suitable
+#' for usage with the HHJ algorithm.
 #'
-#' The HHJ algorithm is computationally intensive as it relies on a cross-validation
-#' process using a type of subsampling to estimate the mean squared error,
-#' (\eqn{MSE}), incurred by the bootstrap at various block-lengths.
+#' The HHJ algorithm is computationally intensive as it relies on a
+#' cross-validation process using a type of subsampling to estimate the mean
+#' squared error (\eqn{MSE}) incurred by the bootstrap at various block-lengths.
 #'
-#' Under-the-hood, \code{hhj} makes use of \code{\link[tseries]{tsbootstrap}}
-#' (\emph{See} Trapletti and Hornik (2020)) to perform the moving block-bootstrap
+#' Under-the-hood, \code{hhj()} makes use of \code{\link[tseries]{tsbootstrap}},
+#' \emph{see} Trapletti and Hornik (2020), to perform the moving block-bootstrap
 #' (or the \emph{block-of-blocks} bootstrap by setting \code{bofb > 1}) according
-#' to Künsch (1989).
-#'
-#' @encoding UTF-8
+#' to Kunsch (1989).
 #'
 #' @param series a numeric vector or time series giving the original data for
-#'  which to find the optimal block length for.
-#' @param nb an integer value, number of bootstrap series to compute.
-#' @param n_iter an integer value, maximum number of iterations for HHJ algorithm.
-#' @param pilot_block_length a numeric value, pilot block length (\eqn{l*}
-#'  \emph{in HHJ}) for which to perform initial block bootstraps.
+#'  which to find the optimal block-length for.
+#' @param nb an integer value, number of bootstrapped series to compute.
+#' @param n_iter an integer value, maximum number of iterations for the HHJ
+#'  algorithm to compute.
+#' @param pilot_block_length a numeric value, the block-length (\eqn{l*} in
+#'  \emph{HHJ}) for which to perform initial block bootstraps.
 #' @param sub_block_length a numeric value, the length of each overlapping
-#'  subsample (\eqn{m} \emph{in HHJ}).
-#' @param k a character string, either \code{"bias/variance"}, \code{"one-sided"},
-#'  or \code{"two-sided"} depending on the desired object of estimation. If the
-#'  desired bootstrap statistic is bias or variance then select
-#'  \code{"bias/variance"} which sets \eqn{k = 3} per HHJ. If the object of
-#'  estimation is the one-sided or two-sided distribution function, then set
-#'  \code{k = "one-sided"} or \code{k = "two-sided"}, which set \eqn{k = 4} or
+#'  subsample, \eqn{m} in \emph{HHJ}.
+#' @param k a character string, either \code{"bias/variance"},
+#'  \code{"one-sided"}, or \code{"two-sided"} depending on the desired object of
+#'  estimation. If the desired bootstrap statistic is bias or variance then
+#'  select \code{"bias/variance"} which sets \eqn{k = 3} per HHJ. If the object
+#'  of estimation is the one-sided or two-sided distribution function, then set
+#'  \code{k = "one-sided"} or \code{k = "two-sided"} which sets \eqn{k = 4} and
 #'  \eqn{k = 5}, respectively. For the purpose of generating symmetric confidence
-#'  intervals for an unknown parameter, \code{k = "two-sided"} (the default)
+#'  intervals around an unknown parameter, \code{k = "two-sided"} (the default)
 #'  should be used.
 #' @param bofb a numeric value, length of the basic blocks in the
-#'  \emph{block-of-blocks} bootstrap. \emph{See} \code{m =} for
-#'  \code{\link[tseries]{tsbootstrap}}.
-#' @param search_grid a numeric value, the range of solutions around l* to
-#'  evaluate within the MSE function \emph{after} 1st iteration.
-#' @param grid_step a numeric value, the number to increment over subsample block
-#'  lengths. If \code{grid_step = 1} then each block length will be evaluated in
-#'  the MSE function, if \code{grid_step > 1}, the the MSE function will search
-#'  over the sequence of block-lengths from \code{1} to \code{m} by
-#'  \code{grid_step}. If \code{grid_step} is supplied as a vector of length 2,
-#'  the the first iteration will step by the first element and subsequent
-#'  iterations will step by the second element.
+#'  \emph{block-of-blocks} bootstrap, \emph{see} \code{m = } for
+#'  \code{\link[tseries]{tsbootstrap}} and Kunsch (1989).
+#' @param search_grid a numeric value, the range of solutions around \eqn{l*} to
+#'  evaluate within the \eqn{MSE} function \emph{after} the first iteration. The
+#'  first iteration will search through all the possible block-lengths unless
+#'  specified in \code{grid_step = }.
+#' @param grid_step a numeric value or vector of at most length 2, the number of
+#'  steps to increment over the subsample block-lengths when evaluating the
+#'  \eqn{MSE} function. If \code{grid_step = 1} then each block-length will be
+#'  evaluated in the \eqn{MSE} function. If \code{grid_step > 1}, the \eqn{MSE}
+#'  function will search over the sequence of block-lengths from \code{1} to
+#'  \code{m} by \code{grid_step}. If \code{grid_step} is a vector of length 2,
+#'  the first iteration will step by the first element of \code{grid_step} and
+#'  subsequent iterations will step by the second element.
 #' @param cl a cluster object, created by package \pkg{parallel},
-#'  \pkg{doParallel} or by package \pkg{snow}. If \code{NULL}, no parallelization
-#'  will be used.
+#'  \pkg{doParallel}, or \pkg{snow}. If \code{NULL}, no parallelization will be
+#'  used.
 #' @param verbose a logical value, if set to \code{FALSE} then no interim
 #'  messages are output to the console. Error messages will still be output.
 #'  Default is \code{TRUE}.
-#' @param plots a logical value, if set to \code{FALSE} then no interim
-#'  plots are output to the console. Default is \code{TRUE}.
+#' @param plots a logical value, if set to \code{FALSE} then no interim plots
+#'  are output to the console. Default is \code{TRUE}.
 #'
 #' @return an object of class 'hhj'
 #'
 #' @section References:
 #'
 #' Adrian Trapletti and Kurt Hornik (2020). tseries: Time Series Analysis and
-#'  Computational Finance. R package version 0.10-48.
+#'      Computational Finance. R package version 0.10-48.
 #'
-#' Künsch, H. (1989). The Jackknife and the Bootstrap for General Stationary
-#'  Observations. The Annals of Statistics, 17(3), 1217-1241. Retrieved
-#'  February 16, 2021, from \url{http://www.jstor.org/stable/2241719}
+#' Kunsch, H. (1989) The Jackknife and the Bootstrap for General Stationary
+#'      Observations. The Annals of Statistics, 17(3), 1217-1241. Retrieved
+#'      February 16, 2021, from \url{http://www.jstor.org/stable/2241719}
 #'
 #' Peter Hall, Joel L. Horowitz, Bing-Yi Jing, On blocking rules for the
-#'  bootstrap with dependent data, Biometrika, Volume 82, Issue 3, September
-#'  1995, Pages 561–574, DOI: \doi{10.1093/biomet/82.3.561#'}
+#'      bootstrap with dependent data, Biometrika, Volume 82, Issue 3,
+#'      September 1995, Pages 561-574, DOI: \doi{10.1093/biomet/82.3.561#'}
 #'
 #' @export
 #'
@@ -80,6 +82,7 @@
 #' # Calculate optimal block length for series
 #' hhj(sim, sub_block_length = 10)
 #'}
+#'
 #' \dontrun{
 #' # Use parallel computing
 #' library(parallel)

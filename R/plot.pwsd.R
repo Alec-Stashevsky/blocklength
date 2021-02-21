@@ -1,9 +1,9 @@
-#' Plot Correlogram for Politis and White Auto-Correlation Implied Hypothesis Test
+#' Plot Correlogram for Politis and White Auto\eqn{-}Correlation Implied Hypothesis Test
 #'
 #' S3 Method for objects of class 'pwsd'
 #' \emph{See} \code{?plot.acf} of the \pkg{stats} package for more customization
 #'  options on the correlogram, from which \code{plot.pwsd} is based
-#' @encoding UTF-8
+#'
 #' @param x an of object of class 'pwsd' or 'acf'
 #'
 #' @inheritParams pwsd

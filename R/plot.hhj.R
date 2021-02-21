@@ -1,7 +1,7 @@
 #' Plot MSE Function for HHJ Algorithm
 #'
 #' S3 Method for objects of class 'hhj'
-#' @encoding UTF-8
+#'
 #' @param x an object of class 'hhj'
 #' @param iter a vector of \code{hhj()} iterations to plot. \code{NULL}. All
 #'  iterations are plotted by default.

@@ -6,9 +6,10 @@
 #'  Romano (1995). This code was adapted from \code{\link[np]{b.star}} to add
 #'  functionality and include correlogram support including an S3 method,
 #'  \emph{see} Hayfield and Racine (2008).
-#' @encoding UTF-8
+#'
 #' @param data an \eqn{n x k} data.frame, matrix, or vector (if \eqn{k = 1})
-#'  where the optimal block-length will be computed for each of the \eqn{k} columns.
+#'  where the optimal block-length will be computed for each of the \eqn{k}
+#'  columns.
 #' @param K_N an integer value, the maximum lags for the auto-correlation,
 #'  \eqn{rho_k}, which to apply the \emph{implied hypothesis} test. Defaults to
 #'  \code{max(5, log(N))}. \emph{See} Politis and White (2004) footnote c.
@@ -16,13 +17,15 @@
 #'  \eqn{M}, to compute the auto-covariance for. \emph{See} Theorem 3.3 (ii) of
 #'  Politis and White (2004).
 #' @param b_max a numeric value, the upper-bound for the optimal block-length.
-#'  Defaults to \code{ceiling(min(3 * sqrt(n), n / 3))} per Politis and White (2004).
+#'  Defaults to \code{ceiling(min(3 * sqrt(n), n / 3))} per Politis and White
+#'  (2004).
 #' @param c a numeric value, the constant which acts as the significance level
 #'  for the implied hypothesis test. Defaults to \code{qnorm(0.975)} for a 95\%
 #'  confidence level. Politis and  White (2004) suggest \code{c = 2}.
-#' @param round a logical value, if set to \code{FALSE} then the final block-length
-#'  output will not be rounded, the default. If set to \code{TRUE} the final
-#'  estimates for the optimal block-length will be rounded to whole numbers.
+#' @param round a logical value, if set to \code{FALSE} then the final
+#'  block-length output will not be rounded, the default. If set to \code{TRUE}
+#'  the final estimates for the optimal block-length will be rounded to whole
+#'  numbers.
 #' @param correlogram a logical value, if set to \code{TRUE} a plot of the
 #'  correlogram (\emph{i.e.} a plot of \eqn{R(k)} vs. \eqn{k}) will be output to
 #'  the console. If set to \code{FALSE}, no interim plots will be output to the
@@ -34,21 +37,21 @@
 #' @section References:
 #'
 #' Andrew Patton, Dimitris N. Politis & Halbert White (2009) Correction to
-#'  “Automatic Block-Length Selection for the Dependent Bootstrap” by D. Politis
-#'  and H. White, Econometric Reviews, 28:4, 372-375, DOI:
-#'  \doi{10.1080/07474930802459016}
+#'      "Automatic Block-Length Selection for the Dependent Bootstrap" by D.
+#'      Politis and H. White, Econometric Review, 28:4, 372-375, DOI:
+#'      \doi{10.1080/07474930802459016}
 #'
 #' Dimitris N. Politis & Halbert White (2004) Automatic Block-Length Selection
-#'  for the Dependent Bootstrap, Econometric Reviews, 23:1, 53-70, DOI:
-#'  \doi{10.1081/ETC-120028836}
+#'      for the Dependent Bootstrap, Econometric Reviews, 23:1, 53-70, DOI:
+#'      \doi{10.1081/ETC-120028836}
 #'
-#' Politis, D.N. and Romano, J.P. (1995), BIAS‐CORRECTED NONPARAMETRIC SPECTRAL
-#'  ESTIMATION. Journal of Time Series Analysis, 16: 67-103, DOI:
-#'  \doi{10.1111/j.1467-9892.1995.tb00223.x}
+#' Politis, D.N. and Romano, J.P. (1995), Bias-Corrected Nonparametric Spectral
+#'      Estimation. Journal of Time Series Analysis, 16: 67-103, DOI:
+#'      \doi{10.1111/j.1467-9892.1995.tb00223.x}
 #'
 #' Tristen Hayfield and Jeffrey S. Racine (2008). Nonparametric Econometrics:
-#'  The np Package. Journal of Statistical Software 27(5). DOI:
-#'  \doi{10.18637/jss.v027.i05}
+#'      The np Package. Journal of Statistical Software 27(5). DOI:
+#'      \doi{10.18637/jss.v027.i05}
 #'
 #' @export
 #'
@@ -60,11 +63,10 @@
 #' # Calculate optimal block length for series
 #' pwsd(sim, round = TRUE)
 #'
-#' \donttest{
+#'
 #' # Use S3 Method
 #' b <- pwsd(sim, round = TRUE, correlogram = FALSE)
 #' plot(b)
-#' }
 #'
 pwsd <- function(
   data,
