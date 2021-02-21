@@ -4,6 +4,7 @@
 * macOS-latest (GitHub Actions)
 * win-builder (devel and release)
 
+## Resubmission
 
 CHANGES: Updated .Rd files to remove unicode characters
 
