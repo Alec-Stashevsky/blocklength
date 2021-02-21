@@ -14,6 +14,8 @@
 #' (or the \emph{block-of-blocks} bootstrap by setting \code{bofb > 1}) according
 #' to Künsch (1989).
 #'
+#' @encoding UTF-8
+#'
 #' @param series a numeric vector or time series giving the original data for
 #'  which to find the optimal block length for.
 #' @param nb an integer value, number of bootstrap series to compute.
@@ -70,13 +72,14 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' # Generate AR(1) time series
 #' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
 #'                         n = 500, innov = rnorm(500))
 #'
 #' # Calculate optimal block length for series
 #' hhj(sim, sub_block_length = 10)
-#'
+#'}
 #' \dontrun{
 #' # Use parallel computing
 #' library(parallel)

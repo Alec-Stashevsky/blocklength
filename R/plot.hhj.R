@@ -1,7 +1,7 @@
 #' Plot MSE Function for HHJ Algorithm
 #'
 #' S3 Method for objects of class 'hhj'
-#'
+#' @encoding UTF-8
 #' @param x an object of class 'hhj'
 #' @param iter a vector of \code{hhj()} iterations to plot. \code{NULL}. All
 #'  iterations are plotted by default.
@@ -11,13 +11,13 @@
 #' @export
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' # Generate AR(1) time series
 #' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
 #'                         n = 500, innov = rnorm(500))
 #'
 #' # Generate 'hhj' class object of optimal block length for series
-#' hhj <- hhj(sim, sub.block.size = 10)
+#' hhj <- hhj(sim, sub_block_length = 10)
 #'
 #' ## S3 method for class 'hhj'
 #' plot(hhj)

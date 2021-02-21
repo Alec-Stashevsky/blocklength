@@ -7,22 +7,17 @@
 
 ## R CMD check results
 
+* This is a new release.
+
 
 ### Local Machine
 
 There were no ERRORs, WARNINGs or NOTEs
 
-* This is a new release.
-* This is a first time submission.
-
 
 ### Win-builder
 
-I did get two NOTEs about the length of time to run the example code for hhj.R
-I have reduced the time as much as possible to compute the example for `hhj()`,
-but the function is somewhat intensive inherently. 
-
-I also got a WARNING about building documentation, pasted below:
+1 ERROR and 1 WARNING due to failed pdf latex compilation. This is a well known issue and I believe it is due to the pdflatex engine used on the win-builder server, because there is unicode (hyphens only) contained in .Rd files. It would be nice to be able to keep the hyphens in there for readability but I can remove if needed. Output included below:
 
 ```
 * checking PDF version of manual ... WARNING
@@ -35,13 +30,15 @@ LaTeX errors found:
 
 ### R-hub
 
-No ERRORs or WARNINGs, 3 NOTEs
+No ERRORs or WARNINGs.
 
-  1. This is a new submisions
-  2. This run time on example for `hhj()` is >5s
-  3. Package unavailable to check Rd xrefs: 'np'
+Two NOTEs:
+
+  1. This is a new submission
+  2. Package unavailable to check Rd xrefs: 'np'
      - There is a reference to package {np} in the .Rd file for pwsd, but there are no other dependencies on this package.
+
 
 ## Downstream dependencies
 
-* There are no downstream dependencies
+* None

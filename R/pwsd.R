@@ -6,7 +6,7 @@
 #'  Romano (1995). This code was adapted from \code{\link[np]{b.star}} to add
 #'  functionality and include correlogram support including an S3 method,
 #'  \emph{see} Hayfield and Racine (2008).
-#'
+#' @encoding UTF-8
 #' @param data an \eqn{n x k} data.frame, matrix, or vector (if \eqn{k = 1})
 #'  where the optimal block-length will be computed for each of the \eqn{k} columns.
 #' @param K_N an integer value, the maximum lags for the auto-correlation,
@@ -60,7 +60,7 @@
 #' # Calculate optimal block length for series
 #' pwsd(sim, round = TRUE)
 #'
-#' \dontrun{
+#' \donttest{
 #' # Use S3 Method
 #' b <- pwsd(sim, round = TRUE, correlogram = FALSE)
 #' plot(b)
