@@ -81,14 +81,13 @@
 #'
 #' # Calculate optimal block length for series
 #' hhj(sim, sub_block_length = 10)
-#'}
 #'
-#' \dontrun{
+#'
 #' # Use parallel computing
 #' library(parallel)
 #'
 #' # Make cluster object with all cores available
-#' cl <- makeCluster(detectCores())
+#' cl <- makeCluster(2)
 #'
 #' # Calculate optimal block length for series
 #' hhj(sim, cl = cl)
@@ -144,13 +143,6 @@ hhj <- function(
     message(" Pilot block length is: ", l_star)
   }
 
-  # Check block-length of subsamples
-  if (is.null(sub_block_length)) {
-    m <- round(n^(1 / 5) * n^(1 / k))
-  } else {
-    m <- sub_block_length
-  }
-
   # Set estimation type (k)
   if (k == "bias/variance") {
     k <- 3
@@ -160,6 +152,13 @@ hhj <- function(
     k <- 5
   } else {
     stop("k must be in c('bias/variance', 'one-sided', 'two-sided')")
+  }
+
+  # Check block-length of subsamples
+  if (is.null(sub_block_length)) {
+    m <- round(n^(1 / 5) * n^(1 / k))
+  } else {
+    m <- sub_block_length
   }
 
   # Initialize overlapping sub samples list

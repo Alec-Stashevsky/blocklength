@@ -8,7 +8,11 @@
 #'
 #' @inheritDotParams base::plot
 #'
+#'
+#' @return No return value, called for side effects
+#'
 #' @export
+#'
 #' @examples
 #'
 #' \donttest{

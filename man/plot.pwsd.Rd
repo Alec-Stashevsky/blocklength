@@ -20,6 +20,9 @@ confidence level. Politis and  White (2004) suggest \code{c = 2}.}
     if \code{x} is an appropriate structure.}
   }}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 S3 Method for objects of class 'pwsd'
 \emph{See} \code{?plot.acf} of the \pkg{stats} package for more customization

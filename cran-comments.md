@@ -6,6 +6,14 @@
 
 ## Resubmission
 
+CHANGES: 
+  * Added references as doi hyperlinks in description section of DESCRIPTION
+  * added \value to .Rd files for plot.hhj.Rd and plot.pwsd.Rd
+  * changed all references from \dontrun to \donttest
+    * NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
+
+
+### Previous Resubmissions
 CHANGES: Updated .Rd files to remove unicode characters
 
 

@@ -115,14 +115,13 @@ sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
 
 # Calculate optimal block length for series
 hhj(sim, sub_block_length = 10)
-}
 
-\dontrun{
+
 # Use parallel computing
 library(parallel)
 
 # Make cluster object with all cores available
-cl <- makeCluster(detectCores())
+cl <- makeCluster(2)
 
 # Calculate optimal block length for series
 hhj(sim, cl = cl)

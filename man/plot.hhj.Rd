@@ -19,6 +19,9 @@ iterations are plotted by default.}
     if \code{x} is an appropriate structure.}
   }}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 S3 Method for objects of class 'hhj'
 }
