@@ -6,8 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions)
+![CRAN/METACRAN](https://img.shields.io/cran/l/blocklength)
 [![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://codecov.io/gh/Alec-Stashevsky/blocklength)
-
 <!-- badges: end -->
 
 Regular bootstrap methods rely on assumptions that observations are
@@ -71,7 +71,8 @@ choice of block-length.
 <!-- install.packages("blocklength") -->
 <!-- ``` -->
 
-Install the development version from [GitHub](https://github.com) with:
+Install the development version from
+[GitHub](https://github.com/Alec-Stashevsky/blocklength) with:
 
 ``` r
 # install.packages("devtools")
@@ -80,8 +81,8 @@ devtools::install_github("Alec-Stashevsky/blocklength")
 
 ## Upcoming changes
 
--   add support to estimate 1 and 2-sided distribution functions w/ hhj
--   change parallel to `{foreach}` (Pending feedback)
+-   change parallel to `{foreach}` or `{future}` (pending user
+    feedback - let me know!)
 -   Build tests
     -   Overlapping subsamples cover entire series
 
