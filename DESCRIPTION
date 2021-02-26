@@ -1,7 +1,7 @@
 Package: blocklength
 Type: Package
 Title: Select Optimal Block-Length to Bootstrap Dependent Data (Block Bootstrap)
-Version: 0.1.3.9001
+Version: 0.1.3.9002
 Authors@R: c(
              person("Alec", "Stashevsky",
                     email = "alec@alecstashevsky.com",
@@ -14,7 +14,9 @@ Description: A set of functions to select the optimal block-length for a
     dependent bootstrap (block-bootstrap). Includes the Hall, Horowitz, and Jing
     (1995) <doi:10.1093/biomet/82.3.561#'> cross-validation method and the 
     Politis and White (2004) <doi:10.1081/ETC-120028836> Spectral Density 
-    Plug-in method with a corresponding set of S3 plot methods.
+    Plug-in method, including the Patton, Politis, and White (2009)
+    <doi:10.1080/07474930802459016> correction with a corresponding set of S3
+    plot methods.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
