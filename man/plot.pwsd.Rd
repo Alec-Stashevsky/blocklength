@@ -10,8 +10,9 @@
 \item{x}{an of object of class 'pwsd' or 'acf'}
 
 \item{c}{a numeric value, the constant which acts as the significance level
-for the implied hypothesis test. Defaults to \code{qnorm(0.975)} for a 95\%
-confidence level. Politis and  White (2004) suggest \code{c = 2}.}
+for the implied hypothesis test. Defaults to \code{qnorm(0.975)} for a
+two-tailed 95\% confidence level. Politis and  White (2004) suggest
+\code{c = 2}.}
 
 \item{...}{
   Arguments passed on to \code{\link[base:plot]{base::plot}}
