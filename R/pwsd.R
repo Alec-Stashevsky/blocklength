@@ -20,8 +20,9 @@
 #'  Defaults to \code{ceiling(min(3 * sqrt(n), n / 3))} per Politis and White
 #'  (2004).
 #' @param c a numeric value, the constant which acts as the significance level
-#'  for the implied hypothesis test. Defaults to \code{qnorm(0.975)} for a 95\%
-#'  confidence level. Politis and  White (2004) suggest \code{c = 2}.
+#'  for the implied hypothesis test. Defaults to \code{qnorm(0.975)} for a
+#'  two-tailed 95\% confidence level. Politis and  White (2004) suggest
+#'  \code{c = 2}.
 #' @param round a logical value, if set to \code{FALSE} then the final
 #'  block-length output will not be rounded, the default. If set to \code{TRUE}
 #'  the final estimates for the optimal block-length will be rounded to whole
@@ -29,7 +30,7 @@
 #' @param correlogram a logical value, if set to \code{TRUE} a plot of the
 #'  correlogram (\emph{i.e.} a plot of \eqn{R(k)} vs. \eqn{k}) will be output to
 #'  the console. If set to \code{FALSE}, no interim plots will be output to the
-#'  console, but may be plotting later using the corresponding S3 method,
+#'  console, but may be plotted later using the corresponding S3 method,
 #'  \link{plot.pwsd}.
 #'
 #' @return an object of class 'pwsd'
