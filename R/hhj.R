@@ -86,7 +86,7 @@
 #' # Use parallel computing
 #' library(parallel)
 #'
-#' # Make cluster object with all cores available
+#' # Make cluster object with 2 cores
 #' cl <- makeCluster(2)
 #'
 #' # Calculate optimal block length for series
