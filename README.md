@@ -6,6 +6,9 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-project.org/package=blocklength)
+![](http://cranlogs.r-pkg.org/badges/grand-total/blocklength?color=brightgreen)
 ![CRAN/METACRAN](https://img.shields.io/cran/l/blocklength)
 [![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://codecov.io/gh/Alec-Stashevsky/blocklength)
 <!-- badges: end -->
@@ -66,12 +69,14 @@ choice of block-length.
 
 ## Installation
 
-<!-- You can install the released version of blocklength from [CRAN](https://CRAN.R-project.org) with: -->
-<!-- ``` r -->
-<!-- install.packages("blocklength") -->
-<!-- ``` -->
+You can install the released version of blocklength from
+[CRAN](https://cran.r-project.org/package=blocklength) with:
 
-Install the development version from
+``` r
+install.packages("blocklength")
+```
+
+You can install the development version from
 [GitHub](https://github.com/Alec-Stashevsky/blocklength) with:
 
 ``` r
