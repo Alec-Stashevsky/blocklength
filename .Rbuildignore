@@ -8,3 +8,4 @@
 ^\.github$
 ^codecov\.yml$
 ^CRAN-RELEASE$
+^docs$

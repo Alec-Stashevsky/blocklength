@@ -1,0 +1,19 @@
+home:
+- title: Select the Optimal Block-Length to Bootstrap Dependent Data
+navbar:
+  left:
+    - icon: fa-home
+      href: https://alecstashevsky.com
+    - text: "Reference"
+      href: reference/index.html
+    - text: "News"
+      href: news/index.html
+reference:
+- title: Optimization Methods
+  contents:
+  - hhj
+  - pwsd
+- title: S3 Plot Methods
+  contents:
+  - plot.hhj
+  - plot.pwsd

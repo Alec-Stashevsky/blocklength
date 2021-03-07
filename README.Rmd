@@ -18,7 +18,10 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions) 
-[![CRAN status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-project.org/package=blocklength) ![](http://cranlogs.r-pkg.org/badges/grand-total/blocklength?color=brightgreen) ![CRAN/METACRAN](https://img.shields.io/cran/l/blocklength) [![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://codecov.io/gh/Alec-Stashevsky/blocklength)
+[![CRAN status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-project.org/package=blocklength) 
+[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/blocklength?color=brightgreen)](https://CRAN.R-project.org/package=blocklength)
+[![CRAN/METACRAN](https://img.shields.io/cran/l/blocklength)](https://CRAN.R-project.org/package=blocklength)
+[![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://codecov.io/gh/Alec-Stashevsky/blocklength)  
 <!-- badges: end -->
 
 Regular bootstrap methods rely on assumptions that observations are independent and identically distributed (*i.i.d.*), but this assumption fails for many types of time series because we would expect the observation in the previous period to have some explanatory power over the current observation. This could occur in any time series from unemployment rates, stock prices, biological data, etc. A time series that is *i.i.d.* would look like white noise, since the following observation would be totally independent of the previous one (random).
