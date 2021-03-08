@@ -1,7 +1,7 @@
 Package: blocklength
 Type: Package
-Title: Select Optimal Block-Length to Bootstrap Dependent Data (Block Bootstrap)
-Version: 0.1.3.9002
+Title: Select an Optimal Block-Length to Bootstrap Dependent Data (Block Bootstrap)
+Version: 0.1.3.9003
 Authors@R: c(
              person("Alec", "Stashevsky",
                     email = "alec@alecstashevsky.com",
@@ -28,5 +28,5 @@ Suggests:
 Imports: 
     tseries,
     stats
-URL: https://github.com/Alec-Stashevsky/blocklength
+URL: https://alecstashevsky.com/r/blocklength, https://github.com/Alec-Stashevsky/blocklength
 BugReports: https://github.com/Alec-Stashevsky/blocklength/issues

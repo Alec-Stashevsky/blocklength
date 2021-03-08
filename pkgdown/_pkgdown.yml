@@ -1,5 +1,5 @@
-home:
-- title: Select the Optimal Block-Length to Bootstrap Dependent Data
+title: blocklength
+url: https://alecstashevsky.com/r/blocklength
 navbar:
   left:
     - icon: fa-home
