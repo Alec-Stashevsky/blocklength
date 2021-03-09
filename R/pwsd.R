@@ -109,7 +109,7 @@ pwsd <- function(
       type = "correlation",
       plot = FALSE)
 
-    rho.k <- autocorrelation[[i]]$acf[-1]
+    rho_k <- autocorrelation[[i]]$acf[-1]
 
     # Plot correlogram
     if (isTRUE(correlogram)) {
@@ -123,14 +123,14 @@ pwsd <- function(
     }
 
     # Set critical value for implied hypothesis test
-    rho.k.critical <- c * sqrt(log10(n) / n)
+    rho_k_critical <- c * sqrt(log10(n) / n)
 
     # Count number of insignificant runs for each possible k of rho(k)
     acfSignificant <- sapply(X = seq_len(length.out = (M_max - K_N + 1)),
       FUN = sigTest,
       # Parameters for sigTest
-      rho.k = rho.k,
-      rho.k.critical = rho.k.critical,
+      rho_k = rho_k,
+      rho_k_critical = rho_k_critical,
       K_N = K_N
       )
 
@@ -140,9 +140,9 @@ pwsd <- function(
     } else {
 
       # If no runs of length K_N are insignificant, take smallest significant value
-      if(any(abs(rho.k) > rho.k.critical)) {
+      if(any(abs(rho_k) > rho_k_critical)) {
 
-        sigLags <- which(abs(rho.k) > 10)
+        sigLags <- which(abs(rho_k) > 10)
         numSig <- length(sigLags)
 
         if(length(numSig) > 0) {
@@ -207,7 +207,7 @@ pwsd <- function(
   result <- structure(list(
     "BlockLength" = blocklengths,
     "Acf" = autocorrelation,
-    "parameters" = cbind(n, k, c, K_N, M_max, b_max, m_hat, M, rho.k.critical),
+    "parameters" = cbind(n, k, c, K_N, M_max, b_max, m_hat, M, rho_k_critical),
     "Call" = call
     ), class = "pwsd")
 
@@ -225,6 +225,6 @@ lambda <- function(t) {
 }
 
 # Function to count the number of significant auto-correlations or given K_N
-sigTest <- function(j, rho.k, rho.k.critical, K_N) {
-  sum((abs(rho.k) < rho.k.critical)[j:(j + K_N - 1)])
+sigTest <- function(j, rho_k, rho_k_critical, K_N) {
+  sum((abs(rho_k) < rho_k_critical)[j:(j + K_N - 1)])
 }
