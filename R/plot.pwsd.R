@@ -24,7 +24,7 @@
 #' b <- pwsd(sim, round = TRUE, correlogram = FALSE)
 #' plot(b)
 #'
-plot.pwsd <- function(x, c = NULL, ...) {
+plot.pwsd <- function(x, c = NULL, main = NULL, ...) {
 
   # Check class
   stopifnot(any(class(x) == "pwsd"))
@@ -42,12 +42,18 @@ plot.pwsd <- function(x, c = NULL, ...) {
   j <- 1
   for (i in acf) {
 
+    if (is.null(main)) {
+      main = paste0("Correlogram for: ", names[j])
+    } else {
+      main = main
+    }
+
     # Plot ACT
     plot(i,
       ci = stats::pnorm(c),
       ci.col =  "darkmagenta",
       xlab = "Lag (k)",
-      main = paste0("Correlogram for: ", names[j]),
+      main = main,
       ...)
 
     # Name Counter
