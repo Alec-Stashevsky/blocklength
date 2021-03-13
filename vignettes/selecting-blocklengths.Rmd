@@ -104,7 +104,7 @@ $$\rho_{critical} = c\sqrt{\log_{10}N / N}.$$
 
 @doi:10.1081/ETC-120028836 suggest a value of $c = 2$ but by default, `pwsd()` treats $c$ as a standard two-tailed 95% confidence interval by setting `c = qnorm(0.975).` This is quite close the suggested value of 2. Using the correlogram output, either by setting `correlogram = TRUE` or using the corresponding `plot` method, we can visualize $\rho_{critical}$ as the dashed magenta lines that appear on the plot.
 
-```{r Correlogram, fig.show="hold", out.width="40%"}
+```{r Correlogram, fig.show = "hold", out.width = "47%"}
 plot(b, main = "c = qnorm(0.975)")
 
 # Expand confidence level and plot again

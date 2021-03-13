@@ -5,6 +5,8 @@
 #'  options on the correlogram, from which \code{plot.pwsd} is based
 #'
 #' @param x an of object of class 'pwsd' or 'acf'
+#' @param main an overall title for the plot, if no string is supplied a default
+#'  title  will be populated. \emph{See} \code{\link[graphics]{title}}
 #'
 #' @inheritParams pwsd
 #' @inheritDotParams base::plot
