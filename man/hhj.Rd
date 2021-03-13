@@ -9,7 +9,7 @@ hhj(
   nb = 100L,
   n_iter = 10L,
   pilot_block_length = NULL,
-  sub_block_length = NULL,
+  sub_sample = NULL,
   k = "two-sided",
   bofb = 1L,
   search_grid = NULL,
@@ -31,7 +31,7 @@ algorithm to compute.}
 \item{pilot_block_length}{a numeric value, the block-length (\eqn{l*} in
 \emph{HHJ}) for which to perform initial block bootstraps.}
 
-\item{sub_block_length}{a numeric value, the length of each overlapping
+\item{sub_sample}{a numeric value, the length of each overlapping
 subsample, \eqn{m} in \emph{HHJ}.}
 
 \item{k}{a character string, either \code{"bias/variance"},
@@ -114,7 +114,7 @@ sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
                         n = 500, innov = rnorm(500))
 
 # Calculate optimal block length for series
-hhj(sim, sub_block_length = 10)
+hhj(sim, sub_sample = 10)
 
 
 # Use parallel computing

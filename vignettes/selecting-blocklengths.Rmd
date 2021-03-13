@@ -1,0 +1,111 @@
+---
+title: "selecting-blocklengths"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{selecting-blocklengths}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  dev = "svg"
+)
+```
+
+```{r setup}
+library(blocklength)
+set.seed(993)
+```
+
+This vignette builds a framework for tuning the block-selection algorithms in `{blocklength}.` Both the HHJ and PWSD methods require the user to select somewhat arbitrary parameters which may affect the reliability block-selection. We will go through examples that present *problematic* output and understand how to diagnose and remedy these situations under both the HHJ and PWSD methods.
+
+## Tuning Parameters
+
+This section will discuss the tuning parameters of each optimization method. Though some parameters are set to a default, often times manual adjustments will need to be made to remedy problematic solutions such as local optima or corner solutions. 
+
+An overview of the tuning parameters: 
+
+- `hhj()`
+  - `sub_sample`
+  - `pilot_block_length`
+  
+- `pwsd()`
+  - `K_N`
+  - `M_max`
+  - `b_max`
+  - `c`
+  
+
+### HHJ
+
+The accuracy of `hhj()` depends on the choice of two tuning parameters. The first is the size of the subsample series which to perform the cross-validation over. This is the argument `sub_sample =`, or the parameter $m$ in Hall, Horowitz, Jing (1995). At this stage \$m\$ is unknown, but there are some restrictions.
+
+Since `hhj()` must iterate over multiple subsamples it must be that $m < n$ where $n$ is the length of the series provided in argument `series =`. More specifically, it must be that
+
+$$ m^{-1} + n^{-1}m  = o(1) \text{ as } n \rightarrow \infty \ . $$
+
+As a default `sub_sample = NULL` which implies $m = n^{1 / 5} * n^{1 / k},$ but users can override this by directly setting \$m\$ as some numeric constant supplied to `subsample = .`
+
+Though $m$ is almost entirely arbitrary, the second tuning parameter for `hhj()` is less so. This is the `pilot_block_length =` argument, or the parameter $l$ in Hall, Horowitz and Jing (1995) also denoted as $l^{*}_n$ in Lahiri (2003). The `pilot_block_length` is the block-length used to perform the initial block-bootstrap of `series = .`
+
+To reduce the effect of the choice of $l$ on the accuracy of the optimization, `hhj()` replaces $l$ each with the previous iteration's estimate of the optimal block length $l^*$, repeating until convergence or the iteration limit implied by $n_iter = $ is reached. The number supplied to `pilot_block_length = ` is only used on the first iteration of the `hhj()` hence it is referred to as a *pilot* parameter.
+
+
+## PWSD
+
+Like `hhj()`, the accuracy of `pwsd()` is also subject to a somewhat arbitrary choice of tuning parameters. Unlike the HHJ method, however, the tuning parameters for `pwsd()` deal exclusively with the way the method adapts to the underlying correlation structure of the series rather than setting lengths and sizes from which to cross-validate subsamples.
+
+Politis and White (2004) discuss their proposed defaults and some techniques to adjust tuning parameters largely in *footnote c* on page 59. The first tuning parameter of `pwsd()` is `K_N = `, or $K_N$ in Politis and White (2004). `K_N` takes some integer value that indicates the maximum number of lags for which to apply the implied hypothesis test over the correlogram of the series. That is, `K_N` is the number of consecutive lags in the correlogram that must appear insignificant in order to select the optimal bandwidth $M$ for the flat-top lag window. Politis and White (2004) suggest letting $M = 2\hat{m}$ where $\hat{m}$ is the smallest positive integer such that following `K_N` consecutive lags appear insignificant in respect so some implied level of significance. This concept is admittedly a bit confusing and will be discussed with more detail in following sections. By default, `K_N  = NULL` which sets $K_N = max(5, \ceil{\log_{10}n})$ per Politis and White's (2004) suggestion. Note $K_N$ must be some non-decreasing integer valued function of $N$ such that $K_N = o(log_{10}N).$
+
+The next tuning parameter `M_max =` acts as an upper bound for $M$ such that
+
+$$2 * \hat{m} > M_max \Rightarrow M = M_max \ .$$
+
+Thus, `M_max` allows the user to expand or contract the maximum size of the bandwidth for the flat-top lag windows of Politis and Romano (1995). If it is the case that $2 * \hat{m} < M_max$ *only* changing the value of `M_max` will not have an affect on the method's accuracy.
+
+We can inspect the output of `pwsd()` to assess any interim values that may help us understand how further tune the calculation. For example, we can find the estimation of $\hat{m}$ by inspecting the `$parameters` component of the class 'pwsd' objects.
+
+```{r Inspect Parameters}
+# Generate an AR(1) simulation
+sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
+                        n = 500, innov = rnorm(500))
+
+# Run the PWSD method
+b <- pwsd(sim)
+
+# Inspect interim parameters
+b$parameters
+```
+
+
+The next tuning parameter is `b_max = ` which acts as an upper-bound for the optimal block-length output. If `pwsd()` estimates some value for the optimal block-length such that `b_Stationary > b_max` or `b_Circular > b_max` then the optimal output will be set to `b_max.` By default, `b_max = NULL` which sets `b_max = ceiling(min(3 * sqrt(n), n / 3)).` We can inspect the output of `pwsd()` to see if the selected block-lengths are being censored by `b_max.`
+
+```{r Inpect b_max}
+# Test if optimal block-length are censored by b_max
+b$parameters[, "b_max"] > b$BlockLength
+```
+
+Here we can see our optimal block-lengths of 8-9 observations are far below the default maximum value.
+
+The final tuning parameter for `pwsd()` is the argument `c = ` also denoted as $c$ in Politis and White (2004). At a high-level $c$ acts as a pseudo confidence-level to conduct the implied hypothesis tests on the series' correlogram. Thus, it must be that $c > 0.$ If the auto-correlation of a given lag $k$ is above some critical value $\rho(k)_critical$, then that lag is considered *significant.* This critical value is defined as 
+
+$$\rho(k)_critical = c\sqrt{\log_{10}N / N}.$$
+
+Politis and White (2004) suggest a value of $c = 2$ but by default, `pwsd()` treats $c$ as a standard two-tailed 95% confidence interval by setting `c = qnorm(0.975).` This is quite close the suggested value of 2. Using the correlogram output, either by setting `correlogram = TRUE` or using the corresponding `plot` method, we can visualize $\rho(k)_critical$ as the dashed magenta lines that appear on the plot.
+
+```{r Correlogram}
+plot(b)
+
+# Expand confidence level and plot again
+b2 <- pwsd(sim, c = 4, correlogram = F)
+plot(b2)
+```
+
+
+## Diagnosing Non-Optimal Solutions
+
+richardson extrapolation

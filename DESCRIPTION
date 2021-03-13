@@ -24,9 +24,12 @@ RoxygenNote: 7.1.1
 Suggests: 
     testthat,
     covr,
-    parallel
+    parallel,
+    knitr,
+    rmarkdown
 Imports: 
     tseries,
     stats
 URL: https://alecstashevsky.com/r/blocklength, https://github.com/Alec-Stashevsky/blocklength
 BugReports: https://github.com/Alec-Stashevsky/blocklength/issues
+VignetteBuilder: knitr

@@ -21,7 +21,7 @@
 #'  algorithm to compute.
 #' @param pilot_block_length a numeric value, the block-length (\eqn{l*} in
 #'  \emph{HHJ}) for which to perform initial block bootstraps.
-#' @param sub_block_length a numeric value, the length of each overlapping
+#' @param sub_sample a numeric value, the length of each overlapping
 #'  subsample, \eqn{m} in \emph{HHJ}.
 #' @param k a character string, either \code{"bias/variance"},
 #'  \code{"one-sided"}, or \code{"two-sided"} depending on the desired object of
@@ -80,7 +80,7 @@
 #'                         n = 500, innov = rnorm(500))
 #'
 #' # Calculate optimal block length for series
-#' hhj(sim, sub_block_length = 10)
+#' hhj(sim, sub_sample = 10)
 #'
 #'
 #' # Use parallel computing
@@ -98,7 +98,7 @@ hhj <- function(
   nb = 100L,
   n_iter = 10L,
   pilot_block_length = NULL,
-  sub_block_length = NULL,
+  sub_sample = NULL,
   k = "two-sided",
   bofb = 1L,
   search_grid = NULL,
@@ -155,10 +155,10 @@ hhj <- function(
   }
 
   # Check block-length of subsamples
-  if (is.null(sub_block_length)) {
+  if (is.null(sub_sample)) {
     m <- round(n^(1 / 5) * n^(1 / k))
   } else {
-    m <- sub_block_length
+    m <- round(sub_sample)
   }
 
   # Initialize overlapping sub samples list
@@ -214,7 +214,7 @@ hhj <- function(
         lengths(grid), " function evaluations required.")
     }
 
-    # Create sub-blocks of length m = sub_block_length
+    # Create sub-blocks of length m = sub_sample
     for (i in seq_len(length.out = (n - m + 1))) {
       series.list[[i]] <- series[seq(from = i, to = (i + m - 1), by = 1)]
     }

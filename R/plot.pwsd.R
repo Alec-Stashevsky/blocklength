@@ -45,6 +45,7 @@ plot.pwsd <- function(x, c = NULL, ...) {
     # Plot ACT
     plot(i,
       ci = stats::pnorm(c),
+      ci.col =  "darkmagenta",
       xlab = "Lag (k)",
       main = paste0("Correlogram for: ", names[j]),
       ...)

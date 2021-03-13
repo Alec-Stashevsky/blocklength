@@ -33,7 +33,7 @@ sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
                         n = 500, innov = rnorm(500))
 
 # Generate 'hhj' class object of optimal block length for series
-hhj <- hhj(sim, sub_block_length = 10)
+hhj <- hhj(sim, sub_sample = 10)
 
 ## S3 method for class 'hhj'
 plot(hhj)

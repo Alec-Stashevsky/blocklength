@@ -88,7 +88,7 @@ this using two methods.
 
 ```{r hhj}
 ## Using the HHJ Algorithm with overlapping subsamples of width 10
-hhj(series, sub_block_length = 10, k = "bias/variance")
+hhj(series, sub_sample = 10, k = "bias/variance")
 ```
 
 
