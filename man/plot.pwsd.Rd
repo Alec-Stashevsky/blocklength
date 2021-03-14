@@ -4,7 +4,7 @@
 \alias{plot.pwsd}
 \title{Plot Correlogram for Politis and White Auto\eqn{-}Correlation Implied Hypothesis Test}
 \usage{
-\method{plot}{pwsd}(x, c = NULL, main = NULL, ...)
+\method{plot}{pwsd}(x, c = NULL, main = NULL, ylim = NULL, ...)
 }
 \arguments{
 \item{x}{an of object of class 'pwsd' or 'acf'}
@@ -16,6 +16,8 @@ two-tailed 95\% confidence level. Politis and  White (2004) suggest
 
 \item{main}{an overall title for the plot, if no string is supplied a default
 title  will be populated. \emph{See} \code{\link[graphics]{title}}}
+
+\item{ylim}{a numeric of length 2 giving the y-axis limits for the plot}
 
 \item{...}{
   Arguments passed on to \code{\link[base:plot]{base::plot}}
