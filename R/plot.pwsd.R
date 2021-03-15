@@ -54,7 +54,9 @@ plot.pwsd <- function(x, c = NULL, main = NULL, ylim = NULL, ...) {
     }
 
     # Set y-axis limits
-    ylim <- range(i$acf, rho_k_critical, -rho_k_critical)
+    if (is.null(ylim)) {
+      ylim <- range(i$acf, rho_k_critical, -rho_k_critical)
+    }
 
     # Plot ACF
     plot(i,

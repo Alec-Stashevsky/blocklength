@@ -18,137 +18,61 @@ knitr::opts_chunk$set(
 )
 
 # Load problematic correlogram for example
-pcorr <- structure(c(0.75397382397896, 1.0239728279849, -0.511685802005544, 
-  -0.500665804660135, -0.418265146815671, 0.0398156988669962, 1.11514169031673, 
-  0.76616346373894, 0.452037729183018, 1.11040356153086, -0.515483866592001, 
-  -0.570051823564549, 0.281242147260871, 0.0400591772974322, -1.6728345318708, 
-  -2.39975942425394, -2.38312760541762, -1.42359617212391, -0.598213437428014, 
-  -0.775528565795498, 1.11535024906181, 0.925011668856056, 0.0167180431057719, 
-  -0.676683491164365, 0.0105866083122915, 1.76439102285675, 0.72708658687598, 
-  0.957054845224133, 0.0511054024759148, -1.58392945680424, -0.230424920339526, 
-  -1.06472357722276, 1.28111238682375, 0.356414275696611, 2.10072489591245, 
-  0.810761818789969, 0.902575241743354, 3.16579370604787, 2.83013544042279, 
-  1.36164411671023, 2.13374673512622, 1.61632353657044, -1.39153979557622, 
-  -2.92114634606284, -3.09974388180463, -0.481404542244865, -0.774075084673076, 
-  -0.0709606338966851, -0.473100271356732, -1.12588652424387, 0.996665361514865, 
-  0.889645341540606, -0.853789870287284, -0.0646992186687224, 0.538050405933769, 
-  -0.500711259867219, -0.0875497126405199, 0.180432340132639, 1.70522840572095, 
-  1.03581140617729, 0.947042292558062, -0.8234677240572, 0.114127953102951, 
-  1.4086250528574, 2.85601982156778, 1.90795941175677, 1.78305397319664, 
-  -0.307620683787814, -1.59209465536345, -0.747593959230185, -0.900479845574336, 
-  -0.138581705109816, 0.469952005527274, -0.22041626101505, -0.187369990590554, 
-  -1.00259298111613, 1.14772139437849, -0.651093316328801, 0.599913696223347, 
-  -1.49572837022056, -2.39567598780669, -1.01058419731161, -1.58347909152432, 
-  -0.00796288145196389, 1.82936949775909, 1.13885734188804, 0.432122541058652, 
-  -0.372856179209738, 0.030641285305044, 1.29135148352323, -0.673895060435884, 
-  -0.137995689790758, -0.916729131604536, -0.00353382648955786, 
-  0.88650085735671, 0.720106142107725, 2.83510044787857, 0.0711538834596954, 
-  0.215283297488816, 0.000839768606200914, -1.39922588986992, 0.0371705103987541, 
-  -0.338390764043587, -0.431742353070572, -0.44249851600254, -0.150637032588254, 
-  -0.0954713654135354, -0.301097135085279, 0.844165884205359, 0.455198233524232, 
-  0.360842170250592, 0.519392254241665, -0.0692414582433611, 0.663934252079237, 
-  1.0173026097998, 2.0561468770589, 1.88962061851146, 1.49905616750988, 
-  0.359678703285097, 0.0015526516753244, -0.748569379488114, -0.4504681311624, 
-  0.685032629470898, 1.22556869094969, 0.561375603421709, 0.122711100071901, 
-  -0.807483651936711, 1.16294577905767, 2.39636351824812, 1.12394367346766, 
-  0.631176441096741, -0.203681335160116, -1.0626321386169, -0.133218364007741, 
-  -0.662694269793391, 0.570038569630456, -0.173180528901194, -1.18264309574297, 
-  -1.97727066550568, -2.11058589323643, -1.83933663777625, -0.301267148175158, 
-  1.69610364280739, 0.754643920843424, -0.294956522963451, -0.00987780174100597, 
-  -1.10443450472532, 0.325070169004787, -0.104615628773165, 0.0798573836650806, 
-  -0.558508201836467, -1.0879188097613, 0.986310974321609, -0.559973601996569, 
-  -0.207691662473591, 0.296977829413533, 0.321459159816565, -0.80408970466016, 
-  0.194174258832159, 1.27507657223429, 0.324034045422415, 0.939752538587033, 
-  -1.63349678520616, -1.06585979380753, -1.10252542406758, -1.42146579168882, 
-  -1.38766814453077, -2.10122713014295, -0.412524181757307, 0.254060310815619, 
-  0.663688809519437, -0.621903782483335, -0.402043359823606, 0.168701672204545, 
-  2.03765490382455, 1.54548731013671, 2.19545892614006, 0.672938503546991, 
-  0.820085961572121, -0.114811649370944, 0.856742240140787, 0.812057187160125, 
-  1.90960220166514, 2.81157104537616, 0.656272698007232, 0.715605520457469, 
-  0.0218152686970668, -0.619801336784518, -1.4742549940104, 0.371628839845883, 
-  1.31735314460365, -0.312881703382852, 2.06031666060574, 0.994158626136465, 
-  1.72651382892375, 0.238524176331567, 0.35855748288253, 0.134516118480929, 
-  0.102463412146789, 1.70502368181418, 0.031604217289528, 0.124458525199826, 
-  0.549487537718574, -0.463219323743205, -2.38751327492093, 0.685974732777745, 
-  -0.314138610586116, -0.870221564310279, 0.119392771000312, -0.247879973330723, 
-  -0.510483960687525, -1.09027624551738, -2.03161472864871, -0.503171145068435, 
-  -2.4100534575278, -1.33666491175208, -0.941090295771481, -0.616685527938177, 
-  -0.226640116731991, -1.1360560623103, -0.767995946079074, -0.792441409049835, 
-  -0.643915296721768, -1.81862631704964, -0.79992870050991, -1.42838558868814, 
-  -0.0749925417330116, 2.50001771782725, 0.527959376283748, 0.175706505664385, 
-  0.151029346489061, 0.135718055320022, -0.416588452733418, 0.540143508842091, 
-  1.33710232940275, -1.6680407082807, -1.17377746889801, -0.538425449025691, 
-  0.287273439999584, -1.06830834797149, -3.07381369678233, -3.15934128069252, 
-  -0.555843631844538, 0.00928931360337343, 0.620088972213175, -0.542527022227611, 
-  0.384728397602161, 0.588997611210011, -0.143027774899422, 0.22545015611445, 
-  -0.11390752055043, 1.12113356403617, -0.162917625953792, -0.297637348575357, 
-  0.031854098545422, 0.0717996335090206, 0.569073788403972, 1.44303077016199, 
-  0.42231639665421, -0.470002013303147, -1.84706569629717, 1.56274566837451, 
-  0.608423677512527, -0.561498624558193, -0.197928703982176, -0.158148048474635, 
-  -0.0174872551544177, 0.137650691382296, 0.407526939886214, 1.15501331614245, 
-  -0.110538386035923, 1.98318156138113, -0.135468505912231, -0.732657920261112, 
-  -2.52789008205212, -1.72732945505258, -1.42297797956007, -1.41158120668566, 
-  1.09453388504445, 2.0213492315694, 1.87975446541284, 2.54133970783448, 
-  1.81938505757935, 2.12375489569439, 3.97880990145696, 2.7288686174607, 
-  -0.492107648979456, 0.580939453948498, 0.433644227007926, 2.24715181903717, 
-  0.905506831557675, -1.74325291563818, -0.0353033812936546, 0.0929159272923264, 
-  1.2135411161131, 1.4228600711592, -1.25338676060884, 0.187045567249616, 
-  0.980223849616476, -0.17571777002978, 0.230943083751065, 0.616793382160907, 
-  -0.0768610270659412, -0.607544966042097, 1.24119599530546, 0.354246490293773, 
-  0.792472813049117, -0.940178616103817, -0.338860547678687, -1.0378263167659, 
-  -0.914855693733285, -1.8944837251865, 0.456974481183662, -0.240575318536042, 
-  -1.55611071113078, 0.440998876227933, -0.641541995329737, 0.0172869121751687, 
-  0.167487338527976, 1.22434561553687, 0.517433195581869, -0.993066351752803, 
-  0.311210790494673, -0.658618650710552, 0.0947023975520208, -0.767653209536149, 
-  -1.88188491130661, -0.248047299822829, -0.517781256240217, -0.765323143516574, 
-  -0.450345606386794, 0.139979536911651, 0.755623774940573, 2.40833118344544, 
-  0.0309831804300771, 0.235796670083802, -1.26439388502813, -1.33527006097832, 
-  0.202049835076501, 0.169772982985677, 0.462879858271521, 2.23869142578716, 
-  0.670971602740434, 0.719509844195752, 0.36244480733391, 0.37907226525537, 
-  0.755235542212907, 0.28741954997915, -1.38343197243081, -0.800074275899064, 
-  -0.25241583669551, 1.09968260890034, 1.20690769499372, -0.106512042698876, 
-  0.305165726908826, 0.164619930175711, 0.433731393483719, 0.591412398744047, 
-  -1.87790120606784, -1.25303569345649, 0.0810192982365917, 1.4594370762754, 
-  1.32322648429895, 1.05898314119249, 3.11119077230666, 0.427291981032771, 
-  1.18303621601636, 2.41014945107286, 2.22084339277547, 0.148237689304505, 
-  -0.141542975921202, 0.234235692910813, 0.21606216919669, 0.704657389929535, 
-  -1.11748040463976, -0.305395240228385, 1.06907798486041, 1.60123196743855, 
-  1.308754408148, -0.950791295065611, 0.602212832426237, 1.40162793210357, 
-  2.77328529685148, 2.4336304033461, -0.0684126136789043, -0.043975362085231, 
-  1.95488746864732, 1.66009699678034, -0.621093246089795, -2.85147528557028, 
-  -1.86330168098662, -0.925062430817666, -1.06512472029703, -0.990851980946954, 
-  -0.0257817070356169, -0.404967694798508, -0.611124707906474, 
-  -1.02062218026579, -0.871932035709003, -0.101932272183173, 0.830627140842496, 
-  -0.993705603819662, -1.15853136891758, -2.15345422439852, -0.785769534330964, 
-  -0.236536375420252, 0.628596594239903, 0.6588237863826, 1.14246546820345, 
-  -0.396019658345794, 0.482289119547899, -0.672122333268005, -0.649486038910609, 
-  -1.49645741638052, 1.64181004500258, 0.686245233045516, 0.436508872486412, 
-  -0.144856601171898, -0.232714454666777, -2.71284490228506, -2.1726687733474, 
-  -2.35733347621849, -1.42243650621872, -3.14431519167539, -2.58612299583536, 
-  0.0589078563735277, 0.879163383783544, 0.347757855395695, 0.619446630463228, 
-  -0.0469274138919202, -0.210091970268618, 0.0905420631538301, 
-  1.2326513100902, 0.477701327985922, 0.458986512097449, -0.39749178477649, 
-  -0.388850995323317, 0.723026586371688, 0.684664609291381, 2.47094810306402, 
-  3.725290394086, 1.18982050322582, 1.76207563938343, 1.44109422475875, 
-  0.868080239074927, -0.163726147826551, -0.689221511020409, -0.789530982791318, 
-  -1.55867495035685, -1.47375646172937, -2.60934887140805, -1.00604709512338, 
-  -0.827080626897033, -0.411634450981934, -0.50270864262166, 1.30313469070529, 
-  0.346685699052947, 1.51050365109625, 0.730673272045316, 1.60150841065625, 
-  0.505343996701618, -0.203106372136229, 0.698808784033338, -0.436432424745565, 
-  -0.143426468570265, 1.48392695188381, 1.13121708417855, 0.885757215243577, 
-  0.432403656513835, -1.03698152965051, -0.584377304980261, -0.383385989162932, 
-  -1.79240320786069, -2.37189687365876, -1.39206900385473, 0.433475184666006, 
-  -1.53551217143581, 0.379075048750214, -0.797055577665262, 0.444267059655354, 
-  -0.610798643002462, -0.378297985030461, 2.57427689357392, 2.55976329359414, 
-  1.41368439921517, 2.87837310968902, 1.06381873282707, 2.69082368798606, 
-  0.00160419205368378, 0.597012097933858, -0.761463359249899, -0.947332538449514, 
-  -0.521599810272864, -0.944360988764419, -0.759072241441239, 1.79460066479454, 
-  1.02576931623875, 1.44083636602206, 0.447633172271452, 0.26317019619715
-  ), .Tsp = c(1, 500, 1), class = "ts")
+pcorr <- structure(c(0.500528302565943, -0.754836705515775, -1.19039679450543, 
+  -0.178590255566502, -0.60652246495491, 1.82273156499271, -0.172010338128128, 
+  -2.0163653383661, -0.3745369917274, 0.456123617810818, 1.67415100748476, 
+  0.937900901537193, -1.29338484030548, -1.28069618875814, -1.82633767163309, 
+  -0.614386402460464, 0.584995100586833, -0.504037627819764, 0.0226448302823769, 
+  -1.20080447279195, -0.0617993438737834, 0.528551859910452, 1.96448337848478, 
+  0.072350278901269, 0.225152117571247, -1.25610158595963, -0.845732815433606, 
+  0.471680065854876, 2.4943925938456, 1.80772326821158, 0.204809764053051, 
+  -0.150961614287815, -0.0197795008143637, -1.05994768012253, -1.29810950765603, 
+  -1.17853411156364, -0.643232293492797, -2.20411574357046, 0.216829082430902, 
+  -0.941814658830531, -0.781300200015838, 0.273580690612867, 1.09702483374736, 
+  -1.36990396610849, -2.07605582194368, 0.451160815513836, 0.86688665896418, 
+  0.51840092005946, 1.28921143353651, 0.875645430906388, 0.591064637882466, 
+  -0.55966314736262, -0.367191668064688, -2.76744332433181, -1.2443630247938, 
+  -0.154933017518784, 0.0667021828181572, 0.197007379842123, 0.490808179023661, 
+  2.2336743342413, 1.89448119625069, 1.47138565779839, -0.666213196115124, 
+  0.843870629377204, -0.203203819755488, -2.20410902950622, 0.827755498838514, 
+  1.78219490528679, -0.111762758688384, -2.22360645019641, -1.0056276510069, 
+  -0.329364603192913, 1.33056799025663, 0.149121700442515, 0.267676241642407, 
+  -0.679653050876458, 0.0901160031947412, -0.563650739275465, 0.666301686016796, 
+  1.70298732225847, 0.673722209645992, 1.32892165992321, -1.29016755347508, 
+  -2.11926333043274, -0.434170672177059, -1.11952602901843, -0.282918307090735, 
+  -0.296513315892018, -0.215455257897354, -0.229591553459229, 1.90335315883752, 
+  -0.640041683494477, 0.555037751515986, 0.498140844212503, -0.295915459399637, 
+  0.587207819554741, -0.52622399410093, 1.32416109800959, -0.825699074434715, 
+  -2.51977385384327, -0.681811843738689, 1.0515603999965, 1.75547334518565, 
+  1.46352961234024, 0.0972088740341473, -1.41469490750948, -2.39336234402329, 
+  0.596660462796983, 2.29853427605131, 1.65898229920668, -0.0276102807086275, 
+  -1.64374943302099, 0.602395878758738, 0.229442193055737, 2.1687970121186, 
+  0.643910340438762, -0.290718077669911, -1.02619172899549, -0.433490300518998, 
+  -0.978870909554381, -0.0098964640725574, -1.96478096657371, -0.0969197029820769, 
+  -2.08344229475593, -0.293555313118738, -1.29271002623495, 0.768226868279432, 
+  0.714533099091565, -0.739381839162954, 0.486811684636613, -0.0462968073811469, 
+  0.119532030148799, 0.699661964254544, -0.121299551979732, -0.952343329737353, 
+  0.47622151198097, -0.235031006098588, -0.274831514573784, -0.0760339102360359, 
+  1.25475007283353, 1.46495001193988, 0.167876131248247, 0.191014261173205, 
+  1.20954335642528, 1.84131238261517, 1.11873900227391, -0.948077984555249, 
+  -1.06745345491371, -1.4245470888048, -0.538478752695991, -0.277037416300269, 
+  -0.887735440660801, -0.960970972045782, -1.17008385676073, 0.291022149761318, 
+  1.57923122715123, 2.55155997330415, 0.225931504246328, 0.00220891571648253, 
+  -0.416842778537851, -0.607033513606461, -0.40792204210633, 0.0685179557733119, 
+  1.14003218398751, 1.82522025910671, 1.35481822913805, 1.52147329773245, 
+  0.328519767736851, -0.0225431382950235, -0.0632294307946625, 
+  -0.34692001495444, 0.609522181403036, 1.18523376254118, -0.2922169564903, 
+  0.486710723126883, 0.0171559573700382, -0.841704196640039, -0.170564928787282, 
+  1.09088790395037, 1.01711383301683, -0.57576763235922, -0.813788055144079, 
+  0.845138966533092, -0.506617097735509, -0.180391805588545, -0.0731710033636772, 
+  0.650969458632428, -0.544567330307273, -0.697447901212486, -0.843571490826714, 
+  -1.04624243603828, 0.862168240020156, 0.393550845622028, -1.48053698592407, 
+  -1.750632331433, 1.47944447592151, 1.1384887083871, 1.19239984208863, 
+  1.05781365301425, 0.231828681437716), .Tsp = c(1, 200, 1), class = "ts")
 ```
 
 
-This vignette builds a framework for tuning the block-selection algorithms in `{blocklength}.` Both the @10.1093/biomet/82.3.561 ("HHJ") and @doi:10.1081/ETC-120028836 ("PWSD") methods require the user to select somewhat arbitrary parameters which may affect the reliability of the block-length optimization. We will go through examples that present *problematic* output and understand how to diagnose and remedy these situations under both the HHJ and PWSD frameworks.
+This vignette builds a framework for tuning the block-selection algorithms in `blocklength.` Both the @10.1093/biomet/82.3.561 ("HHJ") and @doi:10.1081/ETC-120028836 ("PWSD") methods require the user to select somewhat arbitrary parameters which may affect the reliability of the block-length optimization. We will go through examples that present *problematic* output and understand how to diagnose and remedy these situations under both the HHJ and PWSD frameworks.
 
 
 ## Tuning Parameters
@@ -157,53 +81,54 @@ This section will discuss the tuning parameters of each optimization method. Tho
 
 An overview of the tuning parameters: 
 
-- `hhj()`
-  - `sub_sample`
-  - `pilot_block_length`
+a. `hhj()`
+    i. `sub_sample`
+    ii. `pilot_block_length`
   
-- `pwsd()`
-  - `K_N`
-  - `M_max`
-  - `b_max`
-  - `c`
+b. `pwsd()`
+    i. `K_N`
+    ii. `M_max`
+    iii. `m_hat`
+    iv. `b_max`
+    v. `c`
   
 
 ### HHJ
 
-The accuracy of `hhj()` depends on the choice of two tuning parameters. The first is the size of the subsample series to perform the cross-validation over. This is the argument `sub_sample =`, or the parameter $m$ in @10.1093/biomet/82.3.561. At this stage $m$ is unknown, but there are some restrictions $m$ must follow.
+The accuracy of `hhj()` depends on the choice of two tuning parameters. The first is the size of the subsample series to perform the cross-validation over. This is the argument `sub_sample =`, or the parameter $m$ in @10.1093/biomet/82.3.561. At this stage $m$ is unknown, but there are some restrictions $m$ must follow. Note that `hhj()` is a computationally intensive procedure and may take some time, especially as the length of the series becomes large. Employing parallelization and adjusting the grid search parameters to streamline the search process may help.
 
 Since `hhj()` must iterate over multiple subsamples it must be that $m < n$ where $n$ is the length of the series provided in argument `series =`, *i.e.* `length(series)`. More specifically, it must be that
 
 $$ m^{-1} + n^{-1}m  = o(1) \text{ as } n \rightarrow \infty \ . $$
 
-As a default, `sub_sample = NULL` which sets $m = n^{1 / 5} * n^{1 / k}$ satisfying the above restrictions. Users can override this by directly setting $m$ as some numeric constant supplied to `subsample = .` $m$ should be an integer, but `hhj()` will round this to a whole number automatically.
+As a default, `sub_sample = NULL` which sets $m = n^{1 / 5} * n^{1 / k}$ satisfying the above restrictions. Users can override this by directly setting $m$ as some numeric constant supplied to `subsample = .` Ideally, $m$ should be an integer, but `hhj()` will round this to a whole number automatically.
 
 Though $m$ is almost entirely arbitrary, the second tuning parameter for `hhj()` is less so. This is the `pilot_block_length =` argument, or the parameter $l$ in @10.1093/biomet/82.3.561 also denoted as $l^{*}_n$ in the @lahiri2003resampling treatment. The `pilot_block_length` is the block-length used to perform the initial block-bootstrap of `series = .`
 
 To reduce the effect of the choice of $l$ on the accuracy of the optimization, `hhj()` replaces $l$ with the previous iteration's estimate of the optimal block-length $l^*$ (or $\hat{l^0_n}$ in @lahiri2003resampling), repeating until convergence or the iteration limit implied by `n_iter = ` is reached. The number supplied to `pilot_block_length = ` is only used on the first iteration of `hhj()` hence it is referred to as a *pilot* parameter.
 
-In practice, `hhj()` estimates $l^*$ by minimizing an $MSE$ function for each possible block-length for a block-bootstrap of a subsample from `series` with length $m.$ That is, `length(series) = sub_sample.` The block-length that minimizes the $MSE$ on a given subsample then used to estimate $l^*$ which replaces `pilot_block_length` for the next iteration. However, because we minimize the $MSE$ over a subsample of length $m$, we must first scale this block-length back to the original series of length $n.$ This is accomplished by employing the *Richardson Extrapolation,* a sequence acceleration technique from numerical analysis called first developed in 1911, *see* @doi:10.1098/rsta.1911.0009.
+In practice, `hhj()` estimates $l^*$ by minimizing an $MSE$ function for each possible block-length using a block-bootstrap of a subsample from `series` with length $m.$ The block-length that minimizes the $MSE$ on a given subsample is then used to estimate $l^*$ which replaces `pilot_block_length` for the next iteration. However, because we minimize the $MSE$ over a subsample of length $m$, we must first scale this block-length back to the original series of length $n.$ This is accomplished by employing the *Richardson Extrapolation,* a sequence acceleration technique from numerical analysis first developed in 1911, *see* @doi:10.1098/rsta.1911.0009.
 
 In this sense, `hhj()` actually estimates the optimal block-length of the subsample $\hat{l}_m$ which is then scaled up to the full series such that
 
-$$l = \hat{l}_m (n/m)^{1/k}, \ \text{where} \ k = \{3, 4, 5\}.$$
-
+$$l = \hat{l}_m (n/m)^{1/k}, \ \text{where} \ k = \{3, 4, 5\} \ ,$$
+and $k$ depends on the context of the object of estimation.
 
 ### PWSD
 
-Like `hhj()`, the accuracy of `pwsd()` is also subject to a somewhat arbitrary choice of tuning parameters. Unlike the HHJ method, however, the tuning parameters for `pwsd()` deal exclusively with the way the method adapts to the underlying correlation structure of the series, rather than setting lengths and sizes from which to cross-validate subsamples.
+Like `hhj()`, the accuracy of `pwsd()` is also subject to a somewhat arbitrary choice of tuning parameters. Unlike the HHJ method, however, the tuning parameters for `pwsd()` deal exclusively with the way the method adapts to the underlying correlation structure of the series whereas in `hhj(),` tuning parameters set the lengths and sizes from which to cross-validate subsamples. Note that `pwsd()` will set all the tuning parameters to recommended defaults so that only the argument `data = ` must be supplied.
 
-@doi:10.1081/ETC-120028836 discuss their proposed defaults and some techniques to adjust tuning parameters largely in *footnote c* on page 59. The first tuning parameter of `pwsd()` is `K_N = `, or $K_N$ in @doi:10.1081/ETC-120028836. `K_N` takes some integer value that indicates the maximum number of lags for which to apply the implied hypothesis test over the correlogram of the series. That is, `K_N` is the number of consecutive lags in the correlogram that must appear *insignificant* in order to select the optimal bandwidth $M$ for the flat-top lag window.
+@doi:10.1081/ETC-120028836 discuss their proposed defaults and some techniques to adjust tuning parameters largely in *footnote c* on page 59. The first tuning parameter of `pwsd()` is `K_N = `, denoted $K_N$ in @doi:10.1081/ETC-120028836. `K_N` takes some integer value that indicates the maximum number of lags for which to apply the implied hypothesis test over the correlogram of the series. That is, `K_N` is the number of consecutive lags in the correlogram that must appear *insignificant* in order to select the optimal bandwidth $M$ for the flat-top lag window.
 
-@doi:10.1081/ETC-120028836 suggest letting $M = 2\hat{m}$ where $\hat{m}$ is the smallest positive integer such that the following `K_N` consecutive lags appear insignificant in respect so some implied level of significance, discussed later. This concept is admittedly a bit confusing and will be discussed with more detail in following sections. By default, `K_N  = NULL` which sets $K_N = max(5, \lceil \ \log_{10}n\rceil \ )$ per the suggestion of @doi:10.1081/ETC-120028836. Note $K_N$ must be some non-decreasing integer valued function of $N$ such that $K_N = o(log_{10}N)$ where $N$ is again the length of the series supplied to `data = `, *i.e.* `nrow(data)`$= N.$
+@doi:10.1081/ETC-120028836 suggest letting $M = 2\hat{m}$ where $\hat{m}$ is the smallest positive integer such that the following `K_N` consecutive lags appear insignificant in respect to some level of significance, discussed later. By default, `K_N  = NULL` which sets $K_N = max(5, \lceil \ \log_{10}N \ \rceil)$ per the suggestion of @doi:10.1081/ETC-120028836. Note $K_N$ must be some non-decreasing integer valued function of $N$ such that $K_N = o(\log_{10}N)$ where $N$ is again the length of the series supplied to `data = `, *i.e.* `nrow(data).`
 
 The next tuning parameter `M_max =` (denoted as $M_{max}$ below) acts as an upper-bound for $M$ such that
 
 $$2 * \hat{m} > M_{max} \Rightarrow M = M_{max} \ .$$
 
-Thus, `M_max` allows the user to expand or contract the maximum size of the bandwidth for the flat-top lag windows of @https://doi.org/10.1111/j.1467-9892.1995.tb00223.x. It also controls the maxiumum number of lags to consider in the correlation structure. If it is the case that $2 * \hat{m} < M_{max}$, then *only* changing the value of `M_max` will not have an affect on the method's accuracy.
+Thus, `M_max` allows us to expand or contract the maximum size of the bandwidth for the flat-top lag windows of @https://doi.org/10.1111/j.1467-9892.1995.tb00223.x. If it is the case that $2 * \hat{m} < M_{max}$, then *only* changing the value of `M_max` will not have an affect on the method's accuracy.
 
-We can inspect the output of `pwsd()` to assess any interim values that may help us understand how to further tune the calculation. For example, we can find value estimated as $\hat{m}$ by inspecting the `$parameters` component of `pwsd()` output objects, *i.e.* objects where `class = "pwsd".`
+We can inspect the output of `pwsd()` to assess any interim values that may help us understand how to further tune the calculation. For example, we can find the value estimated as $\hat{m}$ by inspecting the `$parameters` component of `pwsd()` output objects, *i.e.* objects where `class = "pwsd".`
 
 To show this lets first do some housekeeping and attach `blocklength.`
 ```{r setup}
@@ -212,41 +137,45 @@ set.seed(32)
 ```
 
 
-Now, we generate a stationary $AR(1)$ time series and assess and optimal block-length using the PWSD method:
+Now, we generate a stationary $AR(1)$ time series and select an optimal block-length using the PWSD method:
 ```{r Inspect Parameters}
 # Generate an AR(1) simulation
 sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
                         n = 500, innov = rnorm(500))
 
-# Run the PWSD method
+# Run the PWSD method and suppress output of the correlogram
 b <- pwsd(sim, correlogram = FALSE)
 
 # Inspect interim parameters
 b$parameters
 ```
+Here we can see that `m_hat = 3` and `M_max = 28` so no censoring is occurring.
 
+In certain situations, we may wish to forego the implied hypothesis test to estimate `m_hat` and instead set `m_hat` directly by supplying some integer to `pwsd(m_hat = ).` In general, the implied hypothesis test should be used unless specific characteristics are known about the data-generating process of the underlying series or issues with the correlogram output are present.
 
-The next tuning parameter is `b_max = ` which acts as an upper-bound for the optimal block-length. If `pwsd()` estimates some value for the optimal block-length such that `b_Stationary > b_max` or `b_Circular > b_max` then the optimal output will be set to `b_max.` By default, `b_max = NULL` which sets `b_max = ceiling(min(3 * sqrt(n), n / 3)).` We can inspect the output of `pwsd()` to see if the selected block-lengths are being censored by `b_max.`
-
+The next tuning parameter is `b_max = ` which acts as an upper-bound for the optimal block-length, *i.e.* `$BlockLength.` If `pwsd()` estimates some value for the optimal block-length such that `b_Stationary > b_max` or `b_Circular > b_max` then `b_Stationary`/`b_Circular` will be set to `b_max.` By default, `b_max = NULL` which sets `b_max = ceiling(min(3 * sqrt(n), n / 3)).` We can inspect the output of `pwsd()` to see if the selected block-lengths are being censored by `b_max.`
 ```{r Inpect b_max}
-# Test if optimal block-length are censored by b_max
-b$parameters[, "b_max"] > b$BlockLength
-```
+# Test if optimal block-length is censored by b_max
+b$parameters[, "b_max"] == b$BlockLength
 
-Here we can see our optimal block-lengths is between 8 and 9 observations. These are far below the default maximum value.
+# Print the upper-bound
+b$parameters[, "b_max"]
+```
+Here we can see our optimal block-length is between 8 and 9 observations long. These are far below the default maximum value of 68.
 
 The final tuning parameter for `pwsd()` is the argument `c = ` also denoted as $c$ in @doi:10.1081/ETC-120028836. At a high-level $c$ acts as a pseudo confidence-level to conduct the implied hypothesis tests on the series' correlogram. Thus, it must be that $c > 0.$ If the auto-correlation of a given lag $k$ is above some critical value $\rho_{critical}$, then that lag is considered *significant.* This critical value is defined as 
 
 $$\rho_{critical} = c\sqrt{\log_{10}N / N}.$$
 
-@doi:10.1081/ETC-120028836 suggest a value of $c = 2$ but by default, `pwsd()` treats $c$ as a standard two-tailed 95% confidence interval by setting `c = qnorm(0.975).` This is quite close the suggested value of 2. Using the correlogram output, either by setting `correlogram = TRUE` or using the corresponding `plot` method, we can visualize $\rho_{critical}$ as the dashed magenta lines that appear on the plot.
+@doi:10.1081/ETC-120028836 suggest a value of $c = 2$ but by default, `pwsd()` treats $c$ as a standard two-tailed 95% confidence interval by setting `c = qnorm(0.975).` This is quite close the suggested value of 2. Using the correlogram output, either by setting `correlogram = TRUE` or using the corresponding `plot` method, we can visualize $\rho_{critical}$ as the dashed magenta lines that form the significance bands on the plot.
 
 ```{r Correlogram}
+# Plot correlogram from previous selection
 plot(b, main = "c = qnorm(0.975)", ylim = c(-0.2, 1))
 
 # Expand confidence level and plot again
 b1 <- pwsd(sim, c = 4, correlogram = FALSE)
-plot(b1, main = "c = 4", ylim = c(-0.2, 1))
+plot(b1, main = "c = 4", ylim = c(-0.5, 1.2))
 ```
 
 
@@ -257,65 +186,77 @@ Problematic solutions can render block-length selections unreliable and inconsis
 
 ### HHJ
 
-If the argument `plots = TRUE` of `hhj()` the the $MSE$ function will be plotted and output to the console for each iteration of the algorithm. If `plots = FALSE`, then this interim output will be suppressed; however, users can save the output of `hhj()` and then access these plots later by using the corresponding S3 `plot` method, just like how we plotted the output for `pwsd()` above.
+If `plots = TRUE` the $MSE$ function will be plotted and output to the console for each iteration of the algorithm. If `plots = FALSE`, then this interim output will be suppressed; however, users can save the output of `hhj()` and then access these plots later by using the corresponding S3 `plot` method, just like how we plotted the output for `pwsd()` above.
 
-The main issues that occur with the `hhj()` optimization method is solving for local minima or corner solutions of the $MSE$ function. Ideally, the $MSE$ plot will exhibit as convex shape, such as the plot depicted below:
+The main issues that occur with the `hhj()` optimization method are local minima or corner solutions of the $MSE$ function. Ideally, the $MSE$ plot will exhibit a convex shape, such as the plot depicted below:
 
 ```{r Convex MSE}
-# Select block-length using HHJ method
+# Select a block-length using HHJ method
 b2 <- hhj(sim, sub_sample = 10, k = "bias/variance", plots = FALSE)
 plot(b2)
 ```
 
-However, this is often times not the case and the $MSE$ plot may display concave characteristics. An example of a *problematic* $MSE$ plot is illustrated below.
+However, this is often times not the case and the $MSE$ plot may appear concave. An example of a *problematic* $MSE$ plot is illustrated below.
 
 ```{r Concave MSE}
-# Generate AR(2) simulation
+# Generate a AR(2) simulation
 sim2 <- stats::arima.sim(list(order = c(2, 0, 0), ar = c(0.5, 0.3)),
                         n = 500, innov = rnorm(500))
 
-# Select block-length using HHJ method
+# Select a block-length using HHJ method
 b3 <- hhj(sim2, plots = FALSE)
 plot(b3)
 ```
 
-Here we see the $MSE$ function is minimized by taking the largest block-length available, in this case, 25. This is problematic because it may be that a higher block-length is truly optimal had we evaluated the $MSE$ over a larger range of possible block-lengths $l.$ Similarly, it may be that the smallest (rightmost) block-length is found to minimize the $MSE$ function. This is the main issue with concavity. Such plots often indicate that the solution is some local minimum, and that changing the tuning parameters of `hhj()` will likely lead to a new and equally unreliable estimate. 
+Here we see the $MSE$ function is minimized by taking the largest block-length available, in this case 25. This is problematic because it may be that some larger block-length is truly optimal. Had we evaluated the $MSE$ over a larger range of possible block-lengths, this may have been captured. Similarly, it may be that the smallest (leftmost) block-length is found to minimize the $MSE$ function. This is the main issue with concavity. Such plots often indicate that the solution reached is some local minimum, and that changing the tuning parameters of `hhj()` will likely lead to a new and equally unreliable estimate. 
 
-In such cases, it may help to shrink the `sub_sample` size, $m.$ As discussed previously the choice of `pilot_block_length` is less important but users are encouraged to try a range of combinations for the tuning parameters. It may be the case that no permutation of `pilot_block_length` and `sub_sample` produce a convex $MSE$ plot. In these cases, users are encouraged to benchmark the results of `hhj()` with other methods provided in this package.
+In such cases, it may help to shrink the `sub_sample` size, $m.$ As discussed previously the choice of `pilot_block_length` is less important but users are encouraged to try a range of combinations for the tuning parameters. It may be the case that no permutation of `pilot_block_length` and `sub_sample` produce a convex $MSE$ plot. In this situation, users are encouraged to benchmark the results of `hhj()` with other methods provided in this package.
 
 
 ### PWSD
 
-@doi:10.1081/ETC-120028836 are explicit that manual inspection of the correlogram is necessary, especially in cases where $\hat{m}$ and subsequently the optimal block-length $\hat{b}_{opt}$ are large. By looking at the correlogram and the significance bands corresponding to $\pm c\sqrt{\log_{10}{N}/N},$ we can asses how sensitive the selection of $\hat{m}$ is to the tuning parameters.
+@doi:10.1081/ETC-120028836 are explicit that manual inspection of the correlogram is necessary, especially in cases where $\hat{m},$ and subsequently the optimal block-length $\hat{b}_{opt},$ are large. By looking at the correlogram and the significance bands corresponding to $\pm \  c\sqrt{\log_{10}{N}/N},$ we can asses how sensitive the selection of $\hat{m}$ is to the tuning parameters.
 
 Specifically, @doi:10.1081/ETC-120028836 define $\hat{m}$ as the smallest integer such that the correlogram remains within the significance bands for at least $K_N$ lags *after* the lag $\hat{m}.$ 
 
-To illustrate this, consider a *problematic* correlogram arising from an $AR(1)$ simulation with $\rho = 0.3 \ ,$ named `pcorr,` below. Note `pcorr` has been loaded behind the scenes so it is not randomly generated each time the vignette is built.
+To illustrate this, consider a *problematic* correlogram arising from an $AR(1)$ simulation of 500 observations with $\rho = 0.3 \ ,$ named `pcorr` in the code below. Note `pcorr` has been loaded behind the scenes so it is not randomly generated each time the vignette is built.
 
 ```{r Problematic Correlogram}
-# Select block-length using PWSD method
-b4 <- pwsd(pcorr, c = 1.3, correlogram = FALSE)
+# Select a block-length using PWSD method
+b4 <- pwsd(pcorr, K_N = 5, correlogram = FALSE)
 plot(b4)
 
 # Output m_hat to console
 b4$parameters[, "m_hat"]
 ```
 
-If we are to follow the @doi:10.1081/ETC-120028836 rule for estimating $\hat{m}$ explicitly where $K_N = 5$, then it must be that $\hat{m} = 7$ because 7 is the smallest lag $k$ such that the following 5 lags are insignificant (within the dashed bands). If we were to adjust $c$ or $K_N$ slightly and estimate $\hat{m}$ once more it would be radically different. For example if we keep $c = 2$ but change $K_N = 4,$ then we would be led to $\hat{m} = 2.$
-
-Alternatively, when $K_N = 5$ but $c = 1.1,$ we get the following output with much smaller bands of significance.
+If we are to follow the @doi:10.1081/ETC-120028836 rule for estimating $\hat{m}$ explicitly where $K_N = 5$, then it must be that $\hat{m} = 3$ because 3 is the smallest lag $k$ such that the following 5 lags are insignificant (within the dashed bands). If we were to adjust $c$ or $K_N$ slightly and re-estimate $\hat{m}$ once more it would be radically different. For example if we keep $c$ as the default `qnorm(0.975)` but change $K_N = 6,$ then we would be led to $\hat{m} = 9.$
 
 ```{r Problematic Correlogram 2}
 # Select block-length using PWSD method
-b5 <- pwsd(pcorr, c = 1.1, correlogram = FALSE)
+b5 <- pwsd(pcorr, K_N = 6, correlogram = FALSE)
 plot(b5)
 
 # Output m_hat to console
 b5$parameters[, "m_hat"]
 ```
 
-Here we can see that moving these significance bands closer togeather 
+Alternatively, when we keep $K_N = 5$ but change $c$ to mimic a 1% confidence level by setting `c = qnorm(0.995),` we get the following output with much wider bands of significance:
 
+```{r Problematic Correlogram 3}
+# Select a block-length using PWSD method
+b6 <- pwsd(pcorr, c = qnorm(0.995), correlogram = FALSE)
+plot(b6)
+
+# Output m_hat to console
+b6$parameters[, "m_hat"]
+```
+
+Here we can see that moving these significance bands farther apart changes the estimation to $\hat{m} = 1.$ Overall, the sensitivity of $\hat{m}$ to the tuning parameters is concerning and users should proceed with vigilantly.
+
+The default tuning parameters for `pwsd()` are merely *suggestions,* and @doi:10.1081/ETC-120028836 provide a rule-of-thumb when users are faced with problematic solutions such as the correlograms presented above. They recommend that users always take into account their experience and any knowledge of the data set at-hand, but also note that flat-top lag window spectral estimators preform best with small values of $M$ and that users should favor the smallest or most simple model over a more complex model with similar explanatory power. In this light, @doi:10.1081/ETC-120028836 recommend setting $\hat{m} = 1$ in the presence of an unclear correlogram and lack of reasonable intuition. Note that `pwsd()` will automatically set $\hat{m} = 1$ if there are no significant lags in the correlogram. To accomplish this manually, we can set `M_max = 1` to force $\hat{m} = 1.$
+
+However, if some knowledge of the underlying data-generating process is known, we may want to lean on intuition. For example, benchmark interest rates are often derived from some daily interest rate using a 30-day (or 90-day) compound average. In such circumstances, we may want to examine at least 30 (90) lags of the correlation structure and consider completely overriding the estimation of $\hat{m}$ by setting the argument to `m_hat = 30` or `m_hat = 90.`
 
 
 ## References:

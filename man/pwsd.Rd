@@ -8,6 +8,7 @@ pwsd(
   data,
   K_N = NULL,
   M_max = NULL,
+  m_hat = NULL,
   b_max = NULL,
   c = NULL,
   round = FALSE,
@@ -26,6 +27,12 @@ columns.}
 \item{M_max}{an integer value, the upper-bound for the optimal number of lags,
 \eqn{M}, to compute the auto-covariance for. \emph{See} Theorem 3.3 (ii) of
 Politis and White (2004).}
+
+\item{m_hat}{an integer value, if set to \code{NULL} (the default), then
+\code{m_hat} is estimated as the smallest integer after which the correlogram
+appears negligible for \code{K_N} lags. In problematic cases, setting
+\code{m_hat} to an integer value can be used to override the estimation
+procedure.}
 
 \item{b_max}{a numeric value, the upper-bound for the optimal block-length.
 Defaults to \code{ceiling(min(3 * sqrt(n), n / 3))} per Politis and White

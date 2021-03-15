@@ -16,6 +16,11 @@
 #' @param M_max an integer value, the upper-bound for the optimal number of lags,
 #'  \eqn{M}, to compute the auto-covariance for. \emph{See} Theorem 3.3 (ii) of
 #'  Politis and White (2004).
+#' @param m_hat an integer value, if set to \code{NULL} (the default), then
+#'  \code{m_hat} is estimated as the smallest integer after which the correlogram
+#'  appears negligible for \code{K_N} lags. In problematic cases, setting
+#'  \code{m_hat} to an integer value can be used to override the estimation
+#'  procedure.
 #' @param b_max a numeric value, the upper-bound for the optimal block-length.
 #'  Defaults to \code{ceiling(min(3 * sqrt(n), n / 3))} per Politis and White
 #'  (2004).
@@ -72,7 +77,8 @@
 pwsd <- function(
   data,
   K_N = NULL,
-  M_max= NULL,
+  M_max = NULL,
+  m_hat = NULL,
   b_max = NULL,
   c = NULL,
   round = FALSE,
@@ -116,12 +122,21 @@ pwsd <- function(
     # Set critical value for implied hypothesis test
     rho_k_critical <- c * sqrt(log10(n) / n)
 
-    # Estimate m_hat with implied hypothesis test of correlation structure
-    m_hat <- implied_hypothesis(
-      rho_k = rho_k,
-      rho_k_critical = rho_k_critical,
-      K_N = K_N
+    # Set m_hat
+    if (is.null(m_hat)) {
+
+      # Estimate m_hat with implied hypothesis test of correlation structure
+      m_hat <- implied_hypothesis(
+        rho_k = rho_k,
+        rho_k_critical = rho_k_critical,
+        K_N = K_N
       )
+
+    } else {
+
+      stopifnot(all.equal(m_hat %% 1, 0))
+
+    }
 
     # Plot correlogram
     if (isTRUE(correlogram)) {
