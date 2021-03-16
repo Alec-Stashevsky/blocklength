@@ -151,10 +151,13 @@ b$parameters
 ```
 Here we can see that `m_hat = 3` and `M_max = 28` so no censoring is occurring.
 
-In certain situations, we may wish to forego the implied hypothesis test to estimate `m_hat` and instead set `m_hat` directly by supplying some integer to `pwsd(m_hat = ).` In general, the implied hypothesis test should be used unless specific characteristics are known about the data-generating process of the underlying series or issues with the correlogram output are present.
+In certain situations, we may wish to forego the implied hypothesis test to estimate `m_hat` and instead set `m_hat` directly by supplying some integer to `pwsd(m_hat = ).` In general, the implied hypothesis test should not be used unless specific characteristics are known about the data-generating process of the underlying series or issues with the correlogram output are present.
 
-The next tuning parameter is `b_max = ` which acts as an upper-bound for the optimal block-length, *i.e.* `$BlockLength.` If `pwsd()` estimates some value for the optimal block-length such that `b_Stationary > b_max` or `b_Circular > b_max` then `b_Stationary`/`b_Circular` will be set to `b_max.` By default, `b_max = NULL` which sets `b_max = ceiling(min(3 * sqrt(n), n / 3)).` We can inspect the output of `pwsd()` to see if the selected block-lengths are being censored by `b_max.`
+The next tuning parameter is `b_max = ` which acts as an upper-bound for the optimal block-length. This can be extracted from 'pwsd' class objects using `$BlockLength.` If `pwsd()` estimates some value for the optimal block-length such that `b_Stationary > b_max` or `b_Circular > b_max` then `b_Stationary`/`b_Circular` will be set to `b_max.` By default, `b_max = NULL` which sets `b_max = ceiling(min(3 * sqrt(n), n / 3)).` We can inspect the output of `pwsd()` to see if the selected block-lengths are being censored by `b_max.`
 ```{r Inpect b_max}
+# Print block-length estimates
+b$BlockLength
+
 # Test if optimal block-length is censored by b_max
 b$parameters[, "b_max"] == b$BlockLength
 
@@ -167,15 +170,18 @@ The final tuning parameter for `pwsd()` is the argument `c = ` also denoted as $
 
 $$\rho_{critical} = c\sqrt{\log_{10}N / N}.$$
 
-@doi:10.1081/ETC-120028836 suggest a value of $c = 2$ but by default, `pwsd()` treats $c$ as a standard two-tailed 95% confidence interval by setting `c = qnorm(0.975).` This is quite close the suggested value of 2. Using the correlogram output, either by setting `correlogram = TRUE` or using the corresponding `plot` method, we can visualize $\rho_{critical}$ as the dashed magenta lines that form the significance bands on the plot.
+@doi:10.1081/ETC-120028836 suggest a value of $c = 2$ but by default, `pwsd()` treats $c$ as a standard two-tailed 95% confidence interval by setting `c = qnorm(0.975).` This is quite close to the suggested value of 2. Using the correlogram output, either by setting `correlogram = TRUE` or using the corresponding `plot` method, we can visualize $\rho_{critical}$ as the dashed magenta lines that form the significance bands on the plot.
 
 ```{r Correlogram}
+# Print rho_k_critical
+b$parameters[, "rho_k_critical"]
+
 # Plot correlogram from previous selection
 plot(b, main = "c = qnorm(0.975)", ylim = c(-0.2, 1))
 
 # Expand confidence level and plot again
 b1 <- pwsd(sim, c = 4, correlogram = FALSE)
-plot(b1, main = "c = 4", ylim = c(-0.5, 1.2))
+plot(b1, main = "c = 4", ylim = c(-0.2, 1))
 ```
 
 
@@ -188,7 +194,7 @@ Problematic solutions can render block-length selections unreliable and inconsis
 
 If `plots = TRUE` the $MSE$ function will be plotted and output to the console for each iteration of the algorithm. If `plots = FALSE`, then this interim output will be suppressed; however, users can save the output of `hhj()` and then access these plots later by using the corresponding S3 `plot` method, just like how we plotted the output for `pwsd()` above.
 
-The main issues that occur with the `hhj()` optimization method are local minima or corner solutions of the $MSE$ function. Ideally, the $MSE$ plot will exhibit a convex shape, such as the plot depicted below:
+The main issues that occur with the `hhj()` optimization method are solving for local minima or corner solutions of the $MSE$ function. Ideally, the $MSE$ plot will exhibit a convex shape, such as the plot depicted below:
 
 ```{r Convex MSE}
 # Select a block-length using HHJ method
@@ -208,7 +214,9 @@ b3 <- hhj(sim2, plots = FALSE)
 plot(b3)
 ```
 
-Here we see the $MSE$ function is minimized by taking the largest block-length available, in this case 25. This is problematic because it may be that some larger block-length is truly optimal. Had we evaluated the $MSE$ over a larger range of possible block-lengths, this may have been captured. Similarly, it may be that the smallest (leftmost) block-length is found to minimize the $MSE$ function. This is the main issue with concavity. Such plots often indicate that the solution reached is some local minimum, and that changing the tuning parameters of `hhj()` will likely lead to a new and equally unreliable estimate. 
+Here we see the $MSE$ function is minimized by taking the largest block-length available, in this case 25. This is problematic because it may be that some larger block-length is truly optimal. Had we evaluated the $MSE$ over a larger range of possible block-lengths, this may have been captured. Similarly, it may be that the smallest (leftmost) block-length is found to minimize the $MSE$ function.
+
+This is the main issue with concavity. Such plots often indicate that the solution reached is some local minimum, and that changing the tuning parameters of `hhj()` will likely lead to a new and equally unreliable estimate. 
 
 In such cases, it may help to shrink the `sub_sample` size, $m.$ As discussed previously the choice of `pilot_block_length` is less important but users are encouraged to try a range of combinations for the tuning parameters. It may be the case that no permutation of `pilot_block_length` and `sub_sample` produce a convex $MSE$ plot. In this situation, users are encouraged to benchmark the results of `hhj()` with other methods provided in this package.
 
@@ -224,7 +232,7 @@ To illustrate this, consider a *problematic* correlogram arising from an $AR(1)$
 ```{r Problematic Correlogram}
 # Select a block-length using PWSD method
 b4 <- pwsd(pcorr, K_N = 5, correlogram = FALSE)
-plot(b4)
+plot(b4, main = "Problematic Correlogram")
 
 # Output m_hat to console
 b4$parameters[, "m_hat"]
@@ -235,24 +243,24 @@ If we are to follow the @doi:10.1081/ETC-120028836 rule for estimating $\hat{m}$
 ```{r Problematic Correlogram 2}
 # Select block-length using PWSD method
 b5 <- pwsd(pcorr, K_N = 6, correlogram = FALSE)
-plot(b5)
+plot(b5, main = "Problematic Correlogram 2")
 
 # Output m_hat to console
 b5$parameters[, "m_hat"]
 ```
 
-Alternatively, when we keep $K_N = 5$ but change $c$ to mimic a 1% confidence level by setting `c = qnorm(0.995),` we get the following output with much wider bands of significance:
+Alternatively, when we keep $K_N = 5$ but change $c$ to mimic a 99% confidence level by setting `c = qnorm(0.995),` we get the following output with much wider bands of significance:
 
 ```{r Problematic Correlogram 3}
 # Select a block-length using PWSD method
 b6 <- pwsd(pcorr, c = qnorm(0.995), correlogram = FALSE)
-plot(b6)
+plot(b6, main = "Problematic Correlogram 3")
 
 # Output m_hat to console
 b6$parameters[, "m_hat"]
 ```
 
-Here we can see that moving these significance bands farther apart changes the estimation to $\hat{m} = 1.$ Overall, the sensitivity of $\hat{m}$ to the tuning parameters is concerning and users should proceed with vigilantly.
+Here we can see that moving these significance bands farther apart changes the estimation to $\hat{m} = 1.$ Overall, the sensitivity of $\hat{m}$ to the tuning parameters is concerning and users should proceed with vigilance.
 
 The default tuning parameters for `pwsd()` are merely *suggestions,* and @doi:10.1081/ETC-120028836 provide a rule-of-thumb when users are faced with problematic solutions such as the correlograms presented above. They recommend that users always take into account their experience and any knowledge of the data set at-hand, but also note that flat-top lag window spectral estimators preform best with small values of $M$ and that users should favor the smallest or most simple model over a more complex model with similar explanatory power. In this light, @doi:10.1081/ETC-120028836 recommend setting $\hat{m} = 1$ in the presence of an unclear correlogram and lack of reasonable intuition. Note that `pwsd()` will automatically set $\hat{m} = 1$ if there are no significant lags in the correlogram. To accomplish this manually, we can set `M_max = 1` to force $\hat{m} = 1.$
 

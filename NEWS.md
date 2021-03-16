@@ -24,6 +24,8 @@
 
 * `plot.pwsd()` now explicitly includes an option to customize title with `main = `
 
+* `hhj()` now includes a warning message if the suuplied iteartion limit `n_iter` is reached.
+
 
 # blocklength 0.1.3
 
