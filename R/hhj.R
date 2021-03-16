@@ -313,6 +313,12 @@ hhj <- function(
     if (isTRUE(verbose)) {
       message(" Chosen block length: ", l_star, "  After iteration: ", j)
     }
+
+    # Print if final-iteration is reached w/ no convergence
+    if (i == n_iter & isTRUE(verbose)){
+      message("Block-length has not converged. Stopping at iteration limit: ", i)
+    }
+
   }
 }
 
