@@ -232,10 +232,10 @@ implied_hypothesis <- function(rho_k, rho_k_critical, K_N) {
   run_lengths <- rle(abs(rho_k) < rho_k_critical)
 
   # Take first consecutive insignificant run of length at least K_N
-  if (any(run_lengths$values == TRUE & run_lengths$lengths >= K_N)) {
+  if (any(run_lengths$values & run_lengths$lengths >= K_N)) {
 
     # Save position
-    run_pos <- min(which(run_lengths$values == TRUE & run_lengths$lengths >= K_N))
+    run_pos <- min(which(run_lengths$values & run_lengths$lengths >= K_N))
 
     if (run_pos == 1) {
       m_hat <- 1
