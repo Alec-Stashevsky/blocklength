@@ -2,7 +2,7 @@
 title: "Tuning Block-Length Selection Methods"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{selecting-blocklengths}
+  %\VignetteIndexEntry{Tuning Block-Length Selection Methods}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
@@ -13,7 +13,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "47%",
+  fig.align = "center",
   fig.show = "hold",
+  fig.ext = "svg",
   dev = "svg"
 )
 
