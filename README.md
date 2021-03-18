@@ -100,7 +100,6 @@ First we will generate the time series:
 
 ``` r
 library(blocklength)
-set.seed(32)
 
 # Simulate AR(1) time series
 series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
@@ -124,11 +123,11 @@ hhj(series, sub_sample = 10, k = "bias/variance")
 #>  Chosen block length: 11  After iteration: 1
 ```
 
-<img src="man/figures/README-hhj-1.svg" width="100%" />
+<img src="man/figures/README-hhj-1.svg" width="100%" style="display: block; margin: auto;" />
 
     #>  Converged at block length (l): 11
 
-<img src="man/figures/README-hhj-2.svg" width="100%" />
+<img src="man/figures/README-hhj-2.svg" width="100%" style="display: block; margin: auto;" />
 
     #> $`Optimal Block Length`
     #> [1] 11
@@ -181,11 +180,11 @@ data <- data.frame("AR1" = series)
 pwsd(data) 
 ```
 
-<img src="man/figures/README-pwsd-1.svg" width="100%" />
+<img src="man/figures/README-pwsd-1.svg" width="100%" style="display: block; margin: auto;" />
 
     #> $BlockLength
     #>     b_Stationary b_Circular
-    #> AR1     10.24828   11.73136
+    #> AR1     9.327923   10.67781
     #> 
     #> $Acf
     #> $Acf$AR1
@@ -202,7 +201,7 @@ pwsd(data)
     #> 
     #> $parameters
     #>        n k        c K_N M_max b_max m_hat M rho_k_critical
-    #> [1,] 500 1 1.959964   5    28    68     4 8      0.1439999
+    #> [1,] 500 1 1.959964   5    28    68     3 6      0.1439999
     #> 
     #> $Call
     #> pwsd(data = data)
@@ -211,4 +210,4 @@ pwsd(data)
     #> [1] "pwsd"
 
 We can see that both methods produce similar results for a block-length
-of 10-11 depending on the type of bootstrap method used.
+of 9 or 11 depending on the type of bootstrap method used.

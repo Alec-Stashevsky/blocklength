@@ -1,15 +1,43 @@
-title: blocklength
 url: https://alecstashevsky.com/r/blocklength
+
+home:
+  title: blocklength
+
+development:
+  mode: auto
+  version_label: warning
+  version_tooltip: "Development version"
+
 navbar:
-  left:
-    - icon: fa-home
+  structure:
+    left:  [home, articles, reference, news]
+    right: [github]
+  components:
+    home:
+      icon: fas fa-home fa-lg
       href: https://alecstashevsky.com
-    - text: "Reference"
+    articles:
+      text: Articles
+      menu:
+      - text: "Tuning Parameters"
+        href: articles/tuning-parameters.html
+    reference:
+      text: "Reference"
       href: reference/index.html
-    - text: "News"
+    news:
+      text: News
       href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/Alec-Stashevsky/blocklength
+
+articles:
+- title: Working with blocklength
+  navbar: ~
+
 reference:
 - title: Optimization Methods
+  navbar: ~
   contents:
   - hhj
   - pwsd

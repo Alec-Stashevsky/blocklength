@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "47%",
-  fig.align = "center",
   fig.show = "hold",
   fig.ext = "svg",
   dev = "svg"
@@ -97,17 +96,17 @@ b. `pwsd()`
 
 ### HHJ
 
-The accuracy of `hhj()` depends on the choice of two tuning parameters. The first is the size of the subsample series to perform the cross-validation over. This is the argument `sub_sample =`, or the parameter $m$ in @10.1093/biomet/82.3.561. At this stage $m$ is unknown, but there are some restrictions $m$ must follow. Note that `hhj()` is a computationally intensive procedure and may take some time, especially as the length of the series becomes large. Employing parallelization and adjusting the grid search parameters to streamline the search process may help.
+The accuracy of `hhj()` depends on the choice of two tuning parameters. The first is the size of the subsample series to perform the cross-validation over. This is the argument `sub_sample`, or the parameter $m$ in @10.1093/biomet/82.3.561. At this stage $m$ is unknown, but there are some restrictions $m$ must follow. Note that `hhj()` is a computationally intensive procedure and may take some time, especially as the length of the series becomes large. Employing parallelization and adjusting the grid search parameters to streamline the search process may help.
 
-Since `hhj()` must iterate over multiple subsamples it must be that $m < n$ where $n$ is the length of the series provided in argument `series =`, *i.e.* `length(series)`. More specifically, it must be that
+Since `hhj()` must iterate over multiple subsamples it must be that $m < n$ where $n$ is the length of the series provided in argument `series`, *i.e.* `length(series)`. More specifically, it must be that
 
 $$ m^{-1} + n^{-1}m  = o(1) \text{ as } n \rightarrow \infty \ . $$
 
-As a default, `sub_sample = NULL` which sets $m = n^{1 / 5} * n^{1 / k}$ satisfying the above restrictions. Users can override this by directly setting $m$ as some numeric constant supplied to `subsample = .` Ideally, $m$ should be an integer, but `hhj()` will round this to a whole number automatically.
+As a default, `sub_sample = NULL` which sets $m = n^{1 / 5} * n^{1 / k}$ satisfying the above restrictions. Users can override this by directly setting $m$ as some numeric constant supplied to `subsample.` Ideally, $m$ should be an integer, but `hhj()` will round this to a whole number automatically.
 
-Though $m$ is almost entirely arbitrary, the second tuning parameter for `hhj()` is less so. This is the `pilot_block_length =` argument, or the parameter $l$ in @10.1093/biomet/82.3.561 also denoted as $l^{*}_n$ in the @lahiri2003resampling treatment. The `pilot_block_length` is the block-length used to perform the initial block-bootstrap of `series = .`
+Though $m$ is almost entirely arbitrary, the second tuning parameter for `hhj()` is less so. This is the `pilot_block_length` argument, or the parameter $l$ in @10.1093/biomet/82.3.561 also denoted as $l^{*}_n$ in the @lahiri2003resampling treatment. The `pilot_block_length` is the block-length used to perform the initial block-bootstrap of `series.`
 
-To reduce the effect of the choice of $l$ on the accuracy of the optimization, `hhj()` replaces $l$ with the previous iteration's estimate of the optimal block-length $l^*$ (or $\hat{l^0_n}$ in @lahiri2003resampling), repeating until convergence or the iteration limit implied by `n_iter = ` is reached. The number supplied to `pilot_block_length = ` is only used on the first iteration of `hhj()` hence it is referred to as a *pilot* parameter.
+To reduce the effect of the choice of $l$ on the accuracy of the optimization, `hhj()` replaces $l$ with the previous iteration's estimate of the optimal block-length $l^*$ (or $\hat{l^0_n}$ in @lahiri2003resampling), repeating until convergence or the iteration limit implied by `n_iter` is reached. The number supplied to `pilot_block_length` is only used on the first iteration of `hhj()` hence it is referred to as a *pilot* parameter.
 
 In practice, `hhj()` estimates $l^*$ by minimizing an $MSE$ function for each possible block-length using a block-bootstrap of a subsample from `series` with length $m.$ The block-length that minimizes the $MSE$ on a given subsample is then used to estimate $l^*$ which replaces `pilot_block_length` for the next iteration. However, because we minimize the $MSE$ over a subsample of length $m$, we must first scale this block-length back to the original series of length $n.$ This is accomplished by employing the *Richardson Extrapolation,* a sequence acceleration technique from numerical analysis first developed in 1911, *see* @doi:10.1098/rsta.1911.0009.
 
@@ -118,13 +117,13 @@ and $k$ depends on the context of the object of estimation.
 
 ### PWSD
 
-Like `hhj()`, the accuracy of `pwsd()` is also subject to a somewhat arbitrary choice of tuning parameters. Unlike the HHJ method, however, the tuning parameters for `pwsd()` deal exclusively with the way the method adapts to the underlying correlation structure of the series whereas in `hhj(),` tuning parameters set the lengths and sizes from which to cross-validate subsamples. Note that `pwsd()` will set all the tuning parameters to recommended defaults so that only the argument `data = ` must be supplied.
+Like `hhj()`, the accuracy of `pwsd()` is also subject to a somewhat arbitrary choice of tuning parameters. Unlike the HHJ method, however, the tuning parameters for `pwsd()` deal exclusively with the way the method adapts to the underlying correlation structure of the series whereas in `hhj(),` tuning parameters set the lengths and sizes from which to cross-validate subsamples. Note that `pwsd()` will set all the tuning parameters to recommended defaults so that only the argument `data` must be supplied.
 
-@doi:10.1081/ETC-120028836 discuss their proposed defaults and some techniques to adjust tuning parameters largely in *footnote c* on page 59. The first tuning parameter of `pwsd()` is `K_N = `, denoted $K_N$ in @doi:10.1081/ETC-120028836. `K_N` takes some integer value that indicates the maximum number of lags for which to apply the implied hypothesis test over the correlogram of the series. That is, `K_N` is the number of consecutive lags in the correlogram that must appear *insignificant* in order to select the optimal bandwidth $M$ for the flat-top lag window.
+@doi:10.1081/ETC-120028836 discuss their proposed defaults and some techniques to adjust tuning parameters largely in *footnote c* on page 59. The first tuning parameter of `pwsd()` is `K_N`, denoted $K_N$ in @doi:10.1081/ETC-120028836. `K_N` takes some integer value that indicates the maximum number of lags for which to apply the implied hypothesis test over the correlogram of the series. That is, `K_N` is the number of consecutive lags in the correlogram that must appear *insignificant* in order to select the optimal bandwidth $M$ for the flat-top lag window.
 
 @doi:10.1081/ETC-120028836 suggest letting $M = 2\hat{m}$ where $\hat{m}$ is the smallest positive integer such that the following `K_N` consecutive lags appear insignificant in respect to some level of significance, discussed later. By default, `K_N  = NULL` which sets $K_N = max(5, \lceil \ \log_{10}N \ \rceil)$ per the suggestion of @doi:10.1081/ETC-120028836. Note $K_N$ must be some non-decreasing integer valued function of $N$ such that $K_N = o(\log_{10}N)$ where $N$ is again the length of the series supplied to `data = `, *i.e.* `nrow(data).`
 
-The next tuning parameter `M_max =` (denoted as $M_{max}$ below) acts as an upper-bound for $M$ such that
+The next tuning parameter `M_max` (denoted as $M_{max}$ below) acts as an upper-bound for $M$ such that
 
 $$2 * \hat{m} > M_{max} \Rightarrow M = M_{max} \ .$$
 
@@ -168,7 +167,7 @@ b$parameters[, "b_max"]
 ```
 Here we can see our optimal block-length is between 8 and 9 observations long. These are far below the default maximum value of 68.
 
-The final tuning parameter for `pwsd()` is the argument `c = ` also denoted as $c$ in @doi:10.1081/ETC-120028836. At a high-level $c$ acts as a pseudo confidence-level to conduct the implied hypothesis tests on the series' correlogram. Thus, it must be that $c > 0.$ If the auto-correlation of a given lag $k$ is above some critical value $\rho_{critical}$, then that lag is considered *significant.* This critical value is defined as 
+The final tuning parameter for `pwsd()` is the argument `c` also denoted as $c$ in @doi:10.1081/ETC-120028836. At a high-level $c$ acts as a pseudo confidence-level to conduct the implied hypothesis tests on the series' correlogram. Thus, it must be that $c > 0.$ If the auto-correlation of a given lag $k$ is above some critical value $\rho_{critical}$, then that lag is considered *significant.* This critical value is defined as 
 
 $$\rho_{critical} = c\sqrt{\log_{10}N / N}.$$
 
@@ -231,7 +230,7 @@ Specifically, @doi:10.1081/ETC-120028836 define $\hat{m}$ as the smallest intege
 
 To illustrate this, consider a *problematic* correlogram arising from an $AR(1)$ simulation of 500 observations with $\rho = 0.3 \ ,$ named `pcorr` in the code below. Note `pcorr` has been loaded behind the scenes so it is not randomly generated each time the vignette is built.
 
-```{r Problematic Correlogram}
+```{r Problematic Correlogram, fig.align = "center", out.width = "80%"}
 # Select a block-length using PWSD method
 b4 <- pwsd(pcorr, K_N = 5, correlogram = FALSE)
 plot(b4, main = "Problematic Correlogram")
@@ -242,7 +241,7 @@ b4$parameters[, "m_hat"]
 
 If we are to follow the @doi:10.1081/ETC-120028836 rule for estimating $\hat{m}$ explicitly where $K_N = 5$, then it must be that $\hat{m} = 3$ because 3 is the smallest lag $k$ such that the following 5 lags are insignificant (within the dashed bands). If we were to adjust $c$ or $K_N$ slightly and re-estimate $\hat{m}$ once more it would be radically different. For example if we keep $c$ as the default `qnorm(0.975)` but change $K_N = 6,$ then we would be led to $\hat{m} = 9.$
 
-```{r Problematic Correlogram 2}
+```{r Problematic Correlogram 2, fig.align = "center", out.width = "80%"}
 # Select block-length using PWSD method
 b5 <- pwsd(pcorr, K_N = 6, correlogram = FALSE)
 plot(b5, main = "Problematic Correlogram 2")
@@ -253,7 +252,7 @@ b5$parameters[, "m_hat"]
 
 Alternatively, when we keep $K_N = 5$ but change $c$ to mimic a 99% confidence level by setting `c = qnorm(0.995),` we get the following output with much wider bands of significance:
 
-```{r Problematic Correlogram 3}
+```{r Problematic Correlogram 3, fig.align = "center", out.width = "80%"}
 # Select a block-length using PWSD method
 b6 <- pwsd(pcorr, c = qnorm(0.995), correlogram = FALSE)
 plot(b6, main = "Problematic Correlogram 3")

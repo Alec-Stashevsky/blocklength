@@ -10,8 +10,12 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%",
+  fig.align = "center",
+  fig.ext = "svg",
   dev = "svg"
 )
+
+set.seed(32)
 ```
 
 # blocklength
@@ -73,7 +77,6 @@ simulated autoregressive *AR(1)* time series.
 First we will generate the time series:
 ```{r series}
 library(blocklength)
-set.seed(32)
 
 # Simulate AR(1) time series
 series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
@@ -102,5 +105,5 @@ data <- data.frame("AR1" = series)
 pwsd(data) 
 ```
 
-We can see that both methods produce similar results for a block-length of 10-11
+We can see that both methods produce similar results for a block-length of 9 or 11
 depending on the type of bootstrap method used.
