@@ -49,9 +49,10 @@ jobs:
         shell: Rscript {0}
 
       - name: Query maxOSX dependencies
+        if: runner.os == 'macOS'
         run: |
           brew cask install xquartz
-          install.packages('cairo')
+          Rscript -e "install.packages('cairo')"
 
       - name: Cache R packages
         if: runner.os != 'Windows'
