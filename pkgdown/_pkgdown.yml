@@ -19,10 +19,10 @@ navbar:
     articles:
       text: Articles
       menu:
-      - text: "Tuning Parameters"
+      - text: Tuning Block-Selection Methods
         href: articles/tuning-parameters.html
     reference:
-      text: "Reference"
+      text: Reference
       href: reference/index.html
     news:
       text: News
@@ -34,6 +34,8 @@ navbar:
 articles:
 - title: Working with blocklength
   navbar: ~
+  contents:
+  - tuning-parameters
 
 reference:
 - title: Optimization Methods
