@@ -51,9 +51,7 @@ jobs:
       - name: Install XQuartz on macOS
         if: runner.os == 'macOS'
         run: |
-          brew tap homebrew/homebrew-cask-versions
-          brew upgrade
-          brew doctor
+          brew install --cask
           brew cask install xquartz
 
       - name: Cache R packages
