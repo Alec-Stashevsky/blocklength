@@ -48,11 +48,9 @@ jobs:
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
 
-      - name: Query maxOSX dependencies
+      - name: Install XQuartz on macOS
         if: runner.os == 'macOS'
-        run: |
-          brew cask install xquartz
-          Rscript -e "install.packages('cairo')"
+        run: brew cask install xquartz
 
       - name: Cache R packages
         if: runner.os != 'Windows'
