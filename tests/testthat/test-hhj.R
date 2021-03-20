@@ -71,4 +71,6 @@ test_that("hhj parrallelization works", {
 
   expect_is(hhj(series, cl = cl), "hhj")
 
+  parallel::stopCluster(cl)
+
 })

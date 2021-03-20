@@ -14,8 +14,8 @@ status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-projec
 <!-- badges: end -->
 
 `blocklength` is an R package used to automatically select the
-block-length parameter to perform a block-bootstrap on dependent data
-such as stationary time series.
+block-length parameter for a block-bootstrap. It is meant for use with
+dependent data such as stationary time series.
 
 ## The Story
 

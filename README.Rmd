@@ -28,7 +28,7 @@ set.seed(32)
 [![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://codecov.io/gh/Alec-Stashevsky/blocklength)  
 <!-- badges: end -->
 
-`blocklength` is an R package used to automatically select the block-length parameter to perform a block-bootstrap on dependent data such as stationary time series.
+`blocklength` is an R package used to automatically select the block-length parameter for a block-bootstrap. It is meant for use with dependent data such as stationary time series.
 
 
 ## The Story
