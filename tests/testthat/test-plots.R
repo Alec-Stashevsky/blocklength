@@ -4,8 +4,12 @@ test_that("plot.hhj works", {
     n = 50, innov = rnorm(50))
 
   x <- hhj(sim)
-
   expect_invisible(plot(x))
+
+  expect_error(plot(x, iter = c("throw", 1, -1)))
+
+  class(x) <- "testing"
+  expect_error(plot(x))
 
 })
 

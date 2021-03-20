@@ -38,9 +38,9 @@ The problem with the block bootstrap is the high sensitivity to the
 choice of block-length, or the number of blocks to break the time series
 into.
 
-The goal of `{blocklength}` is to simplify and automate the process of
+The goal of `blocklength` is to simplify and automate the process of
 selecting a block-length to perform a bootstrap on dependent data.
-`{blocklength}` has several functions that take their name from the
+`blocklength` has several functions that take their name from the
 authors who have proposed them. Currently, there are two methods
 available:
 
@@ -75,7 +75,7 @@ choice of block-length.
 
 ## Installation
 
-You can install the released version of blocklength from
+You can install the released version from
 [CRAN](https://cran.r-project.org/package=blocklength) with:
 
 ``` r

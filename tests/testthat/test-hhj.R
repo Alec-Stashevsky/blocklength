@@ -48,8 +48,27 @@ test_that("hhj function works", {
     n = 20, innov = rnorm(20))
 
   expect_type(hhj(series), "list")
-  expect_is(hhj(series), "hhj")
+  expect_type(hhj(series, sub_sample = 2, k = "one-sided"), "list")
+  expect_type(hhj(series, search_grid = 3, k = "bias/variance"), "list")
+  expect_is(hhj(series, grid_step = 4, pilot_block_length = 3), "hhj")
   expect_error(hhj(NA))
   expect_message(hhj(series, plots = FALSE))
+
+  expect_error(hhj(series, grid_step = 3.3))
+  expect_error(hhj(series, grid_step = c(3, 2, 1)))
+  expect_error(hhj(series, search_grid = 3.3))
+  expect_error(hhj(series, sub_sample = length(series) + 10))
+  expect_error(hhj(series, k = "testing"))
+
+})
+
+test_that("hhj parrallelization works", {
+
+  series <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
+    n = 20, innov = rnorm(20))
+
+  cl <- parallel::makeCluster(2)
+
+  expect_is(hhj(series, cl = cl), "hhj")
 
 })

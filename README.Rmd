@@ -39,7 +39,7 @@ To get around this problem, we can retain some of this *time-dependence* by brea
 
 The problem with the block bootstrap is the high sensitivity to the choice of block-length, or the number of blocks to break the time series into. 
 
-The goal of `{blocklength}` is to simplify and automate the process of selecting a block-length to perform a bootstrap on dependent data. `{blocklength}` has several functions that take their name from the authors who have proposed them. Currently, 
+The goal of `blocklength` is to simplify and automate the process of selecting a block-length to perform a bootstrap on dependent data. `blocklength` has several functions that take their name from the authors who have proposed them. Currently, 
 there are two methods available:
 
  1. `hhj()` takes its name from the [Hall, Horowitz, and Jing (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext) "HHJ" method to select the optimal block-length using a cross-validation algorithm which minimizes the mean squared error *(MSE)* incurred by the bootstrap at various block-lengths.
@@ -53,7 +53,7 @@ Compared to `pwsd()`, `hhj()` is more computationally intensive as it relies on 
 
 ## Installation
 
-You can install the released version of blocklength from [CRAN](https://cran.r-project.org/package=blocklength) with:
+You can install the released version from [CRAN](https://cran.r-project.org/package=blocklength) with:
 
 ``` r
 install.packages("blocklength")

@@ -49,8 +49,15 @@ test_that("pwsd works", {
   sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
     n = 100, innov = rnorm(100))
 
+  white_noise <- rnorm(100)
+
   expect_type(pwsd(sim), "list")
-  expect_is(pwsd(sim), "pwsd")
+  expect_is(pwsd(sim, round = TRUE), "pwsd")
   expect_error(pwsd(NA))
+  expect_error(pwsd(sim, m_hat = 2.2))
+
+  pwsd(white_noise, c = 4)$parameters[, "m_hat"]
+
+  expect_equal(pwsd(white_noise, c = 4)$parameters[, "m_hat"], c("m_hat" = 1))
 
 })
