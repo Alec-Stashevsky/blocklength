@@ -28,6 +28,11 @@ set.seed(32)
 [![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://codecov.io/gh/Alec-Stashevsky/blocklength)  
 <!-- badges: end -->
 
+`blocklength` is an R package used to automatically select the block-length parameter to perform a block-bootstrap on dependent data such as stationary time series.
+
+
+## The Story
+  
 Regular bootstrap methods rely on assumptions that observations are independent and identically distributed (*i.i.d.*), but this assumption fails for many types of time series because we would expect the observation in the previous period to have some explanatory power over the current observation. This could occur in any time series from unemployment rates, stock prices, biological data, etc. A time series that is *i.i.d.* would look like white noise, since the following observation would be totally independent of the previous one (random).
 
 To get around this problem, we can retain some of this *time-dependence* by breaking-up a time series into a number of blocks with length *l*. Instead of sampling each observation randomly (with replacement) like a regular bootstrap, we can resample these *blocks* at random. This way within each block the time-dependence is preserved.
@@ -65,11 +70,9 @@ devtools::install_github("Alec-Stashevsky/blocklength")
 ## Upcoming changes
 
 - change parallel to `{foreach}` or `{future}` (pending user feedback - let me know!)
-- Build tests
-  - Overlapping subsamples cover entire series
 
 
-## Example
+## Use Case
 
 We want to select the optimal block-length to perform a block bootstrap on a 
 simulated autoregressive *AR(1)* time series.
@@ -87,7 +90,7 @@ Now, we can find the optimal block-length to perform a block-bootstrap. We do
 this using two methods.
 
 
-#### 1. The Hall, Horowitz, and Jing (1995) "HHJ" Method
+### 1. The Hall, Horowitz, and Jing (1995) "HHJ" Method
 
 ```{r hhj}
 ## Using the HHJ Algorithm with overlapping subsamples of width 10
@@ -95,7 +98,7 @@ hhj(series, sub_sample = 10, k = "bias/variance")
 ```
 
 
-#### 2. The Politis and White (2004) Spectral Density Estimation "PWSD" Method
+### 2. The Politis and White (2004) Spectral Density Estimation "PWSD" Method
 
 ```{r pwsd}
 # Coerce time series to data.frame

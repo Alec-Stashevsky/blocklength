@@ -13,6 +13,12 @@ status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-projec
 [![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://codecov.io/gh/Alec-Stashevsky/blocklength)  
 <!-- badges: end -->
 
+`blocklength` is an R package used to automatically select the
+block-length parameter to perform a block-bootstrap on dependent data
+such as stationary time series.
+
+## The Story
+
 Regular bootstrap methods rely on assumptions that observations are
 independent and identically distributed (*i.i.d.*), but this assumption
 fails for many types of time series because we would expect the
@@ -88,10 +94,8 @@ devtools::install_github("Alec-Stashevsky/blocklength")
 
 -   change parallel to `{foreach}` or `{future}` (pending user
     feedback - let me know!)
--   Build tests
-    -   Overlapping subsamples cover entire series
 
-## Example
+## Use Case
 
 We want to select the optimal block-length to perform a block bootstrap
 on a simulated autoregressive *AR(1)* time series.
@@ -109,7 +113,7 @@ series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
 Now, we can find the optimal block-length to perform a block-bootstrap.
 We do this using two methods.
 
-#### 1. The Hall, Horowitz, and Jing (1995) “HHJ” Method
+### 1. The Hall, Horowitz, and Jing (1995) “HHJ” Method
 
 ``` r
 ## Using the HHJ Algorithm with overlapping subsamples of width 10
@@ -170,7 +174,7 @@ hhj(series, sub_sample = 10, k = "bias/variance")
     #> attr(,"class")
     #> [1] "hhj"
 
-#### 2. The Politis and White (2004) Spectral Density Estimation “PWSD” Method
+### 2. The Politis and White (2004) Spectral Density Estimation “PWSD” Method
 
 ``` r
 # Coerce time series to data.frame
