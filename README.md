@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# blocklength <img src="man/figures/logo.svg" align="right" />
+# blocklength <img src="man/figures/logo.svg" alt="" style="padding-left: 20px" align="right" />
 
 <!-- badges: start -->
 
