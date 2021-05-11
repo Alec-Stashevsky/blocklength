@@ -48,8 +48,14 @@ test_that("hhj function works", {
     n = 20, innov = rnorm(20))
 
   expect_type(hhj(series), "list")
-  expect_type(hhj(series, sub_sample = 2, k = "one-sided"), "list")
-  expect_type(hhj(series, search_grid = 5, k = "bias/variance"), "list")
+  expect_type(
+    suppressWarnings(
+      hhj(series, sub_sample = 2, k = "one-sided")), "list"
+    )
+  expect_type(
+    suppressWarnings(
+      hhj(series, search_grid = 5, k = "bias/variance")), "list"
+    )
   expect_is(hhj(series, grid_step = 4, pilot_block_length = 3), "hhj")
   expect_error(hhj(NA))
   expect_message(hhj(series, plots = FALSE))

@@ -50,7 +50,7 @@ plot.pwsd <- function(x, c = NULL, main = NULL, ylim = NULL, ...) {
 
     # Set plot title
     if (is.null(main)) {
-      main = paste0("Correlogram for: ", names[j])
+      main <- paste0("Correlogram for: ", names[j])
     }
 
     # Set y-axis limits

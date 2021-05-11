@@ -1,26 +1,22 @@
 ## Test environments
-* local R installation, R 4.0.3
-* ubuntu 20.04 (devel and release on GitHub Actions), R 4.0.3
-* macOS-latest (GitHub Actions)
+* local R installation, R 4.0.4
+* Ubuntu 20.04 (devel and release on GitHub Actions)
+* macOS-latest (release on GitHub Actions)
+* windows-latest (release on GitHub Actions)
 * win-builder (devel and release)
+* Fedora (devel on Rhub)
+* Ubuntu (release on Rhub)
+* Windows Server 2008 R2 (devel on Rhub)
 
 ## Resubmission
 
 CHANGES: 
-  * Added references as doi hyperlinks in description section of DESCRIPTION
-  * added \value to .Rd files for plot.hhj.Rd and plot.pwsd.Rd
-  * changed all references from \dontrun to \donttest
-    * NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
-
-
-### Previous Resubmissions
-CHANGES: Updated .Rd files to remove unicode characters
+  * bug fixes and minor improvements to existing functions
+  
+NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
 
 
 ## R CMD check results
-
-* This is a new release.
-
 
 ### Local Machine
 
@@ -31,17 +27,14 @@ There were no ERRORs, WARNINGs or NOTEs
 
 No ERRORs or WARNINGs
 
-One NOTE:
-  1. This is a new submission
 
 ### R-hub
 
 No ERRORs or WARNINGs.
 
-Two NOTEs:
+One NOTEs:
 
-  1. This is a new submission
-  2. Package unavailable to check Rd xrefs: 'np'
+  1. Package unavailable to check Rd xrefs: 'np'
      - There is a reference to package {np} in the .Rd file for pwsd, but there are no other dependencies on this package.
 
 
