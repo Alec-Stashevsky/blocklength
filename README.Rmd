@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 set.seed(32)
 ```
 
-# blocklength
+# blocklength <img src="man/figures/logo.svg" align="right" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions) 
