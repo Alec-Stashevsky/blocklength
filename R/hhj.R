@@ -317,8 +317,28 @@ hhj <- function(
     }
 
     # Print if final-iteration is reached w/ no convergence
-    if (i == n_iter & isTRUE(verbose)){
-      message("Block-length has not converged. Stopping at iteration limit: ", i)
+    if (j == n_iter) {
+
+      # Warning message about no convergence
+      warning(
+        "Block-length has not converged. Stopping at iteration limit: ", j, "\n",
+        "  Result may be spurious"
+        )
+
+      # Compile results list with custom class
+      result <- structure(
+        list(
+          "Optimal Block Length" = l_star,
+          "Subsample block size (m)" = m,
+          "MSE Data" = p.data,
+          "Iterations" = j,
+          "Series" = deparse(substitute(series)),
+          "Call" = call
+        ),
+        class = "hhj")
+
+      # Return list of results
+      return(result)
     }
 
   }
