@@ -1,7 +1,7 @@
 Package: blocklength
 Type: Package
 Title: Select an Optimal Block-Length to Bootstrap Dependent Data (Block Bootstrap)
-Version: 0.1.4
+Version: 0.1.4.9000
 Authors@R: c(
              person("Alec", "Stashevsky",
                     email = "alec@alecstashevsky.com",
