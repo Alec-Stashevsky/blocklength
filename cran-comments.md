@@ -8,10 +8,12 @@
 * Ubuntu (release on Rhub)
 * Windows Server 2008 R2 (devel on Rhub)
 
-## Resubmission
+## Resubmission - Version 0.1.4
+This is resubmission upgrading to version 0.1.4 from 0.1.3.
 
-CHANGES: 
+Version Changes: 
   * bug fixes and minor improvements to existing functions
+
   
 NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
 
@@ -20,12 +22,12 @@ NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
 
 ### Local Machine
 
-There were no ERRORs, WARNINGs or NOTEs
+No ERRORs, WARNINGs or NOTEs
 
 
 ### Win-builder
 
-No ERRORs or WARNINGs
+No ERRORs or WARNINGs or NOTEs
 
 
 ### R-hub
