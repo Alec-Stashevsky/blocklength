@@ -5,8 +5,8 @@ home:
 
 development:
   mode: auto
-  version_label: warning
-  version_tooltip: "Development version"
+  # version_label: warning
+  # version_tooltip: "Development version"
 
 navbar:
   structure:

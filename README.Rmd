@@ -110,3 +110,8 @@ pwsd(data)
 
 We can see that both methods produce similar results for a block-length of 9 or 11
 depending on the type of bootstrap method used.
+
+
+## Acknowledgements
+
+A big shoutout to Malina Cheeneebash for designing the `blocklength` hex sticker! Also to Sergio Armella and [Simon P. Couch](https://www.simonpcouch.com) for their help and feedback!

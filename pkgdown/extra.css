@@ -40,17 +40,24 @@
     padding-bottom: 9px;
     margin-top: 40px;
     margin-bottom: 20px;
+    border-bottom: 3px solid rgb(232, 216, 195);
+}
+
+.container.template-home .page-header {
+    padding-bottom: 9px;
+    margin-top: 40px;
+    margin-bottom: 20px;
     border-bottom: 0px solid rgb(232, 216, 195);
 }
 
-.page-header:after {
+
+.container.template-home .page-header:after {
     content: ""; /* This is necessary for the pseudo element to work. */
     display: block; /* This will put the pseudo element on its own line. */
     width: 75%; /* Change this to whatever width you want. */
     padding-top: 0px; /* This creates some space between the element and the border. */
     border-bottom: 3px solid rgb(232, 216, 195); /* This creates the border. Replace black with whatever color you want. */
 }
-
 
 #pkgdown-sidebar {
   font-size: 1.5rem;
