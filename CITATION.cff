@@ -9,7 +9,7 @@ type: software
 license: GPL-2.0-or-later
 title: 'blocklength: Select an Optimal Block-Length to Bootstrap Dependent Data (Block
   Bootstrap)'
-version: 0.1.4.9000
+version: 0.1.4.9001
 abstract: A set of functions to select the optimal block-length for a dependent bootstrap
   (block-bootstrap). Includes the Hall, Horowitz, and Jing (1995) <doi:10.1093/biomet/82.3.561>
   cross-validation method and the Politis and White (2004) <doi:10.1081/ETC-120028836>
@@ -27,7 +27,7 @@ preferred-citation:
   - family-names: Stashevsky
     given-names: Alec
     email: alec@alecstashevsky.com
-  version: 0.1.4.9000
+  version: 0.1.4.9001
   abstract: A set of functions to select the optimal block-length for a dependent
     bootstrap (block-bootstrap). Includes the Hall, Horowitz, and Jing (1995) <doi:10.1093/biomet/82.3.561>
     cross-validation method and the Politis and White (2004) <doi:10.1081/ETC-120028836>
