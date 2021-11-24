@@ -1,0 +1,92 @@
+# -----------------------------------------------------------
+# CITATION file created with {cffr} R package, v0.1.1
+# See also: https://docs.ropensci.org/cffr/
+# -----------------------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "blocklength" in publications use:'
+type: software
+license: GPL-2.0-or-later
+title: 'blocklength: Select an Optimal Block-Length to Bootstrap Dependent Data (Block
+  Bootstrap)'
+version: 0.1.4.9000
+abstract: A set of functions to select the optimal block-length for a dependent bootstrap
+  (block-bootstrap). Includes the Hall, Horowitz, and Jing (1995) <doi:10.1093/biomet/82.3.561>
+  cross-validation method and the Politis and White (2004) <doi:10.1081/ETC-120028836>
+  Spectral Density Plug-in method, including the Patton, Politis, and White (2009)
+  <doi:10.1080/07474930802459016> correction with a corresponding set of S3 plot methods.
+authors:
+- family-names: Stashevsky
+  given-names: Alec
+  email: alec@alecstashevsky.com
+preferred-citation:
+  type: manual
+  title: 'blocklength: Select an Optimal Block-Length to Bootstrap Dependent Data
+    (Block Bootstrap)'
+  authors:
+  - family-names: Stashevsky
+    given-names: Alec
+    email: alec@alecstashevsky.com
+  version: 0.1.4.9000
+  abstract: A set of functions to select the optimal block-length for a dependent
+    bootstrap (block-bootstrap). Includes the Hall, Horowitz, and Jing (1995) <doi:10.1093/biomet/82.3.561>
+    cross-validation method and the Politis and White (2004) <doi:10.1081/ETC-120028836>
+    Spectral Density Plug-in method, including the Patton, Politis, and White (2009)
+    <doi:10.1080/07474930802459016> correction with a corresponding set of S3 plot
+    methods.
+  repository: https://CRAN.R-project.org/package=blocklength
+  repository-code: https://github.com/Alec-Stashevsky/blocklength
+  url: https://alecstashevsky.com/r/blocklength
+  contact:
+  - family-names: Stashevsky
+    given-names: Alec
+    email: alec@alecstashevsky.com
+  keywords:
+  - block-bootstrap
+  - block-resampling
+  - blocklength
+  - boot
+  - bootstrap
+  - cran
+  - depedent-bootstrap
+  - dependent
+  - horowitz
+  - inference
+  - meboot
+  - politis
+  - r
+  - resample
+  - stats
+  - time
+  - time-series
+  - time-series-analysis
+  - tseries
+  license: GPL-2.0-or-later
+  year: '2021'
+repository: https://CRAN.R-project.org/package=blocklength
+repository-code: https://github.com/Alec-Stashevsky/blocklength
+url: https://alecstashevsky.com/r/blocklength
+contact:
+- family-names: Stashevsky
+  given-names: Alec
+  email: alec@alecstashevsky.com
+keywords:
+- block-bootstrap
+- block-resampling
+- blocklength
+- boot
+- bootstrap
+- cran
+- depedent-bootstrap
+- dependent
+- horowitz
+- inference
+- meboot
+- politis
+- r
+- resample
+- stats
+- time
+- time-series
+- time-series-analysis
+- tseries
