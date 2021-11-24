@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">blocklength</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
       </span>
     </div>
 
@@ -176,7 +176,7 @@ columns.</p></td>
       <th>K_N</th>
       <td><p>an integer value, the maximum lags for the auto-correlation,
 \(rho_k\), which to apply the <em>implied hypothesis</em> test. Defaults to
-<code><a href='https://rdrr.io/r/base/Extremes.html'>max(5, log(N))</a></code>. <em>See</em> Politis and White (2004) footnote c.</p></td>
+<code>max(5, log(N))</code>. <em>See</em> Politis and White (2004) footnote c.</p></td>
     </tr>
     <tr>
       <th>M_max</th>
@@ -195,13 +195,13 @@ procedure.</p></td>
     <tr>
       <th>b_max</th>
       <td><p>a numeric value, the upper-bound for the optimal block-length.
-Defaults to <code><a href='https://rdrr.io/r/base/Round.html'>ceiling(min(3 * sqrt(n), n / 3))</a></code> per Politis and White
+Defaults to <code>ceiling(min(3 * sqrt(n), n / 3))</code> per Politis and White
 (2004).</p></td>
     </tr>
     <tr>
       <th>c</th>
       <td><p>a numeric value, the constant which acts as the significance level
-for the implied hypothesis test. Defaults to <code><a href='https://rdrr.io/r/stats/Normal.html'>qnorm(0.975)</a></code> for a
+for the implied hypothesis test. Defaults to <code>qnorm(0.975)</code> for a
 two-tailed 95% confidence level. Politis and  White (2004) suggest
 <code>c = 2</code>.</p></td>
     </tr>
@@ -245,44 +245,47 @@ console, but may be plotted later using the corresponding S3 method,
      doi: <a href='https://doi.org/10.18637/jss.v027.i05'>10.18637/jss.v027.i05</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate AR(1) time series</span>
-<span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/stats/arima.sim.html'>arima.sim</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, ar <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>,
-                        n <span class='op'>=</span> <span class='fl'>500</span>, innov <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>500</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># Calculate optimal block length for series</span>
-<span class='fu'>pwsd</span><span class='op'>(</span><span class='va'>sim</span>, round <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='pwsd-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; $BlockLength
-#&gt;      b_Stationary b_Circular
-#&gt; data            7          8
-#&gt; 
-#&gt; $Acf
-#&gt; $Acf$data
-#&gt; 
-#&gt; Autocorrelations of series ‘data[, i]’, by lag
-#&gt; 
-#&gt;      0      1      2      3      4      5      6      7      8      9     10 
-#&gt;  1.000  0.475  0.211  0.102  0.075  0.088  0.042  0.030 -0.048 -0.037 -0.022 
-#&gt;     11     12     13     14     15     16     17     18     19     20     21 
-#&gt; -0.017  0.000  0.004  0.009  0.036  0.018  0.068  0.076  0.058  0.047 -0.005 
-#&gt;     22     23     24     25     26     27     28 
-#&gt; -0.079 -0.113 -0.069 -0.081 -0.044 -0.024 -0.007 
-#&gt; 
-#&gt; 
-#&gt; $parameters
-#&gt;        n k        c K_N M_max b_max m_hat M rho_k_critical
-#&gt; [1,] 500 1 1.959964   5    28    68     2 4      0.1439999
-#&gt; 
-#&gt; $Call
-#&gt; pwsd(data = sim, round = TRUE)
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "pwsd"</div><div class='input'>
-
-<span class='co'># Use S3 Method</span>
-<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'>pwsd</span><span class='op'>(</span><span class='va'>sim</span>, round <span class='op'>=</span> <span class='cn'>TRUE</span>, correlogram <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>
-</div><div class='img'><img src='pwsd-2.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Generate AR(1) time series</span></span>
+<span class='r-in'><span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/stats/arima.sim.html'>arima.sim</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, ar <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>,</span>
+<span class='r-in'>                        n <span class='op'>=</span> <span class='fl'>500</span>, innov <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>500</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Calculate optimal block length for series</span></span>
+<span class='r-in'><span class='fu'>pwsd</span><span class='op'>(</span><span class='va'>sim</span>, round <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='pwsd-1.png' alt='' width='700' height='433' /></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $BlockLength</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      b_Stationary b_Circular</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data            7          8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Acf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Acf$data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Autocorrelations of series ‘data[, i]’, by lag</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      0      1      2      3      4      5      6      7      8      9     10 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1.000  0.475  0.211  0.102  0.075  0.088  0.042  0.030 -0.048 -0.037 -0.022 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     11     12     13     14     15     16     17     18     19     20     21 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -0.017  0.000  0.004  0.009  0.036  0.018  0.068  0.076  0.058  0.047 -0.005 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     22     23     24     25     26     27     28 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -0.079 -0.113 -0.069 -0.081 -0.044 -0.024 -0.007 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $parameters</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        n k        c K_N M_max b_max m_hat M rho_k_critical</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,] 500 1 1.959964   5    28    68     2 4      0.1439999</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Call</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> pwsd(data = sim, round = TRUE)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"class")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "pwsd"</span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use S3 Method</span></span>
+<span class='r-in'><span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'>pwsd</span><span class='op'>(</span><span class='va'>sim</span>, round <span class='op'>=</span> <span class='cn'>TRUE</span>, correlogram <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='pwsd-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">blocklength</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
 <a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li><p>In <code><a href="../reference/pwsd.html">pwsd()</a></code>, <code>m_hat</code> was indexing the first insignificant lag of the correlation structure rather than the first <em>significant</em> lag prior to the consecutive run of insignificant lags.</p></li>
-<li><p><code><a href="../reference/pwsd.html">pwsd()</a></code> and <code><a href="../reference/plot.pwsd.html">plot.pwsd()</a></code> now output significance bands that match <code>rho_k_critical</code> exactly. Prior to this, the significance bands on the correlogram output were generated using the <code><a href="https://rdrr.io/r/stats/plot.acf.html">plot.acf(ci = )</a></code> argument which led to misleading graphical representations of the implied hypothesis test’s critical value in the PWSD method.</p></li>
+<li><p><code><a href="../reference/pwsd.html">pwsd()</a></code> and <code><a href="../reference/plot.pwsd.html">plot.pwsd()</a></code> now output significance bands that match <code>rho_k_critical</code> exactly. Prior to this, the significance bands on the correlogram output were generated using the <code>plot.acf(ci = )</code> argument which led to misleading graphical representations of the implied hypothesis test’s critical value in the PWSD method.</p></li>
 <li><p>In <code><a href="../reference/hhj.html">hhj()</a></code>, <code>sub_block_length</code> has been changed to <code>sub_sample</code> to avoid confusion with the other tuning parameter, <code>pilot_block_length</code></p></li>
 </ul>
 </div>
