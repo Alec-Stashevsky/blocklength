@@ -104,7 +104,7 @@ Kunsch, H. (1989) The Jackknife and the Bootstrap for General Stationary
 
 Peter Hall, Joel L. Horowitz, Bing-Yi Jing, On blocking rules for the
      bootstrap with dependent data, Biometrika, Volume 82, Issue 3,
-     September 1995, Pages 561-574, DOI: \doi{10.1093/biomet/82.3.561#'}
+     September 1995, Pages 561-574, DOI: \doi{10.1093/biomet/82.3.561}
 }
 
 \examples{

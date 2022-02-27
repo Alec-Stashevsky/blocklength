@@ -1,3 +1,8 @@
+# blocklength 0.1.5
+
+* Minor adjustments to documentation per CRAN requests.
+
+
 # blocklength 0.1.4
 
 

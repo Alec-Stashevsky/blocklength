@@ -23,4 +23,4 @@ PackageRoxygenize: rd,collate,namespace
 
 PythonType: conda
 PythonVersion: 3.8.5
-PythonPath: C:\Users\Alec\anaconda3/python.exe
+PythonPath: C:/Users/Alec/anaconda3/python.exe
