@@ -1,5 +1,5 @@
 ## Test environments
-* local R installation, R 4.0.4
+* local R installation, R 4.1.2
 * Ubuntu 20.04 (devel and release on GitHub Actions)
 * macOS-latest (release on GitHub Actions)
 * windows-latest (release on GitHub Actions)
@@ -8,11 +8,11 @@
 * Ubuntu (release on Rhub)
 * Windows Server 2008 R2 (devel on Rhub)
 
-## Resubmission - Version 0.1.4
-This is resubmission upgrading to version 0.1.4 from 0.1.3.
+## Resubmission - Version 0.1.5
+This is resubmission upgrading to version 0.1.5 from 0.1.4.
 
 Version Changes: 
-  * bug fixes and minor improvements to existing functions
+  * Addressed CRAN reviewer comments for incorrect DOI link in `man/hhj.Rd`
 
   
 NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
