@@ -13,6 +13,7 @@ This is resubmission upgrading to version 0.1.5 from 0.1.4.
 
 Version Changes: 
   * Addressed CRAN reviewer comments for incorrect DOI link in `man/hhj.Rd`
+  * Addressed CRAN review comments to change https://codecov.io/gh/Alec-Stashevsky/blocklength to https://app.codecov.io/gh/Alec-Stashevsky/blocklength
 
   
 NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
