@@ -93,11 +93,7 @@ a:hover {
   transition: all 500ms ease;
 }
 
-code {
-  background-color: rgb(232, 216, 195);
-}
-
-pre {
+pre, pre code {
   font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans
     Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
   color: #efefef;
@@ -125,10 +121,12 @@ pre a:hover {
 
 /* Repicate Zenburn theme */
 .fl      {color: #8cd0d3;}
-.fu      {color: #8cd0d3;} /* function */
+.fu      {color: #efefef;} /* function */
 .ch,.st  {color: #cc9393;} /* string */
 .kw      {color: #264D66;} /* keyword */
 .co      {color: #7f9f7f;} /* comment */
+.va      {color: #efefef;} /* variable */
+.op      {color: #efefef;} /* operator */
 
 .message { color: #7f9f7f; font-weight: bolder;}
 .error   { color: orange;  font-weight: bolder;}
