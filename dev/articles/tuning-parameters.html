@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,20 +42,20 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">blocklength</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.5.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="https://alecstashevsky.com">
+  <a href="https://alecstashevsky.com" class="external-link">
     <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -73,7 +75,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/Alec-Stashevsky/blocklength">
+  <a href="https://github.com/Alec-Stashevsky/blocklength" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -94,7 +96,7 @@
       <h1 data-toc-skip>Tuning Block-Length Selection Methods</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/master/vignettes/tuning-parameters.Rmd"><code>vignettes/tuning-parameters.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/HEAD/vignettes/tuning-parameters.Rmd" class="external-link"><code>vignettes/tuning-parameters.Rmd</code></a></small>
       <div class="hidden name"><code>tuning-parameters.Rmd</code></div>
 
     </div>
@@ -102,9 +104,9 @@
     
     
 <p>This vignette builds a framework for tuning the block-selection algorithms in <code>blocklength.</code> Both the <span class="citation">Hall, Horowitz, and Jing (1995)</span> (“HHJ”) and <span class="citation">Politis and White (2004)</span> (“PWSD”) methods require the user to select somewhat arbitrary parameters which may affect the reliability of the block-length optimization. We will go through examples that present <em>problematic</em> output and understand how to diagnose and remedy these situations under both the HHJ and PWSD frameworks.</p>
-<div id="tuning-parameters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tuning-parameters" class="anchor"></a>Tuning Parameters</h2>
+<div class="section level2">
+<h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a>
+</h2>
 <p>This section will discuss the tuning parameters of each optimization method. Though some parameters are set to a default, often times manual inspection and adjustments will need to be made to identify and remedy problematic solutions such as local optima or corner solutions.</p>
 <p>An overview of the tuning parameters:</p>
 <ol style="list-style-type: lower-alpha">
@@ -126,9 +128,9 @@
 </ol>
 </li>
 </ol>
-<div id="hhj" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hhj" class="anchor"></a>HHJ</h3>
+<div class="section level3">
+<h3 id="hhj">HHJ<a class="anchor" aria-label="anchor" href="#hhj"></a>
+</h3>
 <p>The accuracy of <code><a href="../reference/hhj.html">hhj()</a></code> depends on the choice of two tuning parameters. The first is the size of the subsample series to perform the cross-validation over. This is the argument <code>sub_sample</code>, or the parameter <span class="math inline">\(m\)</span> in <span class="citation">Hall, Horowitz, and Jing (1995)</span>. At this stage <span class="math inline">\(m\)</span> is unknown, but there are some restrictions <span class="math inline">\(m\)</span> must follow. Note that <code><a href="../reference/hhj.html">hhj()</a></code> is a computationally intensive procedure and may take some time, especially as the length of the series becomes large. Employing parallelization and adjusting the grid search parameters to streamline the search process may help.</p>
 <p>Since <code><a href="../reference/hhj.html">hhj()</a></code> must iterate over multiple subsamples it must be that <span class="math inline">\(m &lt; n\)</span> where <span class="math inline">\(n\)</span> is the length of the series provided in argument <code>series</code>, <em>i.e.</em> <code>length(series)</code>. More specifically, it must be that</p>
 <p><span class="math display">\[ m^{-1} + n^{-1}m  = o(1) \text{ as } n \rightarrow \infty \ . \]</span></p>
@@ -139,9 +141,9 @@
 <p>In this sense, <code><a href="../reference/hhj.html">hhj()</a></code> actually estimates the optimal block-length of the subsample <span class="math inline">\(\hat{l}_m\)</span> which is then scaled up to the full series such that</p>
 <p><span class="math display">\[l = \hat{l}_m (n/m)^{1/k}, \ \text{where} \ k = \{3, 4, 5\} \ ,\]</span> and <span class="math inline">\(k\)</span> depends on the context of the object of estimation.</p>
 </div>
-<div id="pwsd" class="section level3">
-<h3 class="hasAnchor">
-<a href="#pwsd" class="anchor"></a>PWSD</h3>
+<div class="section level3">
+<h3 id="pwsd">PWSD<a class="anchor" aria-label="anchor" href="#pwsd"></a>
+</h3>
 <p>Like <code><a href="../reference/hhj.html">hhj()</a></code>, the accuracy of <code><a href="../reference/pwsd.html">pwsd()</a></code> is also subject to a somewhat arbitrary choice of tuning parameters. Unlike the HHJ method, however, the tuning parameters for <code><a href="../reference/pwsd.html">pwsd()</a></code> deal exclusively with the way the method adapts to the underlying correlation structure of the series whereas in <code>hhj(),</code> tuning parameters set the lengths and sizes from which to cross-validate subsamples. Note that <code><a href="../reference/pwsd.html">pwsd()</a></code> will set all the tuning parameters to recommended defaults so that only the argument <code>data</code> must be supplied.</p>
 <p><span class="citation">Politis and White (2004)</span> discuss their proposed defaults and some techniques to adjust tuning parameters largely in <em>footnote c</em> on page 59. The first tuning parameter of <code><a href="../reference/pwsd.html">pwsd()</a></code> is <code>K_N</code>, denoted <span class="math inline">\(K_N\)</span> in <span class="citation">Politis and White (2004)</span>. <code>K_N</code> takes some integer value that indicates the maximum number of lags for which to apply the implied hypothesis test over the correlogram of the series. That is, <code>K_N</code> is the number of consecutive lags in the correlogram that must appear <em>insignificant</em> in order to select the optimal bandwidth <span class="math inline">\(M\)</span> for the flat-top lag window.</p>
 <p><span class="citation">Politis and White (2004)</span> suggest letting <span class="math inline">\(M = 2\hat{m}\)</span> where <span class="math inline">\(\hat{m}\)</span> is the smallest positive integer such that the following <code>K_N</code> consecutive lags appear insignificant in respect to some level of significance, discussed later. By default, <code>K_N  = NULL</code> which sets <span class="math inline">\(K_N = max(5, \lceil \ \log_{10}N \ \rceil)\)</span> per the suggestion of <span class="citation">Politis and White (2004)</span>. Note <span class="math inline">\(K_N\)</span> must be some non-decreasing integer valued function of <span class="math inline">\(N\)</span> such that <span class="math inline">\(K_N = o(\log_{10}N)\)</span> where <span class="math inline">\(N\)</span> is again the length of the series supplied to <code>data =</code>, <em>i.e.</em> <code>nrow(data).</code></p>
@@ -151,13 +153,13 @@
 <p>We can inspect the output of <code><a href="../reference/pwsd.html">pwsd()</a></code> to assess any interim values that may help us understand how to further tune the calculation. For example, we can find the value estimated as <span class="math inline">\(\hat{m}\)</span> by inspecting the <code>$parameters</code> component of <code><a href="../reference/pwsd.html">pwsd()</a></code> output objects, <em>i.e.</em> objects where <code>class = "pwsd".</code></p>
 <p>To show this lets first do some housekeeping and attach <code>blocklength.</code></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://alecstashevsky.com/r/blocklength">blocklength</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://alecstashevsky.com/r/blocklength">blocklength</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span></code></pre></div>
 <p>Now, we generate a stationary <span class="math inline">\(AR(1)\)</span> time series and select an optimal block-length using the PWSD method:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Generate an AR(1) simulation</span>
-<span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.sim.html">arima.sim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, ar <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
-                        n <span class="op">=</span> <span class="fl">500</span>, innov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span><span class="op">)</span>
+<span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.sim.html" class="external-link">arima.sim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, ar <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
+                        n <span class="op">=</span> <span class="fl">500</span>, innov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Run the PWSD method and suppress output of the correlogram</span>
 <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pwsd.html">pwsd</a></span><span class="op">(</span><span class="va">sim</span>, correlogram <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -195,21 +197,21 @@
 <span class="co">#&gt;      0.1439999</span>
 
 <span class="co"># Plot correlogram from previous selection</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">b</span>, main <span class="op">=</span> <span class="st">"c = qnorm(0.975)"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b</span>, main <span class="op">=</span> <span class="st">"c = qnorm(0.975)"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Expand confidence level and plot again</span>
 <span class="va">b1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pwsd.html">pwsd</a></span><span class="op">(</span><span class="va">sim</span>, c <span class="op">=</span> <span class="fl">4</span>, correlogram <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">b1</span>, main <span class="op">=</span> <span class="st">"c = 4"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b1</span>, main <span class="op">=</span> <span class="st">"c = 4"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="tuning-parameters_files/figure-html/Correlogram-1.svg" width="47%"><img src="tuning-parameters_files/figure-html/Correlogram-2.svg" width="47%"></p>
 </div>
 </div>
-<div id="diagnosing-problematic-solutions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#diagnosing-problematic-solutions" class="anchor"></a>Diagnosing Problematic Solutions</h2>
+<div class="section level2">
+<h2 id="diagnosing-problematic-solutions">Diagnosing Problematic Solutions<a class="anchor" aria-label="anchor" href="#diagnosing-problematic-solutions"></a>
+</h2>
 <p>Problematic solutions can render block-length selections unreliable and inconsistent, thus it is important to inspect the interim output of the <span class="math inline">\(MSE\)</span> function for <code><a href="../reference/hhj.html">hhj()</a></code> and the respective Correlogram output of <code>pwsd().</code></p>
-<div id="hhj-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hhj-1" class="anchor"></a>HHJ</h3>
+<div class="section level3">
+<h3 id="hhj-1">HHJ<a class="anchor" aria-label="anchor" href="#hhj-1"></a>
+</h3>
 <p>If <code>plots = TRUE</code> the <span class="math inline">\(MSE\)</span> function will be plotted and output to the console for each iteration of the algorithm. If <code>plots = FALSE</code>, then this interim output will be suppressed; however, users can save the output of <code><a href="../reference/hhj.html">hhj()</a></code> and then access these plots later by using the corresponding S3 <code>plot</code> method, just like how we plotted the output for <code><a href="../reference/pwsd.html">pwsd()</a></code> above.</p>
 <p>The main issues that occur with the <code><a href="../reference/hhj.html">hhj()</a></code> optimization method are solving for local minima or corner solutions of the <span class="math inline">\(MSE\)</span> function. Ideally, the <span class="math inline">\(MSE\)</span> plot will exhibit a convex shape, such as the plot depicted below:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -223,13 +225,13 @@
 <span class="co">#&gt; Calculating MSE for each level in subsample: 10 function evaluations required.</span>
 <span class="co">#&gt;  Chosen block length: 11  After iteration: 1</span>
 <span class="co">#&gt;  Converged at block length (l): 11</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">b2</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b2</span><span class="op">)</span></code></pre></div>
 <p><img src="tuning-parameters_files/figure-html/Convex%20MSE-1.svg" width="47%"><img src="tuning-parameters_files/figure-html/Convex%20MSE-2.svg" width="47%"></p>
 <p>However, this is often times not the case and the <span class="math inline">\(MSE\)</span> plot may appear concave. An example of a <em>problematic</em> <span class="math inline">\(MSE\)</span> plot is illustrated below.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Generate a AR(2) simulation</span>
-<span class="va">sim2</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.sim.html">arima.sim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, ar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span>,
-                        n <span class="op">=</span> <span class="fl">500</span>, innov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span><span class="op">)</span>
+<span class="va">sim2</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.sim.html" class="external-link">arima.sim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, ar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span>,
+                        n <span class="op">=</span> <span class="fl">500</span>, innov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Select a block-length using HHJ method</span>
 <span class="va">b3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hhj.html">hhj</a></span><span class="op">(</span><span class="va">sim2</span>, plots <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -238,22 +240,22 @@
 <span class="co">#&gt; Calculating MSE for each level in subsample: 12 function evaluations required.</span>
 <span class="co">#&gt;  Chosen block length: 25  After iteration: 1</span>
 <span class="co">#&gt;  Converged at block length (l): 25</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">b3</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b3</span><span class="op">)</span></code></pre></div>
 <p><img src="tuning-parameters_files/figure-html/Concave%20MSE-1.svg" width="47%"><img src="tuning-parameters_files/figure-html/Concave%20MSE-2.svg" width="47%"></p>
 <p>Here we see the <span class="math inline">\(MSE\)</span> function is minimized by taking the largest block-length available, in this case 25. This is problematic because it may be that some larger block-length is truly optimal. Had we evaluated the <span class="math inline">\(MSE\)</span> over a larger range of possible block-lengths, this may have been captured. Similarly, it may be that the smallest (leftmost) block-length is found to minimize the <span class="math inline">\(MSE\)</span> function.</p>
 <p>This is the main issue with concavity. Such plots often indicate that the solution reached is some local minimum, and that changing the tuning parameters of <code><a href="../reference/hhj.html">hhj()</a></code> will likely lead to a new and equally unreliable estimate.</p>
 <p>In such cases, it may help to shrink the <code>sub_sample</code> size, <span class="math inline">\(m.\)</span> As discussed previously the choice of <code>pilot_block_length</code> is less important but users are encouraged to try a range of combinations for the tuning parameters. It may be the case that no permutation of <code>pilot_block_length</code> and <code>sub_sample</code> produce a convex <span class="math inline">\(MSE\)</span> plot. In this situation, users are encouraged to benchmark the results of <code><a href="../reference/hhj.html">hhj()</a></code> with other methods provided in this package.</p>
 </div>
-<div id="pwsd-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#pwsd-1" class="anchor"></a>PWSD</h3>
+<div class="section level3">
+<h3 id="pwsd-1">PWSD<a class="anchor" aria-label="anchor" href="#pwsd-1"></a>
+</h3>
 <p><span class="citation">Politis and White (2004)</span> are explicit that manual inspection of the correlogram is necessary, especially in cases where <span class="math inline">\(\hat{m},\)</span> and subsequently the optimal block-length <span class="math inline">\(\hat{b}_{opt},\)</span> are large. By looking at the correlogram and the significance bands corresponding to <span class="math inline">\(\pm \  c\sqrt{\log_{10}{N}/N},\)</span> we can asses how sensitive the selection of <span class="math inline">\(\hat{m}\)</span> is to the tuning parameters.</p>
 <p>Specifically, <span class="citation">Politis and White (2004)</span> define <span class="math inline">\(\hat{m}\)</span> as the smallest integer such that the correlogram remains within the significance bands for at least <span class="math inline">\(K_N\)</span> lags <em>after</em> the lag <span class="math inline">\(\hat{m}.\)</span></p>
 <p>To illustrate this, consider a <em>problematic</em> correlogram arising from an <span class="math inline">\(AR(1)\)</span> simulation of 500 observations with <span class="math inline">\(\rho = 0.3 \ ,\)</span> named <code>pcorr</code> in the code below. Note <code>pcorr</code> has been loaded behind the scenes so it is not randomly generated each time the vignette is built.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Select a block-length using PWSD method</span>
 <span class="va">b4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pwsd.html">pwsd</a></span><span class="op">(</span><span class="va">pcorr</span>, K_N <span class="op">=</span> <span class="fl">5</span>, correlogram <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">b4</span>, main <span class="op">=</span> <span class="st">"Problematic Correlogram"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b4</span>, main <span class="op">=</span> <span class="st">"Problematic Correlogram"</span><span class="op">)</span>
 
 <span class="co"># Output m_hat to console</span>
 <span class="va">b4</span><span class="op">$</span><span class="va">parameters</span><span class="op">[</span>, <span class="st">"m_hat"</span><span class="op">]</span>
@@ -264,7 +266,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Select block-length using PWSD method</span>
 <span class="va">b5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pwsd.html">pwsd</a></span><span class="op">(</span><span class="va">pcorr</span>, K_N <span class="op">=</span> <span class="fl">6</span>, correlogram <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">b5</span>, main <span class="op">=</span> <span class="st">"Problematic Correlogram 2"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b5</span>, main <span class="op">=</span> <span class="st">"Problematic Correlogram 2"</span><span class="op">)</span>
 
 <span class="co"># Output m_hat to console</span>
 <span class="va">b5</span><span class="op">$</span><span class="va">parameters</span><span class="op">[</span>, <span class="st">"m_hat"</span><span class="op">]</span>
@@ -274,8 +276,8 @@
 <p>Alternatively, when we keep <span class="math inline">\(K_N = 5\)</span> but change <span class="math inline">\(c\)</span> to mimic a 99% confidence level by setting <code>c = qnorm(0.995),</code> we get the following output with much wider bands of significance:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Select a block-length using PWSD method</span>
-<span class="va">b6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pwsd.html">pwsd</a></span><span class="op">(</span><span class="va">pcorr</span>, c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fl">0.995</span><span class="op">)</span>, correlogram <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">b6</span>, main <span class="op">=</span> <span class="st">"Problematic Correlogram 3"</span><span class="op">)</span>
+<span class="va">b6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pwsd.html">pwsd</a></span><span class="op">(</span><span class="va">pcorr</span>, c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm</a></span><span class="op">(</span><span class="fl">0.995</span><span class="op">)</span>, correlogram <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b6</span>, main <span class="op">=</span> <span class="st">"Problematic Correlogram 3"</span><span class="op">)</span>
 
 <span class="co"># Output m_hat to console</span>
 <span class="va">b6</span><span class="op">$</span><span class="va">parameters</span><span class="op">[</span>, <span class="st">"m_hat"</span><span class="op">]</span>
@@ -287,24 +289,24 @@
 <p>However, if some knowledge of the underlying data-generating process is known, we may want to lean on intuition. For example, benchmark interest rates are often derived from some daily interest rate using a 30-day (or 90-day) compound average. In such circumstances, we may want to examine at least 30 (90) lags of the correlation structure and consider completely overriding the estimation of <span class="math inline">\(\hat{m}\)</span> by setting the argument to <code>m_hat = 30</code> or <code>m_hat = 90.</code></p>
 </div>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References:</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References:<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
-<div id="ref-10-1093/biomet/82-3-561">
-<p>Hall, Peter, Joel L. Horowitz, and Bing-Yi Jing. 1995. “On blocking rules for the bootstrap with dependent data.” <em>Biometrika</em> 82 (3): 561–74. <a href="https://doi.org/10.1093/biomet/82.3.561">https://doi.org/10.1093/biomet/82.3.561</a>.</p>
+<div id="ref-10.1093/biomet/82.3.561">
+<p>Hall, Peter, Joel L. Horowitz, and Bing-Yi Jing. 1995. “On blocking rules for the bootstrap with dependent data.” <em>Biometrika</em> 82 (3): 561–74. <a href="https://doi.org/10.1093/biomet/82.3.561" class="external-link">https://doi.org/10.1093/biomet/82.3.561</a>.</p>
 </div>
 <div id="ref-lahiri2003resampling">
-<p>Lahiri, S. K. 2003. <em>Resampling Methods for Dependent Data</em>. Springer Series in Statistics. Springer. <a href="https://books.google.com/books?id=e4f8sqm439UC">https://books.google.com/books?id=e4f8sqm439UC</a>.</p>
+<p>Lahiri, S. K. 2003. <em>Resampling Methods for Dependent Data</em>. Springer Series in Statistics. Springer. <a href="https://books.google.com/books?id=e4f8sqm439UC" class="external-link">https://books.google.com/books?id=e4f8sqm439UC</a>.</p>
 </div>
-<div id="ref-https://doi-org/10-1111/j-1467-9892-1995-tb00223-x">
-<p>Politis, Dimitris N., and Joseph P. Romano. 1995. “Bias-Corrected Nonparametric Spectral Estimation.” <em>Journal of Time Series Analysis</em> 16 (1): 67–103. <a href="https://doi.org/10.1111/j.1467-9892.1995.tb00223.x">https://doi.org/10.1111/j.1467-9892.1995.tb00223.x</a>.</p>
+<div id="ref-https://doi.org/10.1111/j.1467-9892.1995.tb00223.x">
+<p>Politis, Dimitris N., and Joseph P. Romano. 1995. “Bias-Corrected Nonparametric Spectral Estimation.” <em>Journal of Time Series Analysis</em> 16 (1): 67–103. <a href="https://doi.org/10.1111/j.1467-9892.1995.tb00223.x" class="external-link">https://doi.org/10.1111/j.1467-9892.1995.tb00223.x</a>.</p>
 </div>
-<div id="ref-doi:10-1081/ETC-120028836">
-<p>Politis, Dimitris N., and Halbert White. 2004. “Automatic Block-Length Selection for the Dependent Bootstrap.” <em>Econometric Reviews</em> 23 (1): 53–70. <a href="https://doi.org/10.1081/ETC-120028836">https://doi.org/10.1081/ETC-120028836</a>.</p>
+<div id="ref-doi:10.1081/ETC-120028836">
+<p>Politis, Dimitris N., and Halbert White. 2004. “Automatic Block-Length Selection for the Dependent Bootstrap.” <em>Econometric Reviews</em> 23 (1): 53–70. <a href="https://doi.org/10.1081/ETC-120028836" class="external-link">https://doi.org/10.1081/ETC-120028836</a>.</p>
 </div>
-<div id="ref-doi:10-1098/rsta-1911-0009">
-<p>Richardson, Lewis Fry, and Richard Tetley Glazebrook. 1911. “IX. The Approximate Arithmetical Solution by Finite Differences of Physical Problems Involving Differential Equations, with an Application to the Stresses in a Masonry Dam.” <em>Philosophical Transactions of the Royal Society of London. Series A, Containing Papers of a Mathematical or Physical Character</em> 210 (459-470): 307–57. <a href="https://doi.org/10.1098/rsta.1911.0009">https://doi.org/10.1098/rsta.1911.0009</a>.</p>
+<div id="ref-doi:10.1098/rsta.1911.0009">
+<p>Richardson, Lewis Fry, and Richard Tetley Glazebrook. 1911. “IX. The Approximate Arithmetical Solution by Finite Differences of Physical Problems Involving Differential Equations, with an Application to the Stresses in a Masonry Dam.” <em>Philosophical Transactions of the Royal Society of London. Series A, Containing Papers of a Mathematical or Physical Character</em> 210 (459-470): 307–57. <a href="https://doi.org/10.1098/rsta.1911.0009" class="external-link">https://doi.org/10.1098/rsta.1911.0009</a>.</p>
 </div>
 </div>
 </div>
@@ -321,11 +323,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Alec Stashevsky.</p>
+  <p></p>
+<p>Developed by Alec Stashevsky.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -333,6 +337,8 @@
 
   
 
+
+  
 
   </body>
 </html>

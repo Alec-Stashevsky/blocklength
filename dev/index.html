@@ -34,6 +34,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -46,20 +48,20 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">blocklength</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.5.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="https://alecstashevsky.com">
+  <a href="https://alecstashevsky.com" class="external-link">
     <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +81,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/Alec-Stashevsky/blocklength">
+  <a href="https://github.com/Alec-Stashevsky/blocklength" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -96,60 +98,59 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="blocklength-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#blocklength-" class="anchor"></a>blocklength <img src="reference/figures/logo.svg" alt="" style="padding-left: 20px" align="right">
+<div class="section level1">
+<div class="page-header"><h1 id="blocklength-">blocklength <img src="reference/figures/logo.svg" alt="" style="padding-left: 20px" align="right"><a class="anchor" aria-label="anchor" href="#blocklength-"></a>
 </h1></div>
 <!-- badges: start -->
 
 <p><code>blocklength</code> is an R package used to automatically select the block-length parameter for a block-bootstrap. It is meant for use with dependent data such as stationary time series.</p>
-<div id="the-story" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-story" class="anchor"></a>The Story</h2>
+<div class="section level2">
+<h2 id="the-story">The Story<a class="anchor" aria-label="anchor" href="#the-story"></a>
+</h2>
 <p>Regular bootstrap methods rely on assumptions that observations are independent and identically distributed (<em>i.i.d.</em>), but this assumption fails for many types of time series because we would expect the observation in the previous period to have some explanatory power over the current observation. This could occur in any time series from unemployment rates, stock prices, biological data, etc. A time series that is <em>i.i.d.</em> would look like white noise, since the following observation would be totally independent of the previous one (random).</p>
 <p>To get around this problem, we can retain some of this <em>time-dependence</em> by breaking-up a time series into a number of blocks with length <em>l</em>. Instead of sampling each observation randomly (with replacement) like a regular bootstrap, we can resample these <em>blocks</em> at random. This way within each block the time-dependence is preserved.</p>
 <p>The problem with the block bootstrap is the high sensitivity to the choice of block-length, or the number of blocks to break the time series into.</p>
 <p>The goal of <code>blocklength</code> is to simplify and automate the process of selecting a block-length to perform a bootstrap on dependent data. <code>blocklength</code> has several functions that take their name from the authors who have proposed them. Currently, there are two methods available:</p>
-<ol>
-<li><p><code><a href="reference/hhj.html">hhj()</a></code> takes its name from the <a href="https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext">Hall, Horowitz, and Jing (1995)</a> “HHJ” method to select the optimal block-length using a cross-validation algorithm which minimizes the mean squared error <em>(MSE)</em> incurred by the bootstrap at various block-lengths.</p></li>
-<li><p><code><a href="reference/pwsd.html">pwsd()</a></code> takes its name from the <a href="https://doi.org/10.1081/ETC-120028836">Politis and White (2004)</a> Spectral Density “PWSD” Plug-in method to automatically select the optimal block-length using spectral density estimation via “flat-top” lag windows of <a href="https://doi.org/10.1111/j.1467-9892.1995.tb00223.x">Politis and Romano (1995).</a></p></li>
+<ol style="list-style-type: decimal">
+<li><p><code><a href="reference/hhj.html">hhj()</a></code> takes its name from the <a href="https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext" class="external-link">Hall, Horowitz, and Jing (1995)</a> “HHJ” method to select the optimal block-length using a cross-validation algorithm which minimizes the mean squared error <em>(MSE)</em> incurred by the bootstrap at various block-lengths.</p></li>
+<li><p><code><a href="reference/pwsd.html">pwsd()</a></code> takes its name from the <a href="https://doi.org/10.1081/ETC-120028836" class="external-link">Politis and White (2004)</a> Spectral Density “PWSD” Plug-in method to automatically select the optimal block-length using spectral density estimation via “flat-top” lag windows of <a href="https://doi.org/10.1111/j.1467-9892.1995.tb00223.x" class="external-link">Politis and Romano (1995).</a></p></li>
 </ol>
-<p>Under the hood, <code><a href="reference/hhj.html">hhj()</a></code> uses the moving block bootstrap (MBB) procedure according to <a href="https://projecteuclid.org/euclid.aos/1176347265">Künsch (1989)</a> which resamples blocks from a set of overlapping sub-samples with a fixed block-length. However, the results of <code><a href="reference/hhj.html">hhj()</a></code> may be generalized to other block bootstrap procedures such as the <em>stationary bootstrap</em> of <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870">Politis and Romano (1994).</a></p>
+<p>Under the hood, <code><a href="reference/hhj.html">hhj()</a></code> uses the moving block bootstrap (MBB) procedure according to <a href="https://projecteuclid.org/euclid.aos/1176347265" class="external-link">Künsch (1989)</a> which resamples blocks from a set of overlapping sub-samples with a fixed block-length. However, the results of <code><a href="reference/hhj.html">hhj()</a></code> may be generalized to other block bootstrap procedures such as the <em>stationary bootstrap</em> of <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870" class="external-link">Politis and Romano (1994).</a></p>
 <p>Compared to <code><a href="reference/pwsd.html">pwsd()</a></code>, <code><a href="reference/hhj.html">hhj()</a></code> is more computationally intensive as it relies on iterative resampling processes that optimize the MSE function over each possible block-length (or a select grid of block-lengths), while <code><a href="reference/pwsd.html">pwsd()</a></code> is a simpler “plug-in” rule that uses auto-correlations, auto-covariance, and the spectral density of the series to optimize the choice of block-length.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version from <a href="https://cran.r-project.org/package=blocklength">CRAN</a> with:</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the released version from <a href="https://cran.r-project.org/package=blocklength" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"blocklength"</span><span class="op">)</span></code></pre></div>
-<p>You can install the development version from <a href="https://github.com/Alec-Stashevsky/blocklength">GitHub</a> with:</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"blocklength"</span><span class="op">)</span></code></pre></div>
+<p>You can install the development version from <a href="https://github.com/Alec-Stashevsky/blocklength" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Alec-Stashevsky/blocklength"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="upcoming-changes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#upcoming-changes" class="anchor"></a>Upcoming changes</h2>
+<div class="section level2">
+<h2 id="upcoming-changes">Upcoming changes<a class="anchor" aria-label="anchor" href="#upcoming-changes"></a>
+</h2>
 <ul>
-<li>change parallel to <a href="https://github.com/RevolutionAnalytics/foreach">foreach</a> or <a href="https://future.futureverse.org">future</a> (pending user feedback - let me know!)</li>
+<li>change parallel to <a href="https://github.com/RevolutionAnalytics/foreach" class="external-link">foreach</a> or <a href="https://future.futureverse.org" class="external-link">future</a> (pending user feedback - let me know!)</li>
 </ul>
 </div>
-<div id="use-case" class="section level2">
-<h2 class="hasAnchor">
-<a href="#use-case" class="anchor"></a>Use Case</h2>
+<div class="section level2">
+<h2 id="use-case">Use Case<a class="anchor" aria-label="anchor" href="#use-case"></a>
+</h2>
 <p>We want to select the optimal block-length to perform a block bootstrap on a simulated autoregressive <em>AR(1)</em> time series.</p>
 <p>First we will generate the time series:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://alecstashevsky.com/r/blocklength">blocklength</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://alecstashevsky.com/r/blocklength">blocklength</a></span><span class="op">)</span>
 
 <span class="co"># Simulate AR(1) time series</span>
-<span class="va">series</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.sim.html">arima.sim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, ar <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
+<span class="va">series</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.sim.html" class="external-link">arima.sim</a></span><span class="op">(</span>model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, ar <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
                            n <span class="op">=</span> <span class="fl">500</span>, rand.gen <span class="op">=</span> <span class="va">rnorm</span><span class="op">)</span></code></pre></div>
 <p>Now, we can find the optimal block-length to perform a block-bootstrap. We do this using two methods.</p>
-<div id="1-the-hall-horowitz-and-jing-1995-hhj-method" class="section level3">
-<h3 class="hasAnchor">
-<a href="#1-the-hall-horowitz-and-jing-1995-hhj-method" class="anchor"></a>1. The Hall, Horowitz, and Jing (1995) “HHJ” Method</h3>
+<div class="section level3">
+<h3 id="1-the-hall-horowitz-and-jing-1995-hhj-method">1. The Hall, Horowitz, and Jing (1995) “HHJ” Method<a class="anchor" aria-label="anchor" href="#1-the-hall-horowitz-and-jing-1995-hhj-method"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Using the HHJ Algorithm with overlapping subsamples of width 10</span>
 <span class="fu"><a href="reference/hhj.html">hhj</a></span><span class="op">(</span><span class="va">series</span>, sub_sample <span class="op">=</span> <span class="fl">10</span>, k <span class="op">=</span> <span class="st">"bias/variance"</span><span class="op">)</span>
@@ -204,12 +205,12 @@
 <span id="cb6-39"><a href="#cb6-39"></a><span class="co">#&gt; attr(,"class")</span></span>
 <span id="cb6-40"><a href="#cb6-40"></a><span class="co">#&gt; [1] "hhj"</span></span></code></pre></div>
 </div>
-<div id="2-the-politis-and-white-2004-spectral-density-estimation-pwsd-method" class="section level3">
-<h3 class="hasAnchor">
-<a href="#2-the-politis-and-white-2004-spectral-density-estimation-pwsd-method" class="anchor"></a>2. The Politis and White (2004) Spectral Density Estimation “PWSD” Method</h3>
+<div class="section level3">
+<h3 id="2-the-politis-and-white-2004-spectral-density-estimation-pwsd-method">2. The Politis and White (2004) Spectral Density Estimation “PWSD” Method<a class="anchor" aria-label="anchor" href="#2-the-politis-and-white-2004-spectral-density-estimation-pwsd-method"></a>
+</h3>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Coerce time series to data.frame</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"AR1"</span> <span class="op">=</span> <span class="va">series</span><span class="op">)</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"AR1"</span> <span class="op">=</span> <span class="va">series</span><span class="op">)</span>
 
 <span class="co"># Using Politis and White (2004) Spectral Density Estimation</span>
 <span class="fu"><a href="reference/pwsd.html">pwsd</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> </code></pre></div>
@@ -243,61 +244,71 @@
 <p>We can see that both methods produce similar results for a block-length of 9 or 11 depending on the type of bootstrap method used.</p>
 </div>
 </div>
-<div id="acknowledgements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
-<p>A big shoutout to Malina Cheeneebash for designing the <code>blocklength</code> hex sticker! Also to Sergio Armella and <a href="https://www.simonpcouch.com">Simon P. Couch</a> for their help and feedback!</p>
+<div class="section level2">
+<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
+<p>A big shoutout to Malina Cheeneebash for designing the <code>blocklength</code> hex sticker! Also to Sergio Armella and <a href="https://www.simonpcouch.com" class="external-link">Simon P. Couch</a> for their help and feedback!</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=blocklength">https://​cloud.r-project.org/​package=blocklength</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/Alec-Stashevsky/blocklength/">https://​github.com/​Alec-Stashevsky/​blocklength/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/Alec-Stashevsky/blocklength/issues">https://​github.com/​Alec-Stashevsky/​blocklength/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=blocklength" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/Alec-Stashevsky/blocklength/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/Alec-Stashevsky/blocklength/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small>GPL (&gt;= 2)</small></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Alec Stashevsky <br><small class="roles"> Author, maintainer </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing blocklength</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/Alec-Stashevsky/blocklength/actions"><img src="https://github.com/Alec-Stashevsky/blocklength/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://CRAN.R-project.org/package=blocklength"><img src="https://www.r-pkg.org/badges/version/blocklength" alt="CRAN status"></a></li>
-<li><a href="https://CRAN.R-project.org/package=blocklength"><img src="https://cranlogs.r-pkg.org/badges/grand-total/blocklength?color=brightgreen" alt="Downloads"></a></li>
-<li><a href="https://CRAN.R-project.org/package=blocklength"><img src="https://img.shields.io/cran/l/blocklength" alt="CRAN/METACRAN"></a></li>
-<li><a href="https://codecov.io/gh/Alec-Stashevsky/blocklength"><img src="https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R" alt="codecov"></a></li>
+<li>Alec Stashevsky <br><small class="roles"> Author, maintainer </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/Alec-Stashevsky/blocklength/actions" class="external-link"><img src="https://github.com/Alec-Stashevsky/blocklength/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://CRAN.R-project.org/package=blocklength" class="external-link"><img src="https://www.r-pkg.org/badges/version/blocklength" alt="CRAN status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=blocklength" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/blocklength?color=brightgreen" alt="Downloads"></a></li>
+<li><a href="https://CRAN.R-project.org/package=blocklength" class="external-link"><img src="https://img.shields.io/cran/l/blocklength" alt="CRAN/METACRAN"></a></li>
+<li><a href="https://app.codecov.io/gh/Alec-Stashevsky/blocklength" class="external-link"><img src="https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R" alt="codecov"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Alec Stashevsky.</p>
+  <p></p>
+<p>Developed by Alec Stashevsky.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -305,6 +316,8 @@
 
   
 
+
+  
 
   </body>
 </html>
