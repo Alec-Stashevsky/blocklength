@@ -1,0 +1,9 @@
+pandoc: 3.1.11
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  tuning-parameters: tuning-parameters.html
+last_built: 2025-01-26T22:44Z
+urls:
+  reference: https://alecstashevsky.com/r/blocklength/reference
+  article: https://alecstashevsky.com/r/blocklength/articles
