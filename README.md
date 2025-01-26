@@ -5,12 +5,13 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/workflows/R-CMD-check/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions)
+[![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-project.org/package=blocklength)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/blocklength?color=brightgreen)](https://CRAN.R-project.org/package=blocklength)
 [![CRAN/METACRAN](https://img.shields.io/cran/l/blocklength)](https://CRAN.R-project.org/package=blocklength)
-[![codecov](https://codecov.io/gh/Alec-Stashevsky/blocklength/branch/main/graph/badge.svg?token=U2RFAU594R)](https://app.codecov.io/gh/Alec-Stashevsky/blocklength)
+[![Codecov test
+coverage](https://codecov.io/gh/Alec-Stashevsky/blocklength/graph/badge.svg)](https://app.codecov.io/gh/Alec-Stashevsky/blocklength)
 <!-- badges: end -->
 
 `blocklength` is an R package used to automatically select the
@@ -44,15 +45,15 @@ selecting a block-length to perform a bootstrap on dependent data.
 authors who have proposed them. Currently, there are two methods
 available:
 
-1.  `hhj()` takes its name from the [Hall, Horowitz, and
-    Jing (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext)
+1.  `hhj()` takes its name from the [Hall, Horowitz, and Jing
+    (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext)
     “HHJ” method to select the optimal block-length using a
     cross-validation algorithm which minimizes the mean squared error
     *(MSE)* incurred by the bootstrap at various block-lengths.
 
-2.  `pwsd()` takes its name from the [Politis and
-    White (2004)](https://doi.org/10.1081/ETC-120028836) Spectral
-    Density “PWSD” Plug-in method to automatically select the optimal
+2.  `pwsd()` takes its name from the [Politis and White
+    (2004)](https://doi.org/10.1081/ETC-120028836) Spectral Density
+    “PWSD” Plug-in method to automatically select the optimal
     block-length using spectral density estimation via “flat-top” lag
     windows of [Politis and Romano
     (1995).](https://doi.org/10.1111/j.1467-9892.1995.tb00223.x)
@@ -92,8 +93,8 @@ devtools::install_github("Alec-Stashevsky/blocklength")
 
 ## Upcoming changes
 
--   change parallel to `{foreach}` or `{future}` (pending user
-    feedback - let me know!)
+- change parallel to `{foreach}` or `{future}` (pending user feedback -
+  let me know!)
 
 ## Use Case
 
@@ -124,15 +125,15 @@ hhj(series, sub_sample = 10, k = "bias/variance")
 #>   as.zoo.data.frame zoo
 #> Performing minimization may take some time
 #> Calculating MSE for each level in subsample: 10 function evaluations required.
-#>  Chosen block length: 11  After iteration: 1
 ```
 
 <img src="man/figures/README-hhj-1.svg" width="100%" style="display: block; margin: auto;" />
 
-    #>  Converged at block length (l): 11
+    #>  Chosen block length: 11  After iteration: 1
 
 <img src="man/figures/README-hhj-2.svg" width="100%" style="display: block; margin: auto;" />
 
+    #>  Converged at block length (l): 11
     #> $`Optimal Block Length`
     #> [1] 11
     #> 
