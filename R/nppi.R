@@ -1,12 +1,12 @@
 # NPPI Algorithm for Optimal Block Length in Block Bootstrap
 
 # Function to estimate optimal block length using NPPI algorithm
-nppi_optimal_block_length <- function(data, stat_function, r = 1, a = 1, initial_block_size = NULL, num_bootstrap = 1000, c_1 = 1L) {
+nppi <- function(data, stat_function, r = 1, a = 1, initial_block_size = NULL, num_bootstrap = 1000, c_1 = 1L) {
   n <- length(data)
 
   # Step 1: Set initial block size if not provided
   if (is.null(initial_block_size)) {
-    initial_block_size <- floor(c_1*n^(1 / (r + 4)))
+    initial_block_size <- max(2, round(c_1*n^(1 / (r + 4))))
   }
 
   # Set c_2 to 1 if r=1 and to 0.1 otherwise
@@ -14,15 +14,30 @@ nppi_optimal_block_length <- function(data, stat_function, r = 1, a = 1, initial
 
   # Function to create overlapping blocks
   create_overlapping_blocks <- function(data, block_size) {
+    if (block_size > length(data)) {
+      stop("Block size is larger than data length.")
+    }
+
     N <- length(data) - block_size + 1
     blocks <- embed(data, block_size)[N:1, ]
+
+    if (is.null(dim(blocks))) {
+      blocks <- matrix(blocks, ncol = block_size)
+    }
+
     return(blocks)
   }
 
   # Step 1: Manual Moving Block Bootstrap (MBB) Resampling
   mbb_resample <- function(blocks, num_samples) {
     N <- nrow(blocks)
-    resampled_blocks <- replicate(num_samples, blocks[sample(1:N, N, replace = TRUE), ], simplify = FALSE)
+
+    resampled_blocks <- replicate(num_samples, {
+      sampled_indices <- sample(1:N, N, replace = TRUE)
+      sampled_blocks <- blocks[sampled_indices, , drop = FALSE]  # Keep as matrix
+      return(sampled_blocks)
+    }, simplify = FALSE)
+
     return(resampled_blocks)
   }
 
@@ -98,8 +113,8 @@ nppi_optimal_block_length <- function(data, stat_function, r = 1, a = 1, initial
   variance <- jab_variance_estimator(resampled_blocks, original_blocks, stat_function, m, phi_hat_n)
 
   # Step 5: Calculate Optimal Block Length
-  C_hat_1 <- n * l^(-r) * variance
-  C_hat_2 <- l * bias
+  C_hat_1 <- n * initial_block_size^(-r) * variance
+  C_hat_2 <- initial_block_size * bias
 
   optimal_block_length <- ((2 * C_hat_2^2) / (r * C_hat_1)^(1 / (r + 2)) * n^(1 / (r + 2)))
 
@@ -109,12 +124,40 @@ nppi_optimal_block_length <- function(data, stat_function, r = 1, a = 1, initial
 
 
 
+# Simulation Study  -------------------------------------------------------
+
+# Define the model (6.1): X_t = (epsilon_t + epsilon_{t-1}) / sqrt(2), epsilon_t ~ chi^2(1) - 1
+generate_data_model_6_1 <- function(n) {
+  epsilon <- rchisq(n + 1, df = 1) - 1
+  X <- (epsilon[-1] + epsilon[-(n + 1)]) / sqrt(2)
+  return(X)
+}
+
+# Run simulation to estimate optimal block length
+simulate_optimal_block_length <- function(num_simulations = 500, n = 125, block_lengths = 2:10) {
+  mse_results <- numeric(length(block_lengths))
 
 
+  for (l in block_lengths) {
+    print("Running simulation for block length: ", l)
+    pb <- txtProgressBar(min = 0, max = num_simulations, style = 3)
+    estimates <- numeric(num_simulations)
 
+    for (sim in 1:num_simulations) {
+      data <- generate_data_model_6_1(n)
+      result <- nppi(data, stat_function = function(x) mean(x), initial_block_size = l)
+      estimates[sim] <- result$optimal_block_length
+      setTxtProgressBar(pb, sim)
+    }
 
-# Example usage with a simple mean function
-# stat_function <- function(x) mean(x)
-# data <- rnorm(100)
-# result <- nppi_optimal_block_length(data, stat_function)
-# print(result)
+    mse_results[l] <- mean((estimates - 3)^2)  # Compare with true optimal block length = 3
+  }
+
+  return(data.frame(Block_Length = block_lengths, MSE = mse_results))
+}
+
+# Run the simulation
+set.seed(32)
+data <- generate_data_model_6_1(125)
+simulation_results <- simulate_optimal_block_length()
+print(simulation_results)
