@@ -1,11 +1,83 @@
 #' Lahiri, Furukawa, Lee, (2007) Nonparametric Plug-In "NPPI" Rule to Select the Optimal Block-Length
+#'
+#' This function implements the Nonparametric Plug-In (NPPI) algorithm,
+#'  as proposed by Lahiri, Furukawa, and Lee (2007), to select the optimal block
+#'  length for block bootstrap procedures.
+#'  The NPPI method estimates the optimal block length by balancing bias and
+#'  variance in block bootstrap estimators, particularly for time series and
+#'  other dependent data structures. The function also leverages the Moving
+#'  Block Bootstrap (MBB) method of (Künsch, 1989) and the Moving Blocks
+#'  Jackknifte (MBJ) of Liu and Singh (1992).
+#'
+#'  Jackknife-After-Bootstrap (JAB) variance estimation (Lahiri, 2002).
+#'
+#' @param data A numeric vector representing the time series or dependent data.
+#' @param stat_function A function to compute the statistic of interest
+#'  (*e.g.*, mean, variance). The function should accept a numeric vector as input
+#'  and return a scalar value (default is \code{mean}).
+#' @param r The rate parameter for the MSE expansion (default is 1). This
+#'  parameter controls the convergence rate in the bias-variance trade-off.
+#' @param a The bias exponent (default is 1). Adjust this based on the
+#'  theoretical properties of the statistic being bootstrapped.
+#' @param initial_block_size Optional. The initial block size for bias estimation.
+#'   If not provided, it is set to \code{max(2, round(c_1 * n^{1 / (r + 4)}))}, where \code{n} is the sample size.
+#' @param m Optional. The number of blocks to delete in the
+#'  Jackknife-After-Bootstrap (JAB) variance estimation. If not provided,
+#'  it defaults to \code{floor(c_2 * n^{1/3} * initial_block_size^{2/3})}.
+#' @param num_bootstrap The number of bootstrap replications for bias estimation
+#'  (default is 1000).
+#' @param c_1 A tuning constant for initial block size calculation (default is 1).
+#' @param epsilon A small constant added to the variance to prevent division by
+#'  zero (default is \code{1e-8}).
+#'
+#' @return A object of class \code{nppi} with the following components:
+#' \describe{
+#'   \item{optimal_block_length}{The estimated optimal block length for the block bootstrap procedure.}
+#'   \item{bias}{The estimated bias of the block bootstrap estimator.}
+#'   \item{variance}{The estimated variance of the block bootstrap estimator using the JAB method.}
+#' }
+#'
+#'  @section References:
+#'
+#'  Efron, B. (1992), 'Jackknife-after-bootstrap standard errors and influence
+#'      functions (with discussion)', Journal of Royal Statistical Society,
+#'      Series B 54, 83-111.
+#'
+#' Kunsch, H. (1989) The Jackknife and the Bootstrap for General Stationary
+#'      Observations. The Annals of Statistics, 17(3), 1217-1241. Retrieved
+#'      February 16, 2021, from \url{http://www.jstor.org/stable/2241719}
+#'
+#' Lahiri, S. N., Furukawa, K., & Lee, Y.-D. (2007). A nonparametric plug-in
+#'      rule for selecting optimal block lengths for Block Bootstrap Methods.
+#'      Statistical Methodology, 4(3), 292–321. DOI:
+#'      \doi{10.1016/j.stamet.2006.08.002}
+#'
+#' Lahiri, S. N. (2003). 7.4 A Nonparametric Plug-in Method. In Resampling
+#'      methods for dependent data (pp. 186–197). Springer.
+#'
+#' Liu, R. Y. and Singh, K. (1992), Moving blocks jackknife and bootstrap
+#'      capture weak dependence, in R. Lepage and L. Billard, eds, 'Exploring
+#'      the Limits of the Bootstrap', Wiley, New York, pp. 225-248.
+#'
 
-
-
-
+#' @export
+#'
+#' @examples
+#' #' # Generate AR(1) time series
+#' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
+#'                         n = 500, innov = rnorm(500))
+#'
+#' # Estimate the optimal block length for the sample mean
+#' result <- nppi(data = ar1_data,
+#'   stat_function = mean,
+#'   num_bootstrap = 500
+#' )
+#'
+#' print(result$optimal_block_length)
+#'
 nppi <- function(
     data,
-    stat_function,
+    stat_function = mean,
     r = 1,
     a = 1,
     initial_block_size = NULL,
@@ -160,13 +232,3 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
 
   return(jab_var)
 }
-
-
-
-
-
-
-
-
-
-
