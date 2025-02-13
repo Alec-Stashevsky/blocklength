@@ -101,7 +101,7 @@ nppi <- function(
   }
 
   # Step 1: Estimate bias via block bootstrap
-  bias_result <- bias_estimator(data, initial_block_size)
+  bias_result <- bias_estimator(data, initial_block_size, stat_function, num_bootstrap)
 
   # Step 2: Estimate variance via moving blocks jackknife
   variance <- jab_variance_estimator(
@@ -142,7 +142,7 @@ create_overlapping_blocks <- function(data, block_size) {
   N <- length(data) - block_size + 1
 
   # embed() creates blocks in reverse order so we re-order rows
-  blocks <- embed(data, block_size)[N:1, ]
+  blocks <- stats::embed(data, block_size)[N:1, ]
   if (is.null(dim(blocks))) {
     blocks <- matrix(blocks, ncol = block_size)
   }
@@ -163,7 +163,7 @@ mbb <- function(blocks, num_samples) {
 
 
 # Moving Block Bootstrap Bias Estimator
-bias_estimator <- function(data, block_size) {
+bias_estimator <- function(data, block_size, stat_function, num_bootstrap) {
   # Create blocks for block sizes l and 2l
   blocks_l1   <- create_overlapping_blocks(data, block_size)
   blocks_2l1  <- create_overlapping_blocks(data, 2 * block_size)
