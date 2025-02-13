@@ -3,4 +3,5 @@
 S3method(plot,hhj)
 S3method(plot,pwsd)
 export(hhj)
+export(nppi)
 export(pwsd)

@@ -19,7 +19,7 @@ Description: A set of functions to select the optimal block-length for a
     plot methods.
 License: GPL (>= 2)
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Suggests: 
     testthat,
     covr,

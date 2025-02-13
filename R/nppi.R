@@ -68,10 +68,7 @@
 #'                         n = 500, innov = rnorm(500))
 #'
 #' # Estimate the optimal block length for the sample mean
-#' result <- nppi(data = ar1_data,
-#'   stat_function = mean,
-#'   num_bootstrap = 500
-#' )
+#' result <- nppi(data = sim, stat_function = mean, num_bootstrap = 500)
 #'
 #' print(result$optimal_block_length)
 #'
