@@ -1,5 +1,8 @@
 ---
 output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -18,66 +21,189 @@ knitr::opts_chunk$set(
 set.seed(32)
 ```
 
-# blocklength <img src="man/figures/logo.svg" alt="" style="padding-left: 20px" align="right" />
+# blocklength <img src="man/figures/logo.svg" style="padding-left: 20px" align="right"/>
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions/workflows/R-CMD-check.yaml)
-[![CRAN status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-project.org/package=blocklength) 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-project.org/package=blocklength)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/blocklength?color=brightgreen)](https://CRAN.R-project.org/package=blocklength)
 [![CRAN/METACRAN](https://img.shields.io/cran/l/blocklength)](https://CRAN.R-project.org/package=blocklength)
-[![Codecov test coverage](https://codecov.io/gh/Alec-Stashevsky/blocklength/graph/badge.svg)](https://app.codecov.io/gh/Alec-Stashevsky/blocklength)
+[![Codecov test
+coverage](https://codecov.io/gh/Alec-Stashevsky/blocklength/graph/badge.svg)](https://app.codecov.io/gh/Alec-Stashevsky/blocklength)
+
 <!-- badges: end -->
 
-`blocklength` is an R package used to automatically select the block-length parameter for a block-bootstrap. It is meant for use with dependent data such as stationary time series.
-
+`blocklength` is an R package used to automatically select the
+block-length parameter for a block-bootstrap. It is meant for use with
+dependent data such as stationary time series.
 
 ## The Story
-  
-Regular bootstrap methods rely on assumptions that observations are independent and identically distributed (*i.i.d.*), but this assumption fails for many types of time series because we would expect the observation in the previous period to have some explanatory power over the current observation. This could occur in any time series from unemployment rates, stock prices, biological data, etc. A time series that is *i.i.d.* would look like white noise, since the following observation would be totally independent of the previous one (random).
 
-To get around this problem, we can retain some of this *time-dependence* by breaking-up a time series into a number of blocks with length *l*. Instead of sampling each observation randomly (with replacement) like a regular bootstrap, we can resample these *blocks* at random. This way within each block the time-dependence is preserved.
+Regular bootstrap methods rely on assumptions that observations are
+independent and identically distributed (*i.i.d.*), but this assumption
+fails for many types of time series because we would expect the
+observation in the previous period to have some explanatory power over
+the current observation. This could occur in any time series from
+unemployment rates, stock prices, biological data, etc. A time series
+that is *i.i.d.* would look like white noise, since the following
+observation would be totally independent of the previous one (random).
 
-The problem with the block bootstrap is the high sensitivity to the choice of block-length, or the number of blocks to break the time series into. 
+To get around this problem, we can retain some of this *time-dependence*
+by breaking-up a time series into a number of blocks with length *l*.
+Instead of sampling each observation randomly (with replacement) like a
+regular bootstrap, we can resample these *blocks* at random. This way
+within each block the time-dependence is preserved.
 
-The goal of `blocklength` is to simplify and automate the process of selecting a block-length to perform a bootstrap on dependent data. `blocklength` has several functions that take their name from the authors who have proposed them. Currently, 
-there are two methods available:
+The problem with the block bootstrap is the high sensitivity to the
+choice of block-length, or the number of blocks to break the time series
+into.
 
- 1. `hhj()` takes its name from the [Hall, Horowitz, and Jing (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext) "HHJ" method to select the optimal block-length using a cross-validation algorithm which minimizes the mean squared error *(MSE)* incurred by the bootstrap at various block-lengths.
+The goal of `blocklength` is to simplify and automate the process of
+selecting a block-length to perform a bootstrap on dependent data.
+`blocklength` has several functions that take their name from the
+authors who have proposed them. Currently, there are three methods
+available:
 
- 2. `pwsd()` takes its name from the [Politis and White (2004)](https://doi.org/10.1081/ETC-120028836) Spectral Density "PWSD" Plug-in method to automatically select the optimal block-length using spectral density estimation via "flat-top" lag windows of [Politis and Romano (1995).](https://doi.org/10.1111/j.1467-9892.1995.tb00223.x)
+1.  `hhj()` takes its name from the [Hall, Horowitz, and Jing
+    (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext)
+    "HHJ" method to select the optimal block-length using a
+    cross-validation algorithm which minimizes the mean squared error
+    *(MSE)* incurred by the bootstrap at various block-lengths.
 
-Under the hood, `hhj()` uses the moving block bootstrap (MBB) procedure according to [Künsch (1989)](https://projecteuclid.org/euclid.aos/1176347265) which resamples blocks from a set of overlapping sub-samples with a fixed block-length. However, the results of `hhj()` may be generalized to other block bootstrap procedures such as the *stationary bootstrap* of [Politis and Romano (1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870)
+2.  `pwsd()` takes its name from the [Politis and White
+    (2004)](https://doi.org/10.1081/ETC-120028836) Spectral Density
+    "PWSD" Plug-in method to automatically select the optimal
+    block-length using spectral density estimation via "flat-top" lag
+    windows of [Politis and Romano
+    (1995).](https://doi.org/10.1111/j.1467-9892.1995.tb00223.x)
 
-Compared to `pwsd()`, `hhj()` is more computationally intensive as it relies on iterative resampling processes that optimize the MSE function over each possible block-length (or a select grid of block-lengths), while `pwsd()` is a simpler "plug-in" rule that uses auto-correlations, auto-covariance, and the spectral density of the series to optimize the choice of block-length. 
+3.  `nppi()` takes its name from the [Lahiri, Furukawa, and Lee
+    (2007)](https://doi.org/10.1016/j.stamet.2006.08.002) Nonparametric
+    Plug-In "NPPI" method to select the optimal block-length for block
+    bootstrap procedures. The NPPI method estimates the leading term in
+    the first-order expansion of the theoretically optimal block length
+    by using resampling methods to construct consistent bias and
+    variance estimators for the block-bootstrap. Specifically, this
+    package implements the Moving Block Bootstrap (MBB) method of
+    [Künsch (1989)](https://projecteuclid.org/euclid.aos/1176347265) and
+    the Moving Blocks Jackknife (MBJ) of [Liu and Singh
+    (1992).](https://doi.org/10.1214/aos/1176348653) as the bias and
+    variance estimators, respectively.
+
+Under the hood, `hhj()` uses the moving block bootstrap (MBB) procedure
+according to [Künsch
+(1989)](https://projecteuclid.org/euclid.aos/1176347265) which resamples
+blocks from a set of overlapping sub-samples with a fixed block-length.
+However, the results of `hhj()` may be generalized to other block
+bootstrap procedures such as the *stationary bootstrap* of [Politis and
+Romano
+(1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870)
+
+Compared to `pwsd()`, `hhj()` is more computationally intensive as it
+relies on iterative sub-sampling processes that optimize the MSE
+function over each possible block-length (or a select grid of
+block-lengths), while `pwsd()` is a simpler "plug-in" rule that uses
+auto-correlations, auto-covariance, and the spectral density of the
+series to optimize the choice of block-length. Similarly, `nppi()` is
+another "plug-in" rule, however, due to its heavy reliance on
+resampling, can also be computationally intensive compared to `pwsd()`.
+
+For a detailed comparison, see the table below:
+
++---------------+---------------+----------------+-------------------+
+| Feature       | NPPI (Lahiri  | PWSD (Politis  | HHJ (Hall,        |
+|               | et al., 2007) | & White, 2004) | Horowitz & Jing,  |
+|               |               |                | 1995)             |
++===============+===============+================+===================+
+| **Method      | N             | Spectral       | Subsampling-based |
+| Type**        | onparameteric | density        | cross-validation  |
+|               | resampling    | estimation     |                   |
++---------------+---------------+----------------+-------------------+
+| **            | Medium        | Low (direct    | High (multiple    |
+| Computational | (bootstrap    | ACF            | subsamples)       |
+| Cost**        | and           | computation)   |                   |
+|               | jackknife)    |                |                   |
++---------------+---------------+----------------+-------------------+
+| **Primary     | Minimize MSE  | Estimate block | Minimize          |
+| Goal**        | of bootstrap  | length using   | estimation error  |
+|               | estimator     | spectral       | via               |
+|               |               | density        | cross-validation  |
++---------------+---------------+----------------+-------------------+
+| **Variance    | Uses          | Implicitly     | Uses              |
+| Estimation**  | Jackknife-Af  | estimated via  | subsample-based   |
+|               | ter-Bootstrap | spectral       | variance          |
+|               | (JAB)         | density        | estimation        |
++---------------+---------------+----------------+-------------------+
+| **Bias        | Directly      | Indirectly     | Uses              |
+| Estimation**  | estimates     | accounts for   | subsample-based   |
+|               | bias from     | bias via ACF   | bias estimation   |
+|               | bootstrap     | decay          |                   |
++---------------+---------------+----------------+-------------------+
+| **Best for**  | Ge            | Block-length   |                   |
+|               | neral-purpose | selection for  |                   |
+|               | estimators,   | the circular   |                   |
+|               | small sample  | and stationary |                   |
+|               | sizes, and    | block          |                   |
+|               | quantile      | bootstrap.     |                   |
+|               | estimation.   |                |                   |
+|               |               | Time series    |                   |
+|               |               | with strong    |                   |
+|               |               | au             |                   |
+|               |               | tocorrelation. |                   |
++---------------+---------------+----------------+-------------------+
+| **Estimation  | Bootstrap     | Bootstrap      | Bootstrap         |
+| Capacity**    | bias, bootrap | sample mean    | variance and      |
+|               | variance,     | only.          | bootstrap         |
+|               | bootstrap     |                | distribution      |
+|               | distribution  |                | function          |
+|               | function, and |                | estimation        |
+|               | bootstrap     |                |                   |
+|               | quantile      |                |                   |
+|               | estimation    |                |                   |
++---------------+---------------+----------------+-------------------+
+| *             | Requires a    | Works with raw | Requires a        |
+| *Dependency** | user-defined  | time series    | user-defined      |
+|               | parameters    |                | parameters for    |
+|               | for initial   |                | initial           |
+|               | block-length  |                | block-length      |
+|               | *l* and       |                | *l\** and number  |
+|               | number of     |                | of deletion       |
+|               | deletion      |                | blocks *m*.       |
+|               | blocks *m*.   |                |                   |
++---------------+---------------+----------------+-------------------+
 
 
 ## Installation
 
-You can install the released version from [CRAN](https://cran.r-project.org/package=blocklength) with:
+You can install the released version from
+[CRAN](https://cran.r-project.org/package=blocklength) with:
 
 ``` r
 install.packages("blocklength")
 ```
 
-You can install the development version from [GitHub](https://github.com/Alec-Stashevsky/blocklength) with:
+You can install the development version from
+[GitHub](https://github.com/Alec-Stashevsky/blocklength) with:
 
-```r
+``` r
 # install.packages("devtools")
 devtools::install_github("Alec-Stashevsky/blocklength")
 ```
 
-
 ## Upcoming changes
 
-- change parallel to `{foreach}` or `{future}` (pending user feedback - let me know!)
-
+-   change parallel to `{foreach}` or `{future}` (pending user
+    feedback - let me know!)
 
 ## Use Case
 
-We want to select the optimal block-length to perform a block bootstrap on a 
-simulated autoregressive *AR(1)* time series.
+We want to select the optimal block-length to perform a block bootstrap
+on a simulated autoregressive *AR(1)* time series.
 
 First we will generate the time series:
+
 ```{r series}
 library(blocklength)
 
@@ -86,9 +212,8 @@ series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
                            n = 500, rand.gen = rnorm)
 ```
 
-Now, we can find the optimal block-length to perform a block-bootstrap. We do 
-this using two methods.
-
+Now, we can find the optimal block-length to perform a block-bootstrap.
+We do this using two methods.
 
 ### 1. The Hall, Horowitz, and Jing (1995) "HHJ" Method
 
@@ -96,7 +221,6 @@ this using two methods.
 ## Using the HHJ Algorithm with overlapping subsamples of width 10
 hhj(series, sub_sample = 10, k = "bias/variance")
 ```
-
 
 ### 2. The Politis and White (2004) Spectral Density Estimation "PWSD" Method
 
@@ -108,10 +232,11 @@ data <- data.frame("AR1" = series)
 pwsd(data) 
 ```
 
-We can see that both methods produce similar results for a block-length of 9 or 11
-depending on the type of bootstrap method used.
-
+We can see that both methods produce similar results for a block-length
+of 9 or 11 depending on the type of bootstrap method used.
 
 ## Acknowledgements
 
-A big shoutout to Malina Cheeneebash for designing the `blocklength` hex sticker! Also to Sergio Armella and [Simon P. Couch](https://www.simonpcouch.com) for their help and feedback!
+A big shoutout to Malina Cheeneebash for designing the `blocklength` hex
+sticker! Also to Sergio Armella and [Simon P.
+Couch](https://www.simonpcouch.com) for their help and feedback!

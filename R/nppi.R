@@ -46,7 +46,7 @@
 #'
 #'  @section References:
 #'
-#'  Efron, B. (1992), 'Jackknife-after-bootstrap standard errors and influence
+#' Efron, B. (1992), 'Jackknife-after-bootstrap standard errors and influence
 #'      functions (with discussion)', Journal of Royal Statistical Society,
 #'      Series B 54, 83-111.
 #'

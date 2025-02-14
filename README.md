@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# blocklength <img src="man/figures/logo.svg" alt="" style="padding-left: 20px" align="right" />
+# blocklength <img src="man/figures/logo.svg" style="padding-left: 20px" align="right"/>
 
 <!-- badges: start -->
 
@@ -12,6 +12,7 @@ status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-projec
 [![CRAN/METACRAN](https://img.shields.io/cran/l/blocklength)](https://CRAN.R-project.org/package=blocklength)
 [![Codecov test
 coverage](https://codecov.io/gh/Alec-Stashevsky/blocklength/graph/badge.svg)](https://app.codecov.io/gh/Alec-Stashevsky/blocklength)
+
 <!-- badges: end -->
 
 `blocklength` is an R package used to automatically select the
@@ -42,7 +43,7 @@ into.
 The goal of `blocklength` is to simplify and automate the process of
 selecting a block-length to perform a bootstrap on dependent data.
 `blocklength` has several functions that take their name from the
-authors who have proposed them. Currently, there are two methods
+authors who have proposed them. Currently, there are three methods
 available:
 
 1.  `hhj()` takes its name from the [Hall, Horowitz, and Jing
@@ -58,6 +59,19 @@ available:
     windows of [Politis and Romano
     (1995).](https://doi.org/10.1111/j.1467-9892.1995.tb00223.x)
 
+3.  `nppi()` takes its name from the [Lahiri, Furukawa, and Lee
+    (2007)](https://doi.org/10.1016/j.stamet.2006.08.002) Nonparametric
+    Plug-In “NPPI” method to select the optimal block-length for block
+    bootstrap procedures. The NPPI method estimates the leading term in
+    the first-order expansion of the theoretically optimal block length
+    by using resampling methods to construct consistent bias and
+    variance estimators for the block-bootstrap. Specifically, this
+    package implements the Moving Block Bootstrap (MBB) method of
+    [Künsch (1989)](https://projecteuclid.org/euclid.aos/1176347265) and
+    the Moving Blocks Jackknife (MBJ) of [Liu and Singh
+    (1992).](https://doi.org/10.1214/aos/1176348653) as the bias and
+    variance estimators, respectively.
+
 Under the hood, `hhj()` uses the moving block bootstrap (MBB) procedure
 according to [Künsch
 (1989)](https://projecteuclid.org/euclid.aos/1176347265) which resamples
@@ -68,11 +82,91 @@ Romano
 (1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870)
 
 Compared to `pwsd()`, `hhj()` is more computationally intensive as it
-relies on iterative resampling processes that optimize the MSE function
-over each possible block-length (or a select grid of block-lengths),
-while `pwsd()` is a simpler “plug-in” rule that uses auto-correlations,
-auto-covariance, and the spectral density of the series to optimize the
-choice of block-length.
+relies on iterative sub-sampling processes that optimize the MSE
+function over each possible block-length (or a select grid of
+block-lengths), while `pwsd()` is a simpler “plug-in” rule that uses
+auto-correlations, auto-covariance, and the spectral density of the
+series to optimize the choice of block-length. Similarly, `nppi()` is
+another “plug-in” rule, however, due to its heavy reliance on
+resampling, can also be computationally intensive compared to `pwsd()`.
+
+For a detailed comparison, see the table below:
+
+<table style="width:96%;">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 23%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>NPPI (Lahiri et al., 2007)</th>
+<th>PWSD (Politis &amp; White, 2004)</th>
+<th>HHJ (Hall, Horowitz &amp; Jing, 1995)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Method Type</strong></td>
+<td>N onparameteric resampling</td>
+<td>Spectral density estimation</td>
+<td>Subsampling-based cross-validation</td>
+</tr>
+<tr class="even">
+<td><strong> Computational Cost</strong></td>
+<td>Medium (bootstrap and jackknife)</td>
+<td>Low (direct ACF computation)</td>
+<td>High (multiple subsamples)</td>
+</tr>
+<tr class="odd">
+<td><strong>Primary Goal</strong></td>
+<td>Minimize MSE of bootstrap estimator</td>
+<td>Estimate block length using spectral density</td>
+<td>Minimize estimation error via cross-validation</td>
+</tr>
+<tr class="even">
+<td><strong>Variance Estimation</strong></td>
+<td>Uses Jackknife-Af ter-Bootstrap (JAB)</td>
+<td>Implicitly estimated via spectral density</td>
+<td>Uses subsample-based variance estimation</td>
+</tr>
+<tr class="odd">
+<td><strong>Bias Estimation</strong></td>
+<td>Directly estimates bias from bootstrap</td>
+<td>Indirectly accounts for bias via ACF decay</td>
+<td>Uses subsample-based bias estimation</td>
+</tr>
+<tr class="even">
+<td><strong>Best for</strong></td>
+<td>Ge neral-purpose estimators, small sample sizes, and quantile
+estimation.</td>
+<td><p>Block-length selection for the circular and stationary block
+bootstrap.</p>
+<p>Time series with strong au tocorrelation.</p></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Estimation Capacity</strong></td>
+<td>Bootstrap bias, bootrap variance, bootstrap distribution function,
+and bootstrap quantile estimation</td>
+<td>Bootstrap sample mean only.</td>
+<td>Bootstrap variance and bootstrap distribution function
+estimation</td>
+</tr>
+<tr class="even">
+<td><ul>
+<li>*Dependency**</li>
+</ul></td>
+<td>Requires a user-defined parameters for initial block-length
+<em>l</em> and number of deletion blocks <em>m</em>.</td>
+<td>Works with raw time series</td>
+<td>Requires a user-defined parameters for initial block-length
+<em>l*</em> and number of deletion blocks <em>m</em>.</td>
+</tr>
+</tbody>
+</table>
 
 ## Installation
 
