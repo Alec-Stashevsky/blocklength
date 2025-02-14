@@ -90,6 +90,11 @@ nppi <- function(
     c_1 = 1L,
     epsilon = 1e-8) {
 
+  # Check for NA values
+  if (anyNA(data)) {
+    stop("Error: NA values detected in the time series. Please impute or remove them manually.")
+  }
+
   # Set parameters
   n <- length(data)
 

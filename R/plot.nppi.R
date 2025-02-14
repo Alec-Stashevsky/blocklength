@@ -19,7 +19,7 @@
 #'                         n = 500, innov = rnorm(500))
 #'
 #' # Estimate the optimal block length for the sample mean
-#' result <- nppi(data = sim, stat_function = mean, num_bootstrap = 500, m =2)
+#' result <- nppi(data = sim, stat_function = mean, num_bootstrap = 500, m = 2)
 #'
 #' # Use s3 method
 #' plot(result)
