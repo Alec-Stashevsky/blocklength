@@ -19,11 +19,12 @@
 #'  parameter controls the convergence rate in the bias-variance trade-off.
 #' @param a The bias exponent (default is 1). Adjust this based on the
 #'  theoretical properties of the statistic being bootstrapped.
-#' @param initial_block_size Optional. The initial block size for bias estimation.
-#'   If not provided, it is set to \code{max(2, round(c_1 * n^{1 / (r + 4)}))}, where \code{n} is the sample size.
+#' @param l Optional. The initial block size for bias estimation.
+#'   If not provided, it is set to \code{max(2, round(c_1 * n^{1 / (r + 4)}))},
+#'   where \code{n} is the sample size.
 #' @param m Optional. The number of blocks to delete in the
 #'  Jackknife-After-Bootstrap (JAB) variance estimation. If not provided,
-#'  it defaults to \code{floor(c_2 * n^{1/3} * initial_block_size^{2/3})}.
+#'  it defaults to \code{floor(c_2 * n^{1/3} * l^{2/3})}.
 #' @param num_bootstrap The number of bootstrap replications for bias estimation
 #'  (default is 1000).
 #' @param c_1 A tuning constant for initial block size calculation (default is 1).
@@ -32,9 +33,15 @@
 #'
 #' @return A object of class \code{nppi} with the following components:
 #' \describe{
-#'   \item{optimal_block_length}{The estimated optimal block length for the block bootstrap procedure.}
+#'   \item{optimal_block_length}{The estimated optimal block length for the
+#'    block bootstrap procedure.}
 #'   \item{bias}{The estimated bias of the block bootstrap estimator.}
-#'   \item{variance}{The estimated variance of the block bootstrap estimator using the JAB method.}
+#'   \item{variance}{The estimated variance of the block bootstrap estimator
+#'    using the JAB method.}
+#'   \item{jab_point_values}{The point estimates of the statistic for each
+#'    deletion block in the JAB variance estimation. Used for diagnostic plots}
+#'    \item{l}{The initial block size used for bias estimation.}
+#'    \item{m}{The number of blocks to delete in the JAB variance estimation.}
 #' }
 #'
 #'  @section References:
@@ -63,7 +70,7 @@
 #' @export
 #'
 #' @examples
-#' #' # Generate AR(1) time series
+#' # Generate AR(1) time series
 #' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
 #'                         n = 500, innov = rnorm(500))
 #'
@@ -77,7 +84,7 @@ nppi <- function(
     stat_function = mean,
     r = 1,
     a = 1,
-    initial_block_size = NULL,
+    l = NULL,
     m = NULL,
     num_bootstrap = 1000,
     c_1 = 1L,
@@ -86,22 +93,25 @@ nppi <- function(
   # Set parameters
   n <- length(data)
 
-  if (is.null(initial_block_size)) {
-    initial_block_size <- max(2, round(c_1 * n^(1 / (r + 4))))
+  if (is.null(l)) {
+    l <- max(2, round(c_1 * n^(1 / (r + 4))))
+    message(" Setting l to recomended value: ", l)
+
   }
 
   # Recommended values
   c_2 <- if (r == 1) 1 else 0.1
 
   if (is.null(m)) {
-    m <- floor(c_2 * n^(1/3) * initial_block_size^(2/3))
+    m <- floor(c_2 * n^(1/3) * l^(2/3))
+    message(" Setting m to recomended value: ", m)
   }
 
   # Step 1: Estimate bias via block bootstrap
-  bias_result <- bias_estimator(data, initial_block_size, stat_function, num_bootstrap)
+  bias_result <- bias_estimator(data, l, stat_function, num_bootstrap)
 
   # Step 2: Estimate variance via moving blocks jackknife
-  variance <- jab_variance_estimator(
+  variance_result <- jab_variance_estimator(
     bias_result$resampled_blocks,
     bias_result$original_blocks,
     stat_function,
@@ -110,8 +120,8 @@ nppi <- function(
     )
 
   # Step 3: Compute the NPPI estimate for the optimal block length
-  C_hat_1 <- n * initial_block_size^(-r) * variance
-  C_hat_2 <- initial_block_size * bias_result$bias
+  C_hat_1 <- n * l^(-r) * variance_result$jab_variance
+  C_hat_2 <- l * bias_result$bias
   optimal_block_length <- (2 * C_hat_2^2 / ((r * C_hat_1)^(1 / (r + 2)))) * n^(1 / (r + 2))
 
   # Compile results with custom class
@@ -119,7 +129,10 @@ nppi <- function(
     list(
       optimal_block_length = optimal_block_length,
       bias = bias_result$bias,
-      variance = variance
+      variance = variance_result$jab_variance,
+      jab_point_values = variance_result$jab_point_values,
+      l=l,
+      m=m
     ),
     class = "nppi"
   )
@@ -225,7 +238,10 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
 
   # Remove any NA values and compute the JAB variance
   jab_point_values <- jab_point_values[!is.na(jab_point_values)]
-  jab_var <- (m / (N - m)) * (1 / M) * sum((jab_point_values - phi_hat_n)^2) + epsilon
+  jab_variance <- (m / (N - m)) * (1 / M) * sum((jab_point_values - phi_hat_n)^2) + epsilon
 
-  return(jab_var)
+  return(list(
+    jab_variance = jab_variance,
+    jab_point_values = jab_point_values
+  ))
 }

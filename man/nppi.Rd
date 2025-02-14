@@ -9,7 +9,7 @@ nppi(
   stat_function = mean,
   r = 1,
   a = 1,
-  initial_block_size = NULL,
+  l = NULL,
   m = NULL,
   num_bootstrap = 1000,
   c_1 = 1L,
@@ -29,12 +29,13 @@ parameter controls the convergence rate in the bias-variance trade-off.}
 \item{a}{The bias exponent (default is 1). Adjust this based on the
 theoretical properties of the statistic being bootstrapped.}
 
-\item{initial_block_size}{Optional. The initial block size for bias estimation.
-If not provided, it is set to \code{max(2, round(c_1 * n^{1 / (r + 4)}))}, where \code{n} is the sample size.}
+\item{l}{Optional. The initial block size for bias estimation.
+If not provided, it is set to \code{max(2, round(c_1 * n^{1 / (r + 4)}))},
+where \code{n} is the sample size.}
 
 \item{m}{Optional. The number of blocks to delete in the
 Jackknife-After-Bootstrap (JAB) variance estimation. If not provided,
-it defaults to \code{floor(c_2 * n^{1/3} * initial_block_size^{2/3})}.}
+it defaults to \code{floor(c_2 * n^{1/3} * l^{2/3})}.}
 
 \item{num_bootstrap}{The number of bootstrap replications for bias estimation
 (default is 1000).}
@@ -47,9 +48,15 @@ zero (default is \code{1e-8}).}
 \value{
 A object of class \code{nppi} with the following components:
 \describe{
-  \item{optimal_block_length}{The estimated optimal block length for the block bootstrap procedure.}
+  \item{optimal_block_length}{The estimated optimal block length for the
+   block bootstrap procedure.}
   \item{bias}{The estimated bias of the block bootstrap estimator.}
-  \item{variance}{The estimated variance of the block bootstrap estimator using the JAB method.}
+  \item{variance}{The estimated variance of the block bootstrap estimator
+   using the JAB method.}
+  \item{jab_point_values}{The point estimates of the statistic for each
+   deletion block in the JAB variance estimation. Used for diagnostic plots}
+   \item{l}{The initial block size used for bias estimation.}
+   \item{m}{The number of blocks to delete in the JAB variance estimation.}
 }
 
  @section References:
@@ -88,7 +95,7 @@ This function implements the Nonparametric Plug-In (NPPI) algorithm,
 Jackknife-After-Bootstrap (JAB) variance estimation (Lahiri, 2002).
 }
 \examples{
-#' # Generate AR(1) time series
+# Generate AR(1) time series
 sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
                         n = 500, innov = rnorm(500))
 
