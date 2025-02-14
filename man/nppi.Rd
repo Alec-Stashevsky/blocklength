@@ -104,4 +104,7 @@ result <- nppi(data = sim, stat_function = mean, num_bootstrap = 500)
 
 print(result$optimal_block_length)
 
+# Use S3 method to plot JAB diagnostic
+plot(result)
+
 }
