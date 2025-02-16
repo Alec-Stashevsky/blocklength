@@ -88,85 +88,24 @@ block-lengths), while `pwsd()` is a simpler “plug-in” rule that uses
 auto-correlations, auto-covariance, and the spectral density of the
 series to optimize the choice of block-length. Similarly, `nppi()` is
 another “plug-in” rule, however, due to its heavy reliance on
-resampling, can also be computationally intensive compared to `pwsd()`.
+resampling, it can also be computationally intensive compared to
+`pwsd()`.
 
 For a detailed comparison, see the table below:
 
-<table style="width:96%;">
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 22%" />
-<col style="width: 23%" />
-<col style="width: 27%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Feature</th>
-<th>NPPI (Lahiri et al., 2007)</th>
-<th>PWSD (Politis &amp; White, 2004)</th>
-<th>HHJ (Hall, Horowitz &amp; Jing, 1995)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Method Type</strong></td>
-<td>N onparameteric resampling</td>
-<td>Spectral density estimation</td>
-<td>Subsampling-based cross-validation</td>
-</tr>
-<tr class="even">
-<td><strong> Computational Cost</strong></td>
-<td>Medium (bootstrap and jackknife)</td>
-<td>Low (direct ACF computation)</td>
-<td>High (multiple subsamples)</td>
-</tr>
-<tr class="odd">
-<td><strong>Primary Goal</strong></td>
-<td>Minimize MSE of bootstrap estimator</td>
-<td>Estimate block length using spectral density</td>
-<td>Minimize estimation error via cross-validation</td>
-</tr>
-<tr class="even">
-<td><strong>Variance Estimation</strong></td>
-<td>Uses Jackknife-Af ter-Bootstrap (JAB)</td>
-<td>Implicitly estimated via spectral density</td>
-<td>Uses subsample-based variance estimation</td>
-</tr>
-<tr class="odd">
-<td><strong>Bias Estimation</strong></td>
-<td>Directly estimates bias from bootstrap</td>
-<td>Indirectly accounts for bias via ACF decay</td>
-<td>Uses subsample-based bias estimation</td>
-</tr>
-<tr class="even">
-<td><strong>Best for</strong></td>
-<td>Ge neral-purpose estimators, small sample sizes, and quantile
-estimation.</td>
-<td><p>Block-length selection for the circular and stationary block
-bootstrap.</p>
-<p>Time series with strong au tocorrelation.</p></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>Estimation Capacity</strong></td>
-<td>Bootstrap bias, bootrap variance, bootstrap distribution function,
-and bootstrap quantile estimation</td>
-<td>Bootstrap sample mean only.</td>
-<td>Bootstrap variance and bootstrap distribution function
-estimation</td>
-</tr>
-<tr class="even">
-<td><ul>
-<li>*Dependency**</li>
-</ul></td>
-<td>Requires a user-defined parameters for initial block-length
-<em>l</em> and number of deletion blocks <em>m</em>.</td>
-<td>Works with raw time series</td>
-<td>Requires a user-defined parameters for initial block-length
-<em>l*</em> and number of deletion blocks <em>m</em>.</td>
-</tr>
-</tbody>
-</table>
+|  | NPPI (Lahiri et al., 2007) | PWSD (Politis & White, 2004) | HHJ (Hall, Horowitz & Jing, 1995) |
+|:---|:---|:---|:---|
+| **Method Type** | Nonparametric resampling | Spectral density estimation | Subsampling-based cross-validation |
+| **Computational Cost** | Medium (bootstrap resampling & jackknife) | Low (direct ACF computation) | High (subsampling & cross-validation) |
+| **Primary Goal** | Minimize MSE of bootstrap estimator | Estimate block length using spectral density | Minimize MSE via cross-validation |
+| **Variance Estimation** | Moving Blocks Jackknife-After-Bootstrap (JAB) | Implicitly estimated via spectral density | Uses subsample-based variance estimation |
+| **Bias Estimation** | Directly estimates bias from bootstrap | Indirectly accounts for bias via ACF decay | Uses subsample-based bias estimation |
+| **Best for** | General-purpose estimators, small sample sizes, and quantile estimation | Block-length selection for circular and stationary bootstrap, time series with strong autocorrelation | Estimating functionals with strong dependencies |
+| **Estimation Capacity** | Bootstrap bias, variance, distribution function, and quantile estimation | Bootstrap sample mean only | Bootstrap variance and distribution function estimation |
+| **Dependency\*** | User-defined parameters for initial block-length `l` and number of deletion blocks `m` | User-defined parameters for autocorrelation lag and implied hypothesis tests (4 total) | Requires user-defined parameters for `pilot_block_length` (*l\**) and `sub_sample` size (*m*) |
+
+\* All algorithms have default user-defined parameters recomended by the
+respective authors.
 
 ## Installation
 
@@ -185,11 +124,6 @@ You can install the development version from
 devtools::install_github("Alec-Stashevsky/blocklength")
 ```
 
-## Upcoming changes
-
-- change parallel to `{foreach}` or `{future}` (pending user feedback -
-  let me know!)
-
 ## Use Case
 
 We want to select the optimal block-length to perform a block bootstrap
@@ -203,10 +137,13 @@ library(blocklength)
 # Simulate AR(1) time series
 series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
                            n = 500, rand.gen = rnorm)
+
+# Coerce time series to data.frame (not necessary)
+data <- data.frame("AR1" = series)
 ```
 
 Now, we can find the optimal block-length to perform a block-bootstrap.
-We do this using two methods.
+We do this using the three available methods.
 
 ### 1. The Hall, Horowitz, and Jing (1995) “HHJ” Method
 
@@ -272,11 +209,8 @@ hhj(series, sub_sample = 10, k = "bias/variance")
 ### 2. The Politis and White (2004) Spectral Density Estimation “PWSD” Method
 
 ``` r
-# Coerce time series to data.frame
-data <- data.frame("AR1" = series)
-
 # Using Politis and White (2004) Spectral Density Estimation
-pwsd(data) 
+pwsd(data)
 ```
 
 <img src="man/figures/README-pwsd-1.svg" width="100%" style="display: block; margin: auto;" />
@@ -310,6 +244,63 @@ pwsd(data)
 
 We can see that both methods produce similar results for a block-length
 of 9 or 11 depending on the type of bootstrap method used.
+
+### 3. The Lahiri, Furukawa, and Lee (2007) Nonparametric Plug-In “NPPI” Method
+
+``` r
+# Using Lahiri, Furukawa, and Lee (2007) Nonparametric Plug-In 
+nppi(data, m = 8) 
+#>  Setting l to recomended value: 3
+```
+
+<img src="man/figures/README-nppi-1.svg" width="100%" style="display: block; margin: auto;" />
+
+    #> $optimal_block_length
+    #> [1] 0.1666766
+    #> 
+    #> $bias
+    #> [1] 0.01152002
+    #> 
+    #> $variance
+    #> [1] 8.831518e-06
+    #> 
+    #> $jab_point_values
+    #>   [1] -0.0327374132  0.0086065594  0.0025366424  0.0406465091  0.0406465091
+    #>   [6]  0.0027838449 -0.0030100569  0.0406465091 -0.0971565707 -0.0371154550
+    #>  [11] -0.0755599178 -0.0755599178  0.0339749181 -0.0153968136  0.0145322529
+    #>  [16]  0.0169365682 -0.0333963967 -0.0333963967 -0.0333963967  0.0005655976
+    #>  [21]  0.0005655976  0.0005655976 -0.0708860990 -0.0270703095 -0.0270703095
+    #>  [26] -0.0659660916  0.0105882914 -0.0534955263  0.0206597579  0.0206597579
+    #>  [31] -0.0011544990 -0.0011544990  0.0183578992 -0.0301712541  0.0054632495
+    #>  [36] -0.0266459338 -0.0054879294  0.0134722464  0.0134722464  0.0449865026
+    #>  [41]  0.0449865026  0.0449865026  0.0449865026  0.0449865026  0.0100703950
+    #>  [46] -0.0889593545  0.0310801474 -0.0243945020  0.0152544405 -0.0278311082
+    #>  [51] -0.0116288527 -0.0320142219 -0.0320142219 -0.0142486081 -0.0052232227
+    #>  [56] -0.0052232227 -0.0052232227 -0.0276679506  0.0423320598 -0.0917146684
+    #>  [61] -0.0672953105  0.0678550387 -0.0378347310 -0.0378347310 -0.0818476398
+    #>  [66] -0.0427210926 -0.0250356679 -0.0250356679  0.0150383573 -0.0180655321
+    #>  [71] -0.0011544990 -0.0446551570 -0.0994751979 -0.0994751979 -0.0576207962
+    #>  [76] -0.0396419555 -0.0396419555 -0.0396419555 -0.0003119844 -0.0540061018
+    #>  [81]  0.0803656842 -0.0528692544 -0.0646321946 -0.0646321946 -0.0402261089
+    #>  [86] -0.0208329391 -0.0389210110  0.0489710594 -0.0099764121 -0.0355391996
+    #>  [91] -0.0536628938 -0.0378180773  0.0124084253  0.0124084253 -0.0644349773
+    #>  [96] -0.0644349773 -0.0644349773 -0.0369211728 -0.0238227629 -0.0238227629
+    #> [101]  0.0333384171  0.0333384171  0.0140114628  0.0447980697 -0.1019902258
+    #> [106] -0.0428492854 -0.0142220238 -0.1019902258 -0.1019902258 -0.0835156159
+    #> [111] -0.0819563010 -0.0819563010 -0.0185758839 -0.0266705165 -0.0144722001
+    #> [116] -0.0107257918  0.0487134593  0.0487134593  0.0002546279 -0.0931438608
+    #> [121] -0.0011345209 -0.0011345209  0.0375753481  0.0062359912  0.0866643452
+    #> [126]  0.0866643452  0.0866643452  0.0246924924 -0.0187366056 -0.0934362236
+    #> [131] -0.0603000732 -0.0603000732 -0.0417117852 -0.0074732676 -0.0074732676
+    #> 
+    #> $l
+    #> [1] 3
+    #> 
+    #> $m
+    #> [1] 8
+    #> 
+    #> attr(,"class")
+    #> [1] "nppi"
 
 ## Acknowledgements
 

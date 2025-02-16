@@ -21,17 +21,16 @@ knitr::opts_chunk$set(
 set.seed(32)
 ```
 
+
 # blocklength <img src="man/figures/logo.svg" style="padding-left: 20px" align="right"/>
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Alec-Stashevsky/blocklength/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Alec-Stashevsky/blocklength/actions/workflows/R-CMD-check.yaml)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-project.org/package=blocklength)
+[![CRAN status](https://www.r-pkg.org/badges/version/blocklength)](https://CRAN.R-project.org/package=blocklength)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/blocklength?color=brightgreen)](https://CRAN.R-project.org/package=blocklength)
 [![CRAN/METACRAN](https://img.shields.io/cran/l/blocklength)](https://CRAN.R-project.org/package=blocklength)
-[![Codecov test
-coverage](https://codecov.io/gh/Alec-Stashevsky/blocklength/graph/badge.svg)](https://app.codecov.io/gh/Alec-Stashevsky/blocklength)
+[![Codecov test coverage](https://codecov.io/gh/Alec-Stashevsky/blocklength/graph/badge.svg)](https://app.codecov.io/gh/Alec-Stashevsky/blocklength)
 
 <!-- badges: end -->
 
@@ -108,71 +107,68 @@ block-lengths), while `pwsd()` is a simpler "plug-in" rule that uses
 auto-correlations, auto-covariance, and the spectral density of the
 series to optimize the choice of block-length. Similarly, `nppi()` is
 another "plug-in" rule, however, due to its heavy reliance on
-resampling, can also be computationally intensive compared to `pwsd()`.
+resampling, it can also be computationally intensive compared to `pwsd()`.
 
 For a detailed comparison, see the table below:
 
-+---------------+---------------+----------------+-------------------+
-| Feature       | NPPI (Lahiri  | PWSD (Politis  | HHJ (Hall,        |
-|               | et al., 2007) | & White, 2004) | Horowitz & Jing,  |
-|               |               |                | 1995)             |
-+===============+===============+================+===================+
-| **Method      | N             | Spectral       | Subsampling-based |
-| Type**        | onparameteric | density        | cross-validation  |
-|               | resampling    | estimation     |                   |
-+---------------+---------------+----------------+-------------------+
-| **            | Medium        | Low (direct    | High (multiple    |
-| Computational | (bootstrap    | ACF            | subsamples)       |
-| Cost**        | and           | computation)   |                   |
-|               | jackknife)    |                |                   |
-+---------------+---------------+----------------+-------------------+
-| **Primary     | Minimize MSE  | Estimate block | Minimize          |
-| Goal**        | of bootstrap  | length using   | estimation error  |
-|               | estimator     | spectral       | via               |
-|               |               | density        | cross-validation  |
-+---------------+---------------+----------------+-------------------+
-| **Variance    | Uses          | Implicitly     | Uses              |
-| Estimation**  | Jackknife-Af  | estimated via  | subsample-based   |
-|               | ter-Bootstrap | spectral       | variance          |
-|               | (JAB)         | density        | estimation        |
-+---------------+---------------+----------------+-------------------+
-| **Bias        | Directly      | Indirectly     | Uses              |
-| Estimation**  | estimates     | accounts for   | subsample-based   |
-|               | bias from     | bias via ACF   | bias estimation   |
-|               | bootstrap     | decay          |                   |
-+---------------+---------------+----------------+-------------------+
-| **Best for**  | Ge            | Block-length   |                   |
-|               | neral-purpose | selection for  |                   |
-|               | estimators,   | the circular   |                   |
-|               | small sample  | and stationary |                   |
-|               | sizes, and    | block          |                   |
-|               | quantile      | bootstrap.     |                   |
-|               | estimation.   |                |                   |
-|               |               | Time series    |                   |
-|               |               | with strong    |                   |
-|               |               | au             |                   |
-|               |               | tocorrelation. |                   |
-+---------------+---------------+----------------+-------------------+
-| **Estimation  | Bootstrap     | Bootstrap      | Bootstrap         |
-| Capacity**    | bias, bootrap | sample mean    | variance and      |
-|               | variance,     | only.          | bootstrap         |
-|               | bootstrap     |                | distribution      |
-|               | distribution  |                | function          |
-|               | function, and |                | estimation        |
-|               | bootstrap     |                |                   |
-|               | quantile      |                |                   |
-|               | estimation    |                |                   |
-+---------------+---------------+----------------+-------------------+
-| *             | Requires a    | Works with raw | Requires a        |
-| *Dependency** | user-defined  | time series    | user-defined      |
-|               | parameters    |                | parameters for    |
-|               | for initial   |                | initial           |
-|               | block-length  |                | block-length      |
-|               | *l* and       |                | *l\** and number  |
-|               | number of     |                | of deletion       |
-|               | deletion      |                | blocks *m*.       |
-|               | blocks *m*.   |                |                   |
-+---------------+---------------+----------------+-------------------+
+```{r table, echo=FALSE}
+# Comparison table
+table <- data.frame(
+  rows = c(
+    "**Method Type**",
+    "**Computational Cost**",
+    "**Primary Goal**", 
+    "**Variance Estimation**",
+    "**Bias Estimation**",
+    "**Best for**", 
+    "**Estimation Capacity**",
+    "**Dependency\\***"
+    ),
+  NPPI = c(
+    "Nonparametric resampling",
+    "Medium (bootstrap resampling & jackknife)",
+    "Minimize MSE of bootstrap estimator",
+    "Moving Blocks Jackknife-After-Bootstrap (JAB)", 
+    "Directly estimates bias from bootstrap",
+    "General-purpose estimators, small sample sizes, and quantile estimation", 
+    "Bootstrap bias, variance, distribution function, and quantile estimation",
+    "User-defined parameters for initial block-length `l` and number of deletion blocks `m`"
+    ),
+  PWSD = c(
+    "Spectral density estimation",
+    "Low (direct ACF computation)", 
+    "Estimate block length using spectral density",
+    "Implicitly estimated via spectral density", 
+    "Indirectly accounts for bias via ACF decay",
+    "Block-length selection for circular and stationary bootstrap, time series with strong autocorrelation", 
+    "Bootstrap sample mean only",
+    "User-defined parameters for autocorrelation lag and implied hypothesis tests (4 total)"
+    ),
+  HHJ = c(
+    "Subsampling-based cross-validation",
+    "High (subsampling & cross-validation)", 
+    "Minimize MSE via cross-validation",
+    "Uses subsample-based variance estimation", 
+    "Uses subsample-based bias estimation",
+    "Estimating functionals with strong dependencies", 
+    "Bootstrap variance and distribution function estimation", 
+    "Requires user-defined parameters for `pilot_block_length` (*l\\**) and `sub_sample` size (*m*)"
+    )
+)
+
+# Render table
+knitr::kable(
+  table,
+  format = "markdown",
+  col.names = c(
+    "",
+    "NPPI (Lahiri et al., 2007)",
+    "PWSD (Politis & White, 2004)",
+    "HHJ (Hall, Horowitz & Jing, 1995)"
+    ),
+  caption = "* All algorithms have default user-defined parameters recomended by the respective authors."
+  )
+```
 
 
 ## Installation
@@ -192,11 +188,6 @@ You can install the development version from
 devtools::install_github("Alec-Stashevsky/blocklength")
 ```
 
-## Upcoming changes
-
--   change parallel to `{foreach}` or `{future}` (pending user
-    feedback - let me know!)
-
 ## Use Case
 
 We want to select the optimal block-length to perform a block bootstrap
@@ -210,10 +201,14 @@ library(blocklength)
 # Simulate AR(1) time series
 series <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = 0.5),
                            n = 500, rand.gen = rnorm)
+
+# Coerce time series to data.frame (not necessary)
+data <- data.frame("AR1" = series)
 ```
 
 Now, we can find the optimal block-length to perform a block-bootstrap.
-We do this using two methods.
+We do this using the three available methods.
+
 
 ### 1. The Hall, Horowitz, and Jing (1995) "HHJ" Method
 
@@ -222,18 +217,25 @@ We do this using two methods.
 hhj(series, sub_sample = 10, k = "bias/variance")
 ```
 
+
 ### 2. The Politis and White (2004) Spectral Density Estimation "PWSD" Method
 
 ```{r pwsd}
-# Coerce time series to data.frame
-data <- data.frame("AR1" = series)
-
 # Using Politis and White (2004) Spectral Density Estimation
-pwsd(data) 
+pwsd(data)
 ```
 
 We can see that both methods produce similar results for a block-length
 of 9 or 11 depending on the type of bootstrap method used.
+
+
+### 3. The Lahiri, Furukawa, and Lee (2007) Nonparametric Plug-In "NPPI" Method
+
+```{r nppi}
+# Using Lahiri, Furukawa, and Lee (2007) Nonparametric Plug-In 
+nppi(data, m = 8) 
+```
+
 
 ## Acknowledgements
 
