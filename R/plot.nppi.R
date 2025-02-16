@@ -15,6 +15,7 @@
 #'
 #' @examples
 #' # Generate AR(1) time series
+#' set.seed(32)
 #' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
 #'                         n = 500, innov = rnorm(500))
 #'

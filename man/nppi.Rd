@@ -2,7 +2,7 @@
 % Please edit documentation in R/nppi.R
 \name{nppi}
 \alias{nppi}
-\title{Lahiri, Furukawa, Lee, (2007) Nonparametric Plug-In "NPPI" Rule to Select the Optimal Block-Length}
+\title{Lahiri, Furukawa, and Lee (2007) Nonparametric Plug-In "NPPI" Rule to Select the Optimal Block-Length}
 \usage{
 nppi(
   data,
@@ -13,11 +13,13 @@ nppi(
   m = NULL,
   num_bootstrap = 1000,
   c_1 = 1L,
-  epsilon = 1e-08
+  epsilon = 1e-08,
+  plots = TRUE
 )
 }
 \arguments{
-\item{data}{A numeric vector representing the time series or dependent data.}
+\item{data}{A numeric vector, ts, or single-column data.frame representing
+the time series or dependent data.}
 
 \item{stat_function}{A function to compute the statistic of interest
 (*e.g.*, mean, variance). The function should accept a numeric vector as input
@@ -44,6 +46,8 @@ it defaults to \code{floor(c_2 * n^{1/3} * l^{2/3})}.}
 
 \item{epsilon}{A small constant added to the variance to prevent division by
 zero (default is \code{1e-8}).}
+
+\item{plots}{A logical value indicating whether to plot the JAB diagnostic}
 }
 \value{
 A object of class \code{nppi} with the following components:
@@ -61,7 +65,7 @@ A object of class \code{nppi} with the following components:
 
  @section References:
 
- Efron, B. (1992), 'Jackknife-after-bootstrap standard errors and influence
+Efron, B. (1992), 'Jackknife-after-bootstrap standard errors and influence
      functions (with discussion)', Journal of Royal Statistical Society,
      Series B 54, 83-111.
 
@@ -96,11 +100,12 @@ Jackknife-After-Bootstrap (JAB) variance estimation (Lahiri, 2002).
 }
 \examples{
 # Generate AR(1) time series
+set.seed(32)
 sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
                         n = 500, innov = rnorm(500))
 
 # Estimate the optimal block length for the sample mean
-result <- nppi(data = sim, stat_function = mean, num_bootstrap = 500)
+result <- nppi(data = sim, stat_function = mean, num_bootstrap = 500, m = 2)
 
 print(result$optimal_block_length)
 

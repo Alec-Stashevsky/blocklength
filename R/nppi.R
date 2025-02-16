@@ -1,4 +1,4 @@
-#' Lahiri, Furukawa, Lee, (2007) Nonparametric Plug-In "NPPI" Rule to Select the Optimal Block-Length
+#' Lahiri, Furukawa, and Lee (2007) Nonparametric Plug-In "NPPI" Rule to Select the Optimal Block-Length
 #'
 #' This function implements the Nonparametric Plug-In (NPPI) algorithm,
 #'  as proposed by Lahiri, Furukawa, and Lee (2007), to select the optimal block
@@ -11,7 +11,8 @@
 #'
 #'  Jackknife-After-Bootstrap (JAB) variance estimation (Lahiri, 2002).
 #'
-#' @param data A numeric vector representing the time series or dependent data.
+#' @param data A numeric vector, ts, or single-column data.frame representing
+#'  the time series or dependent data.
 #' @param stat_function A function to compute the statistic of interest
 #'  (*e.g.*, mean, variance). The function should accept a numeric vector as input
 #'  and return a scalar value (default is \code{mean}).
@@ -30,6 +31,7 @@
 #' @param c_1 A tuning constant for initial block size calculation (default is 1).
 #' @param epsilon A small constant added to the variance to prevent division by
 #'  zero (default is \code{1e-8}).
+#' @param plots A logical value indicating whether to plot the JAB diagnostic
 #'
 #' @return A object of class \code{nppi} with the following components:
 #' \describe{
@@ -71,11 +73,12 @@
 #'
 #' @examples
 #' # Generate AR(1) time series
+#' set.seed(32)
 #' sim <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5),
 #'                         n = 500, innov = rnorm(500))
 #'
 #' # Estimate the optimal block length for the sample mean
-#' result <- nppi(data = sim, stat_function = mean, num_bootstrap = 500)
+#' result <- nppi(data = sim, stat_function = mean, num_bootstrap = 500, m = 2)
 #'
 #' print(result$optimal_block_length)
 #'
@@ -91,7 +94,22 @@ nppi <- function(
     m = NULL,
     num_bootstrap = 1000,
     c_1 = 1L,
-    epsilon = 1e-8) {
+    epsilon = 1e-8,
+    plots = TRUE) {
+
+  # Convert 1-column data frame to numeric vector
+  if (is.data.frame(data)) {
+    if (ncol(data) == 1) {
+      data <- as.numeric(data[[1]])  # Extract the single column
+    } else {
+      stop("Error: Data must be a numeric vector, time series, or a one-column data frame.")
+    }
+  }
+
+  # Ensure data is numeric
+  if (!is.numeric(data)) {
+    stop("Error: Data must be a numeric vector, time series, or a one-column data frame.")
+  }
 
   # Check for NA values
   if (anyNA(data)) {
@@ -144,6 +162,10 @@ nppi <- function(
     ),
     class = "nppi"
   )
+
+  if (plots & !(is.null(result$jab_point_values) || all(is.na(result$jab_point_values)))) {
+    plot(result)
+  }
 
   return(result)
 

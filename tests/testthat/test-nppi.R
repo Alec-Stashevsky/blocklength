@@ -41,6 +41,30 @@ test_that("nppi handles very small datasets", {
   expect_lt(result$optimal_block_length, length(small_data))
 })
 
+test_that("nppi handles data.frame", {
+  set.seed(42)
+  small_data <- rnorm(10)
+  df <- data.frame(x = small_data)
+
+  result <- nppi(data = df, stat_function = mean, num_bootstrap = 100)
+
+  expect_gt(result$optimal_block_length, 0)
+  expect_lt(result$optimal_block_length, length(small_data))
+})
+
+test_that("nppi handles ts object", {
+  set.seed(42)
+  small_data <- rnorm(10)
+
+  # Coerce to ts
+  ts_data <- ts(small_data)
+  result <- nppi(data = ts_data, stat_function = mean, num_bootstrap = 100)
+
+  expect_gt(result$optimal_block_length, 0)
+  expect_lt(result$optimal_block_length, length(small_data))
+})
+
+
 test_that("nppi correctly sets default values for l and m", {
   set.seed(42)
   sim_data <- stats::arima.sim(list(order = c(1, 0, 0), ar = 0.5), n = 200)
