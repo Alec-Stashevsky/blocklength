@@ -12,6 +12,7 @@ on:
     paths:
       - DESCRIPTION
       - inst/CITATION
+  pull_request:
   workflow_dispatch:
 
 name: Update CITATION.cff
