@@ -54,7 +54,7 @@
 #'
 #' Kunsch, H. (1989) The Jackknife and the Bootstrap for General Stationary
 #'      Observations. The Annals of Statistics, 17(3), 1217-1241. Retrieved
-#'      February 16, 2021, from \url{http://www.jstor.org/stable/2241719}
+#'      February 16, 2021, from \doi{10.1214/aos/1176347265}
 #'
 #' Lahiri, S. N., Furukawa, K., & Lee, Y.-D. (2007). A nonparametric plug-in
 #'      rule for selecting optimal block lengths for Block Bootstrap Methods.

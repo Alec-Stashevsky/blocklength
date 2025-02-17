@@ -47,10 +47,10 @@ authors who have proposed them. Currently, there are three methods
 available:
 
 1.  `hhj()` takes its name from the [Hall, Horowitz, and Jing
-    (1995)](https://academic.oup.com/biomet/article-abstract/82/3/561/260651?redirectedFrom=fulltext)
-    “HHJ” method to select the optimal block-length using a
-    cross-validation algorithm which minimizes the mean squared error
-    *(MSE)* incurred by the bootstrap at various block-lengths.
+    (1995)](https://doi.org/10.1093/biomet/82.3.561) “HHJ” method to
+    select the optimal block-length using a cross-validation algorithm
+    which minimizes the mean squared error *(MSE)* incurred by the
+    bootstrap at various block-lengths.
 
 2.  `pwsd()` takes its name from the [Politis and White
     (2004)](https://doi.org/10.1081/ETC-120028836) Spectral Density
@@ -67,8 +67,8 @@ available:
     by using resampling methods to construct consistent bias and
     variance estimators for the block-bootstrap. Specifically, this
     package implements the Moving Block Bootstrap (MBB) method of
-    [Künsch (1989)](https://projecteuclid.org/euclid.aos/1176347265) and
-    the Moving Blocks Jackknife (MBJ) of [Liu and Singh
+    [Künsch (1989)](https://doi.org/10.1214/aos/1176347265) and the
+    Moving Blocks Jackknife (MBJ) of [Liu and Singh
     (1992).](https://doi.org/10.1214/aos/1176348653) as the bias and
     variance estimators, respectively.
 
@@ -78,8 +78,7 @@ according to [Künsch
 blocks from a set of overlapping sub-samples with a fixed block-length.
 However, the results of `hhj()` may be generalized to other block
 bootstrap procedures such as the *stationary bootstrap* of [Politis and
-Romano
-(1994).](https://www.tandfonline.com/doi/abs/10.1080/01621459.1994.10476870)
+Romano (1994).](https://doi.org/10.1080/01621459.1994.10476870)
 
 Compared to `pwsd()`, `hhj()` is more computationally intensive as it
 relies on iterative sub-sampling processes that optimize the MSE
