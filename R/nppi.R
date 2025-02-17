@@ -6,7 +6,7 @@
 #'  The NPPI method estimates the optimal block length by balancing bias and
 #'  variance in block bootstrap estimators, particularly for time series and
 #'  other dependent data structures. The function also leverages the Moving
-#'  Block Bootstrap (MBB) method of (Künsch, 1989) and the Moving Blocks
+#'  Block Bootstrap (MBB) method of (Kunsch, 1989) and the Moving Blocks
 #'  Jackknifte (MBJ) of Liu and Singh (1992).
 #'
 #'  Jackknife-After-Bootstrap (JAB) variance estimation (Lahiri, 2002).
@@ -58,11 +58,11 @@
 #'
 #' Lahiri, S. N., Furukawa, K., & Lee, Y.-D. (2007). A nonparametric plug-in
 #'      rule for selecting optimal block lengths for Block Bootstrap Methods.
-#'      Statistical Methodology, 4(3), 292–321. DOI:
+#'      Statistical Methodology, 4(3), 292-321. DOI:
 #'      \doi{10.1016/j.stamet.2006.08.002}
 #'
 #' Lahiri, S. N. (2003). 7.4 A Nonparametric Plug-in Method. In Resampling
-#'      methods for dependent data (pp. 186–197). Springer.
+#'      methods for dependent data (pp. 186-197). Springer.
 #'
 #' Liu, R. Y. and Singh, K. (1992), Moving blocks jackknife and bootstrap
 #'      capture weak dependence, in R. Lepage and L. Billard, eds, 'Exploring
