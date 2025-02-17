@@ -13,7 +13,7 @@ Authors@R: c(
 Maintainer: Alec Stashevsky <alec@alecstashevsky.com>
 Description: A set of functions to select the optimal block-length for a 
     dependent bootstrap (block-bootstrap). Includes the Hall, Horowitz, and Jing
-    (1995) <doi:10.1093/biomet/82.3.561> subsamping-based cross-validation method, the 
+    (1995) <doi:10.1093/biomet/82.3.561> subsampling-based cross-validation method, the 
     Politis and White (2004) <doi:10.1081/ETC-120028836> Spectral Density 
     Plug-in method, including the Patton, Politis, and White (2009)
     <doi:10.1080/07474930802459016> correction, and the Lahiri, Furukawa, and Lee
