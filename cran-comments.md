@@ -1,19 +1,9 @@
 ## Test environments
-* local R installation, R 4.1.2
-* Ubuntu 20.04 (devel and release on GitHub Actions)
+* local R installation, R 4.4.2
+* ubuntu-latest (devel, oldrel-1 and release on GitHub Actions)
 * macOS-latest (release on GitHub Actions)
 * windows-latest (release on GitHub Actions)
-* win-builder (devel and release)
-* Fedora (devel on Rhub)
-* Ubuntu (release on Rhub)
-* Windows Server 2008 R2 (devel on Rhub)
-
-## Resubmission - Version 0.1.5
-This is resubmission upgrading to version 0.1.5 from 0.1.4.
-
-Version Changes: 
-  * Addressed CRAN reviewer comments for incorrect DOI link in `man/hhj.Rd`
-  * Addressed CRAN review comments to change https://codecov.io/gh/Alec-Stashevsky/blocklength to https://app.codecov.io/gh/Alec-Stashevsky/blocklength
+* win-builder (devel)
 
   
 NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
@@ -23,24 +13,18 @@ NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
 
 ### Local Machine
 
-No ERRORs, WARNINGs or NOTEs
+0 errors | 0 warnings | 0 notes
 
 
 ### Win-builder
 
-No ERRORs or WARNINGs or NOTEs
+0 errors | 0 warnings | 0 notes
 
 
-### R-hub
+## revdepcheck results
 
-No ERRORs or WARNINGs.
+We checked 0 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
-One NOTEs:
+ * We saw 0 new problems
+ * We failed to check 0 packages
 
-  1. Package unavailable to check Rd xrefs: 'np'
-     - There is a reference to package {np} in the .Rd file for pwsd, but there are no other dependencies on this package.
-
-
-## Downstream dependencies
-
-* None
