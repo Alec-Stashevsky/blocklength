@@ -18,7 +18,13 @@ NOTE: Examples wrapped in \donttest are for hhj.R calls which take >5s to run
 
 ### Win-builder
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 notes
+
+Possibly misspelled words in DESCRIPTION:
+  Furukawa (20:65)
+  Lahiri (20:57)
+  
+These are not misspelled words. They are the names of the authors of the NPPI method used in the package.
 
 
 ## revdepcheck results
