@@ -26,7 +26,7 @@ authors:
 repository: https://CRAN.R-project.org/package=blocklength
 repository-code: https://github.com/Alec-Stashevsky/blocklength
 url: https://alecstashevsky.com/r/blocklength
-date-released: '2024-02-15'
+date-released: '2025-02-15'
 contact:
 - family-names: Stashevsky
   given-names: Alec
