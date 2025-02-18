@@ -46,7 +46,7 @@
 #'    \item{m}{The number of blocks to delete in the JAB variance estimation.}
 #' }
 #'
-#'  @section References:
+#' @section References:
 #'
 #' Efron, B. (1992), 'Jackknife-after-bootstrap standard errors and influence
 #'      functions (with discussion)', Journal of Royal Statistical Society,
