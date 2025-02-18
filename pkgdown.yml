@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   tuning-parameters: tuning-parameters.html
-last_built: 2025-02-18T04:10Z
+last_built: 2025-02-18T04:13Z
 urls:
   reference: https://alecstashevsky.com/r/blocklength, https://github.com/Alec-Stashevsky/blocklength,
     https://alec-stashevsky.github.io/blocklength/reference
