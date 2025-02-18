@@ -9,7 +9,7 @@ type: software
 license: GPL-2.0-or-later
 title: 'blocklength: Select an Optimal Block-Length to Bootstrap Dependent Data (Block
   Bootstrap)'
-version: 0.2.0
+version: 0.2.0.9000
 doi: 10.32614/CRAN.package.blocklength
 abstract: A set of functions to select the optimal block-length for a dependent bootstrap
   (block-bootstrap). Includes the Hall, Horowitz, and Jing (1995) <https://doi.org/10.1093/biomet/82.3.561>
