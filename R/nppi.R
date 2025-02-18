@@ -261,6 +261,7 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
       # Combine the non-overlapping bootstrap samples and compute the statistic
       combined_bs <- do.call(rbind, resampled_blocks[non_overlap_indices])
       jab_point_values[i] <- stat_function(as.vector(t(combined_bs)))
+      jab_tilde_n[i] <- m^(-1) * (N * phi_hat_n - (N - m) * jab_point_values[i])
     } else {
       jab_point_values[i] <- NA  # No valid bootstrap samples for this deletion
     }
@@ -268,7 +269,7 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
 
   # Remove any NA values and compute the JAB variance
   jab_point_values <- jab_point_values[!is.na(jab_point_values)]
-  jab_variance <- (m / (N - m)) * (1 / M) * sum((jab_point_values - phi_hat_n)^2) + epsilon
+  jab_variance <- (m / (N - m)) * (1 / M) * sum((jab_tilde_n - phi_hat_n)^2) + epsilon
 
   return(list(
     jab_variance = jab_variance,
