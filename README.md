@@ -69,7 +69,7 @@ available:
     package implements the Moving Block Bootstrap (MBB) method of
     [Künsch (1989)](https://doi.org/10.1214/aos/1176347265) and the
     Moving Blocks Jackknife (MBJ) of [Liu and Singh
-    (1992).](https://doi.org/10.1214/aos/1176348653) as the bias and
+    (1992)](https://doi.org/10.1214/aos/1176348653) as the bias and
     variance estimators, respectively.
 
 Under the hood, `hhj()` uses the moving block bootstrap (MBB) procedure
