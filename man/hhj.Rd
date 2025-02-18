@@ -100,7 +100,7 @@ Adrian Trapletti and Kurt Hornik (2020). tseries: Time Series Analysis and
 
 Kunsch, H. (1989) The Jackknife and the Bootstrap for General Stationary
      Observations. The Annals of Statistics, 17(3), 1217-1241. Retrieved
-     February 16, 2021, from \url{http://www.jstor.org/stable/2241719}
+     February 16, 2021, from \doi{10.1214/aos/1176347265}
 
 Peter Hall, Joel L. Horowitz, Bing-Yi Jing, On blocking rules for the
      bootstrap with dependent data, Biometrika, Volume 82, Issue 3,

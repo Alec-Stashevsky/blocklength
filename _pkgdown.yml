@@ -1,0 +1,13 @@
+url: https://alecstashevsky.com/r/blocklength, https://github.com/Alec-Stashevsky/blocklength, https://alec-stashevsky.github.io/blocklength
+
+reference:
+  - title: Optimization Methods
+    contents:
+      - hhj
+      - pwsd
+      - nppi
+  - title: S3 Plot Methods
+    contents:
+      - plot.hhj
+      - plot.pwsd
+      - plot.nppi

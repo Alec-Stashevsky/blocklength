@@ -1,3 +1,12 @@
+# blocklength 0.2.0
+
+## New features
+
+* A new function `nppi()` has been added to the package. This function estimates the optimal block-length using the non-parametric plug-in (NPPI) method of Lahiri, Furukawa, Lee, (2007).
+
+* A new S3 plot method `plot.nppi()` has been added to the package. This function outputs a diagnostic plot for JAB point values calculated from the above `nppi()` function.
+
+
 # blocklength 0.1.5
 
 * Minor adjustments to documentation per CRAN requests.
