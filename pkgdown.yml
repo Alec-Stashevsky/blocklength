@@ -1,0 +1,6 @@
+pandoc: 3.1.11
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  tuning-parameters: tuning-parameters.html
+last_built: 2025-02-18T04:07Z

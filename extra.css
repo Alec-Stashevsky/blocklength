@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css?family=Antic&display=swap');
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: #900C3F;
+    background-color: rgb(232, 216, 195);
+}
+.navbar-default .navbar-link {
+    color: #900C3F;
+}
+
+.navbar-default .navbar-link:hover {
+    color: #FF5733;
+}
+
+.label-default {
+    background-color: #900C3F;
+}
+
+
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a {
+    color: #900C3F;
+    background-color: rgb(232, 216, 195);
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #FF5733;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    color: #313131;
+    background-color: rgb(232, 216, 195);
+}
+
+.navbar {
+  color: #900C3F;
+  background-color: rgb(232, 216, 195);
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid rgb(232, 216, 195);
+}
+
+.container.template-home .page-header {
+    padding-bottom: 9px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 0px solid rgb(232, 216, 195);
+}
+
+
+.container.template-home .page-header:after {
+    content: ""; /* This is necessary for the pseudo element to work. */
+    display: block; /* This will put the pseudo element on its own line. */
+    width: 75%; /* Change this to whatever width you want. */
+    padding-top: 0px; /* This creates some space between the element and the border. */
+    border-bottom: 3px solid rgb(232, 216, 195); /* This creates the border. Replace black with whatever color you want. */
+}
+
+#pkgdown-sidebar {
+  font-size: 1.5rem;
+}
+
+code {
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans
+    Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+  color: rgb(39, 81, 77);
+  background-color: rgb(232, 216, 195);
+  padding: 2px;
+}
+
+body {
+  color: #313131;
+  background-color: rgb(255, 248, 227);
+  font-family: "Antic", sans-serif;
+  font-size: 2rem;
+}
+
+/* unvisited link */
+a {
+  color: #900C3F;
+}
+
+/* mouse over link */
+a:hover {
+  color: #FF5733;
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -ms-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
+}
+
+pre, pre code {
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans
+    Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+  color: #efefef;
+  background-color: #3f3f3f;
+}
+
+code a {
+  color: rgb(39, 81, 77);
+  background-color: rgb(232, 216, 195);
+}
+
+code a:hover {
+  color: #6d9995;
+}
+
+pre a {
+  color: #efefef;
+  background-color: transparent;
+}
+
+pre a:hover {
+  color: #f0dfaf;
+  background-color: transparent;
+}
+
+/* Repicate Zenburn theme */
+.fl      {color: #8cd0d3;}
+.fu      {color: #efefef;} /* function */
+.ch,.st  {color: #cc9393;} /* string */
+.kw      {color: #264D66;} /* keyword */
+.co      {color: #7f9f7f;} /* comment */
+.va      {color: #efefef;} /* variable */
+.op      {color: #efefef;} /* operator */
+
+.message { color: #7f9f7f; font-weight: bolder;}
+.error   { color: orange;  font-weight: bolder;}
+.warning { color: #6A0366; font-weight: bolder;}
+
+/* Hanging Index for all section titles references - applies to vignettes */
+#references {
+    text-indent: -2em;
+    margin-left: 2em;
+}
