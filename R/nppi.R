@@ -267,11 +267,13 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
       jab_tilde_n[i] <- m^(-1) * (N * phi_hat_n - (N - m) * jab_point_values[i])
     } else {
       jab_point_values[i] <- NA  # No valid bootstrap samples for this deletion
+      jab_tilde_n[i] <- NA
     }
   }
 
   # Remove any NA values and compute the JAB variance
   jab_point_values <- jab_point_values[!is.na(jab_point_values)]
+  jab_tilde_n <- jab_tilde_n[!is.na(jab_tilde_n)]
   jab_variance <- (m / (N - m)) * (1 / M) * sum((jab_tilde_n - phi_hat_n)^2) + epsilon
 
   return(list(
