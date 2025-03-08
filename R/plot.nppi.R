@@ -27,25 +27,79 @@
 #'
 plot.nppi <- function(x, ...) {
   if (is.null(x$jab_point_values) || all(is.na(x$jab_point_values))) {
-    stop("Error: No valid JAB variance estimates available for plotting.")
+    stop("Error: No valid JAB point values available for plotting.")
+  }
+
+  if (is.null(x$jab_pseudo_values) || all(is.na(x$jab_pseudo_values))) {
+    stop("Error: No valid JAB pseudo values available for plotting.")
   }
 
   # Define x-axis (deletion block indices)
   deletion_blocks <- seq_along(x$jab_point_values)
 
+
+  ## JAB Point Values ##
   # Compute mean variance for reference
   mean_variance <- mean(x$jab_point_values, na.rm = TRUE)
 
   # Plot variance estimates (dots and connecting line)
-  plot(deletion_blocks, x$jab_point_values, type = "o", pch = 16, col = "black",
-       xlab = "Deletion Block Index", ylab = "JAB Point Value",
-       main = "Stability of JAB Point Values", ...)
+  plot(
+    deletion_blocks,
+    x$jab_point_values,
+    type = "o",
+    pch = 16,
+    col = "black",
+    xlab = "Deletion Block Index",
+    ylab = "JAB Point Value",
+    main = "Stability of JAB Point Values",
+    ...
+    )
 
   # Add horizontal dashed line for mean variance
   graphics::abline(h = mean_variance, col = "black", lty = 2)
 
   # Place legend outside the plot area (below the x-axis, centered)
-  graphics::legend("topleft", horiz = FALSE,
-         legend = c("JAB Point Value", "Mean"),
-         col = "black", pch = c(16, NA), lty = c(NA, 2), lwd = 1, cex = 0.9)
+  graphics::legend(
+    "topleft",
+    horiz = FALSE,
+    legend = c("JAB Point Value", "Mean"),
+    col = "black",
+    pch = c(16, NA),
+    lty = c(NA, 2),
+    lwd = 1,
+    cex = 0.9
+    )
+
+
+  ## JAB Pseudo Values ##
+  # Compute mean variance for reference
+  mean_variance_pseudo <- mean(x$jab_pseudo_values, na.rm = TRUE)
+
+  # Plot variance estimates (dots and connecting line)
+  plot(
+    deletion_blocks,
+    x$jab_pseudo_values,
+    type = "o",
+    pch = 16,
+    col = "black",
+    xlab = "Deletion Block Index",
+    ylab = "JAB Pseudo Value",
+    main = "Stability of JAB Pseudo Values",
+    ...
+    )
+
+  # Add horizontal dashed line for mean variance
+  graphics::abline(h = mean_variance_pseudo, col = "black", lty = 2)
+
+  # Place legend outside the plot area (below the x-axis, centered)
+  graphics::legend(
+    "topleft",
+    horiz = FALSE,
+    legend = c("JAB Pseudo Value", "Mean"),
+    col = "black",
+    pch = c(16, NA),
+    lty = c(NA, 2),
+    lwd = 1,
+    cex = 0.9
+    )
 }
