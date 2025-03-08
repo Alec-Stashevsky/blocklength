@@ -1,4 +1,4 @@
-# blocklength (development version)
+# blocklength 0.2.1
 
 # blocklength 0.2.1
 
