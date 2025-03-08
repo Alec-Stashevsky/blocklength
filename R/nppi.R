@@ -42,8 +42,9 @@
 #'    using the JAB method.}
 #'   \item{jab_point_values}{The point estimates of the statistic for each
 #'    deletion block in the JAB variance estimation. Used for diagnostic plots}
-#'    \item{l}{The initial block size used for bias estimation.}
-#'    \item{m}{The number of blocks to delete in the JAB variance estimation.}
+#'   \item{jab_pseudo_values}{The pseudo-values of each JAB point value.}
+#'   \item{l}{The initial block size used for bias estimation.}
+#'   \item{m}{The number of blocks to delete in the JAB variance estimation.}
 #' }
 #'
 #' @section References:
@@ -157,6 +158,7 @@ nppi <- function(
       bias = bias_result$bias,
       variance = variance_result$jab_variance,
       jab_point_values = variance_result$jab_point_values,
+      jab_pseudo_values = variance_result$jab_pseudo_values,
       l=l,
       m=m
     ),
@@ -243,8 +245,9 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
     apply(bs, 1, paste, collapse = ",")
   })
 
-  # Initialize vector to hold JAB point values
+  # Initialize vector to hold JAB point values and pseudo-values
   jab_point_values <- numeric(M)
+  jab_tilde_n <- numeric(M)
 
   # For each deletion block (of m consecutive original blocks)
   for (i in seq_len(M)) {
@@ -261,6 +264,7 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
       # Combine the non-overlapping bootstrap samples and compute the statistic
       combined_bs <- do.call(rbind, resampled_blocks[non_overlap_indices])
       jab_point_values[i] <- stat_function(as.vector(t(combined_bs)))
+      jab_tilde_n[i] <- m^(-1) * (N * phi_hat_n - (N - m) * jab_point_values[i])
     } else {
       jab_point_values[i] <- NA  # No valid bootstrap samples for this deletion
     }
@@ -268,10 +272,11 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
 
   # Remove any NA values and compute the JAB variance
   jab_point_values <- jab_point_values[!is.na(jab_point_values)]
-  jab_variance <- (m / (N - m)) * (1 / M) * sum((jab_point_values - phi_hat_n)^2) + epsilon
+  jab_variance <- (m / (N - m)) * (1 / M) * sum((jab_tilde_n - phi_hat_n)^2) + epsilon
 
   return(list(
     jab_variance = jab_variance,
-    jab_point_values = jab_point_values
+    jab_point_values = jab_point_values,
+    jab_pseudo_values = jab_tilde_n
   ))
 }

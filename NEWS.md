@@ -1,5 +1,20 @@
 # blocklength (development version)
 
+# blocklength 0.2.1
+
+# blocklength 0.2.1
+
+## Minor Changes
+
+* The `nppi()` function now returns an additional item in the `nppi` object: `jab_pseudo_values` which include the *ith MBJ pseudo-value* used in the JAB variance estimator.
+
+
+## Bug Fixes
+
+* In `nppi()` there was an incorrect computation of the JAB variance estimator, which did use the *ith MBJ pseudo-value* in place of the the *ith MBJ point value*. This is now fixed.
+
+
+
 # blocklength 0.2.0
 
 ## New features
