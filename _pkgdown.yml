@@ -11,3 +11,24 @@ reference:
       - plot.hhj
       - plot.pwsd
       - plot.nppi
+
+navbar:
+  structure:
+    left:
+      - home
+      - reference
+      - articles
+      - news
+      - changelog
+
+  components:
+    changelog:
+      text: "Changelog"
+      href: news/index.html
+
+news:
+  releases:
+    - text: "blocklength 0.2.0"
+      href: https://alecstashevsky.com/post/blocklength-0.2.0/
+    - text: "blocklength 0.1.4"
+      href: https://alecstashevsky.com/post/blocklength-0.1.4/
