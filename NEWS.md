@@ -1,7 +1,5 @@
 # blocklength 0.2.2
 
-# blocklength 0.2.2
-
 ## Minor Changes
 
 * The `plot.nppi()` function now returns an additional plot for JAB Pseudo Value Stability. 
