@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">blocklength</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
       </span>
     </div>
 
@@ -59,6 +59,27 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="articles/tuning-parameters.html">Tuning Block-Length Selection Methods</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    News
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li class="dropdown-header">Releases</li>
+    <li>
+      <a href="https://alecstashevsky.com/post/blocklength-0.2.0/" class="external-link">blocklength 0.2.0</a>
+    </li>
+    <li>
+      <a href="https://alecstashevsky.com/post/blocklength-0.1.4/" class="external-link">blocklength 0.1.4</a>
+    </li>
+    <li class="divider">
+    </li>
+<li>
+      <a href="news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
@@ -299,15 +320,15 @@
 <code class="sourceCode R"><span><span class="co"># Using Lahiri, Furukawa, and Lee (2007) Nonparametric Plug-In </span></span>
 <span><span class="fu"><a href="reference/nppi.html">nppi</a></span><span class="op">(</span><span class="va">data</span>, m <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> </span>
 <span><span class="co">#&gt;  Setting l to recomended value: 3</span></span></code></pre></div>
-<p><img src="reference/figures/README-nppi-1.svg" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-nppi-1.svg" width="100%" style="display: block; margin: auto;"><img src="reference/figures/README-nppi-2.svg" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#&gt; $optimal_block_length</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.01073025</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.01073086</span></span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; $bias</span></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; [1] 0.01152002</span></span>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; $variance</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; [1] 0.0331001</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; [1] 0.03309448</span></span>
 <span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; $jab_point_values</span></span>
 <span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt;   [1] -0.0327374132  0.0086065594  0.0025366424  0.0406465091  0.0406465091</span></span>
@@ -339,97 +360,38 @@
 <span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a><span class="co">#&gt; [131] -0.0603000732 -0.0603000732 -0.0417117852 -0.0074732676 -0.0074732676</span></span>
 <span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a><span class="co">#&gt; $jab_pseudo_values</span></span>
-<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a><span class="co">#&gt;   [1]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a><span class="co">#&gt;   [7]  0.00000000  0.64920441  0.00000000  0.00000000  0.00000000 -1.88311391</span></span>
-<span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a><span class="co">#&gt;  [13] -1.51133149  0.00000000  0.00000000  0.00000000  0.00000000 -3.84556083</span></span>
-<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a><span class="co">#&gt;  [19] -3.84556083 -1.52647265 -1.17159616 -3.84556083  0.00000000  0.00000000</span></span>
-<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a><span class="co">#&gt;  [25]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a><span class="co">#&gt;  [31]  0.00000000  0.00000000  0.00000000  4.59487780  0.91735947  0.00000000</span></span>
-<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a><span class="co">#&gt;  [37]  0.00000000  0.00000000  3.27208282  3.27208282  0.00000000 -3.43692588</span></span>
-<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a><span class="co">#&gt;  [43] -0.41290732  0.00000000  0.00000000  0.00000000  0.00000000 -2.24606264</span></span>
-<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a><span class="co">#&gt;  [49] -2.39332695  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a><span class="co">#&gt;  [55]  0.00000000  0.00000000  0.00000000  0.00000000  0.68956715  0.68956715</span></span>
-<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a><span class="co">#&gt;  [61]  0.68956715 -1.39060500 -1.39060500 -1.39060500  0.00000000  0.00000000</span></span>
-<span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a><span class="co">#&gt;  [67]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a><span class="co">#&gt;  [73]  0.00000000  0.00000000  0.00000000  2.98581141  0.30209431  0.30209431</span></span>
-<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a><span class="co">#&gt;  [79]  0.00000000  0.00000000  2.68446096  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a><span class="co">#&gt;  [85]  0.00000000  0.00000000 -2.00449499  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-55"><a href="#cb10-55" tabindex="-1"></a><span class="co">#&gt;  [91]  0.00000000  0.00000000  0.00000000  1.92063884  0.00000000  0.00000000</span></span>
-<span id="cb10-56"><a href="#cb10-56" tabindex="-1"></a><span class="co">#&gt;  [97] -2.62137232 -2.62137232  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-57"><a href="#cb10-57" tabindex="-1"></a><span class="co">#&gt; [103] -1.28524909 -1.28524909 -2.48038348  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-58"><a href="#cb10-58" tabindex="-1"></a><span class="co">#&gt; [109]  0.49202717  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-59"><a href="#cb10-59" tabindex="-1"></a><span class="co">#&gt; [115]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000 -1.69058618</span></span>
-<span id="cb10-60"><a href="#cb10-60" tabindex="-1"></a><span class="co">#&gt; [121]  0.27610129  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-61"><a href="#cb10-61" tabindex="-1"></a><span class="co">#&gt; [127]  0.00000000  0.00000000 -1.01982647  0.00000000  0.00000000 -2.18113724</span></span>
-<span id="cb10-62"><a href="#cb10-62" tabindex="-1"></a><span class="co">#&gt; [133] -2.18113724  0.00000000 -4.11138543 -4.11138543 -4.11138543 -4.11138543</span></span>
-<span id="cb10-63"><a href="#cb10-63" tabindex="-1"></a><span class="co">#&gt; [139] -4.11138543  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-64"><a href="#cb10-64" tabindex="-1"></a><span class="co">#&gt; [145]  0.00000000  0.00000000 -1.97277384  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-65"><a href="#cb10-65" tabindex="-1"></a><span class="co">#&gt; [151]  0.00000000  0.00000000  0.00000000  4.09279831  0.00000000  0.00000000</span></span>
-<span id="cb10-66"><a href="#cb10-66" tabindex="-1"></a><span class="co">#&gt; [157]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-67"><a href="#cb10-67" tabindex="-1"></a><span class="co">#&gt; [163]  0.00000000  0.00000000 -3.25962118  0.13820110 -2.29029663  0.00000000</span></span>
-<span id="cb10-68"><a href="#cb10-68" tabindex="-1"></a><span class="co">#&gt; [169]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-69"><a href="#cb10-69" tabindex="-1"></a><span class="co">#&gt; [175]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-70"><a href="#cb10-70" tabindex="-1"></a><span class="co">#&gt; [181]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-71"><a href="#cb10-71" tabindex="-1"></a><span class="co">#&gt; [187]  0.00000000  0.00000000  0.34869323  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-72"><a href="#cb10-72" tabindex="-1"></a><span class="co">#&gt; [193]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-73"><a href="#cb10-73" tabindex="-1"></a><span class="co">#&gt; [199]  0.00000000 -0.64369492  0.00000000  0.60490894  0.60490894  0.00000000</span></span>
-<span id="cb10-74"><a href="#cb10-74" tabindex="-1"></a><span class="co">#&gt; [205]  0.00000000  0.00000000 -0.48323491  0.00000000 -1.03603976 -1.03603976</span></span>
-<span id="cb10-75"><a href="#cb10-75" tabindex="-1"></a><span class="co">#&gt; [211] -1.03603976  0.00000000  0.00000000  0.00000000  0.33869982 -3.94880081</span></span>
-<span id="cb10-76"><a href="#cb10-76" tabindex="-1"></a><span class="co">#&gt; [217]  0.00000000  4.26156129  0.00000000  0.00000000  2.76587562 -5.51208327</span></span>
-<span id="cb10-77"><a href="#cb10-77" tabindex="-1"></a><span class="co">#&gt; [223]  0.00000000  0.00000000  0.96141512  0.96141512  0.00000000  0.00000000</span></span>
-<span id="cb10-78"><a href="#cb10-78" tabindex="-1"></a><span class="co">#&gt; [229]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-79"><a href="#cb10-79" tabindex="-1"></a><span class="co">#&gt; [235]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-80"><a href="#cb10-80" tabindex="-1"></a><span class="co">#&gt; [241]  0.00000000  0.00000000  3.65720579  1.26070477  0.00000000  0.00000000</span></span>
-<span id="cb10-81"><a href="#cb10-81" tabindex="-1"></a><span class="co">#&gt; [247]  0.00000000  0.17747251  0.17747251  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-82"><a href="#cb10-82" tabindex="-1"></a><span class="co">#&gt; [253]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-83"><a href="#cb10-83" tabindex="-1"></a><span class="co">#&gt; [259]  0.00000000  0.00000000  0.00000000  0.00000000 -2.27706154  0.00000000</span></span>
-<span id="cb10-84"><a href="#cb10-84" tabindex="-1"></a><span class="co">#&gt; [265]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-85"><a href="#cb10-85" tabindex="-1"></a><span class="co">#&gt; [271]  0.00000000 -0.24944831  0.00000000 -1.28524909  0.00000000  0.00000000</span></span>
-<span id="cb10-86"><a href="#cb10-86" tabindex="-1"></a><span class="co">#&gt; [277]  0.00000000  0.00000000  0.00000000  1.37916621  4.73689372  4.73689372</span></span>
-<span id="cb10-87"><a href="#cb10-87" tabindex="-1"></a><span class="co">#&gt; [283]  0.00000000  0.00000000  0.00000000  2.17331162  0.00000000  1.07210762</span></span>
-<span id="cb10-88"><a href="#cb10-88" tabindex="-1"></a><span class="co">#&gt; [289]  1.07210762  1.07210762  0.00000000 -1.33685310  0.00000000  0.00000000</span></span>
-<span id="cb10-89"><a href="#cb10-89" tabindex="-1"></a><span class="co">#&gt; [295]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-90"><a href="#cb10-90" tabindex="-1"></a><span class="co">#&gt; [301]  0.00000000  0.00000000  0.00000000  1.95191159 -6.27836030  0.00000000</span></span>
-<span id="cb10-91"><a href="#cb10-91" tabindex="-1"></a><span class="co">#&gt; [307]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-92"><a href="#cb10-92" tabindex="-1"></a><span class="co">#&gt; [313]  1.88227969  2.60275977  2.60275977  0.00000000  0.00000000  1.10788702</span></span>
-<span id="cb10-93"><a href="#cb10-93" tabindex="-1"></a><span class="co">#&gt; [319]  0.00000000  0.00000000 -0.07994463  1.02794977  0.00000000  0.00000000</span></span>
-<span id="cb10-94"><a href="#cb10-94" tabindex="-1"></a><span class="co">#&gt; [325]  0.00000000  0.00000000  0.00000000  0.00000000 -4.35543954  0.00000000</span></span>
-<span id="cb10-95"><a href="#cb10-95" tabindex="-1"></a><span class="co">#&gt; [331]  0.00000000  0.00000000  0.00000000 -0.74490691  0.00000000  0.00000000</span></span>
-<span id="cb10-96"><a href="#cb10-96" tabindex="-1"></a><span class="co">#&gt; [337]  0.00000000  0.00000000  0.82081383  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-97"><a href="#cb10-97" tabindex="-1"></a><span class="co">#&gt; [343]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-98"><a href="#cb10-98" tabindex="-1"></a><span class="co">#&gt; [349]  0.00000000  1.93089010  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-99"><a href="#cb10-99" tabindex="-1"></a><span class="co">#&gt; [355]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-100"><a href="#cb10-100" tabindex="-1"></a><span class="co">#&gt; [361]  0.00000000  0.96039509  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-101"><a href="#cb10-101" tabindex="-1"></a><span class="co">#&gt; [367]  0.00000000  0.00000000 -2.11597820 -2.11597820  0.00000000  0.00000000</span></span>
-<span id="cb10-102"><a href="#cb10-102" tabindex="-1"></a><span class="co">#&gt; [373]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-103"><a href="#cb10-103" tabindex="-1"></a><span class="co">#&gt; [379]  0.00000000  0.00000000  0.00000000  2.59068021  2.59068021  2.59068021</span></span>
-<span id="cb10-104"><a href="#cb10-104" tabindex="-1"></a><span class="co">#&gt; [385]  0.00000000  0.00000000  0.00000000  0.90545968  0.10318208  0.10318208</span></span>
-<span id="cb10-105"><a href="#cb10-105" tabindex="-1"></a><span class="co">#&gt; [391]  0.00000000  0.00000000  0.00000000  0.00000000 -3.39794020 -3.39794020</span></span>
-<span id="cb10-106"><a href="#cb10-106" tabindex="-1"></a><span class="co">#&gt; [397]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-107"><a href="#cb10-107" tabindex="-1"></a><span class="co">#&gt; [403] -2.21416425  0.00000000 -4.09984392  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-108"><a href="#cb10-108" tabindex="-1"></a><span class="co">#&gt; [409]  0.00000000  0.00000000  0.00000000  4.89093918  1.26855658 -0.48486319</span></span>
-<span id="cb10-109"><a href="#cb10-109" tabindex="-1"></a><span class="co">#&gt; [415]  4.89093918  4.89093918  0.00000000  3.75936933  0.00000000  0.00000000</span></span>
-<span id="cb10-110"><a href="#cb10-110" tabindex="-1"></a><span class="co">#&gt; [421]  3.66386129  3.66386129  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-111"><a href="#cb10-111" tabindex="-1"></a><span class="co">#&gt; [427]  0.00000000 -0.21818926  0.27760699 -0.46953990 -0.69900740  0.00000000</span></span>
-<span id="cb10-112"><a href="#cb10-112" tabindex="-1"></a><span class="co">#&gt; [433]  0.00000000  0.00000000  0.00000000  0.00000000 -4.33966153 -4.33966153</span></span>
-<span id="cb10-113"><a href="#cb10-113" tabindex="-1"></a><span class="co">#&gt; [439] -1.37155811  4.34909933  0.00000000 -1.28647275 -1.28647275  0.00000000</span></span>
-<span id="cb10-114"><a href="#cb10-114" tabindex="-1"></a><span class="co">#&gt; [445]  0.00000000  0.00000000 -3.65745222  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-115"><a href="#cb10-115" tabindex="-1"></a><span class="co">#&gt; [451] -1.73791661  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-116"><a href="#cb10-116" tabindex="-1"></a><span class="co">#&gt; [457]  0.00000000  0.00000000  0.00000000 -6.66415329 -6.66415329 -6.66415329</span></span>
-<span id="cb10-117"><a href="#cb10-117" tabindex="-1"></a><span class="co">#&gt; [463] -2.86837731  0.00000000  0.00000000  0.00000000 -0.20834505  0.00000000</span></span>
-<span id="cb10-118"><a href="#cb10-118" tabindex="-1"></a><span class="co">#&gt; [469]  0.00000000  0.00000000  0.00000000  0.00000000  4.36700654  0.00000000</span></span>
-<span id="cb10-119"><a href="#cb10-119" tabindex="-1"></a><span class="co">#&gt; [475]  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000</span></span>
-<span id="cb10-120"><a href="#cb10-120" tabindex="-1"></a><span class="co">#&gt; [481]  0.00000000  0.00000000  0.00000000  2.33741733  2.33741733  0.00000000</span></span>
-<span id="cb10-121"><a href="#cb10-121" tabindex="-1"></a><span class="co">#&gt; [487]  0.00000000  1.19888469 -0.89822451 -0.89822451  0.00000000</span></span>
-<span id="cb10-122"><a href="#cb10-122" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-123"><a href="#cb10-123" tabindex="-1"></a><span class="co">#&gt; $l</span></span>
-<span id="cb10-124"><a href="#cb10-124" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span>
-<span id="cb10-125"><a href="#cb10-125" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-126"><a href="#cb10-126" tabindex="-1"></a><span class="co">#&gt; $m</span></span>
-<span id="cb10-127"><a href="#cb10-127" tabindex="-1"></a><span class="co">#&gt; [1] 8</span></span>
-<span id="cb10-128"><a href="#cb10-128" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-129"><a href="#cb10-129" tabindex="-1"></a><span class="co">#&gt; attr(,"class")</span></span>
-<span id="cb10-130"><a href="#cb10-130" tabindex="-1"></a><span class="co">#&gt; [1] "nppi"</span></span></code></pre></div>
+<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a><span class="co">#&gt;   [1]  0.64920441 -1.88311391 -1.51133149 -3.84556083 -3.84556083 -1.52647265</span></span>
+<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a><span class="co">#&gt;   [7] -1.17159616 -3.84556083  4.59487780  0.91735947  3.27208282  3.27208282</span></span>
+<span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a><span class="co">#&gt;  [13] -3.43692588 -0.41290732 -2.24606264 -2.39332695  0.68956715  0.68956715</span></span>
+<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a><span class="co">#&gt;  [19]  0.68956715 -1.39060500 -1.39060500 -1.39060500  2.98581141  0.30209431</span></span>
+<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a><span class="co">#&gt;  [25]  0.30209431  2.68446096 -2.00449499  1.92063884 -2.62137232 -2.62137232</span></span>
+<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a><span class="co">#&gt;  [31] -1.28524909 -1.28524909 -2.48038348  0.49202717 -1.69058618  0.27610129</span></span>
+<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a><span class="co">#&gt;  [37] -1.01982647 -2.18113724 -2.18113724 -4.11138543 -4.11138543 -4.11138543</span></span>
+<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a><span class="co">#&gt;  [43] -4.11138543 -4.11138543 -1.97277384  4.09279831 -3.25962118  0.13820110</span></span>
+<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a><span class="co">#&gt;  [49] -2.29029663  0.34869323 -0.64369492  0.60490894  0.60490894 -0.48323491</span></span>
+<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a><span class="co">#&gt;  [55] -1.03603976 -1.03603976 -1.03603976  0.33869982 -3.94880081  4.26156129</span></span>
+<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a><span class="co">#&gt;  [61]  2.76587562 -5.51208327  0.96141512  0.96141512  3.65720579  1.26070477</span></span>
+<span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a><span class="co">#&gt;  [67]  0.17747251  0.17747251 -2.27706154 -0.24944831 -1.28524909  1.37916621</span></span>
+<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a><span class="co">#&gt;  [73]  4.73689372  4.73689372  2.17331162  1.07210762  1.07210762  1.07210762</span></span>
+<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a><span class="co">#&gt;  [79] -1.33685310  1.95191159 -6.27836030  1.88227969  2.60275977  2.60275977</span></span>
+<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a><span class="co">#&gt;  [85]  1.10788702 -0.07994463  1.02794977 -4.35543954 -0.74490691  0.82081383</span></span>
+<span id="cb10-55"><a href="#cb10-55" tabindex="-1"></a><span class="co">#&gt;  [91]  1.93089010  0.96039509 -2.11597820 -2.11597820  2.59068021  2.59068021</span></span>
+<span id="cb10-56"><a href="#cb10-56" tabindex="-1"></a><span class="co">#&gt;  [97]  2.59068021  0.90545968  0.10318208  0.10318208 -3.39794020 -3.39794020</span></span>
+<span id="cb10-57"><a href="#cb10-57" tabindex="-1"></a><span class="co">#&gt; [103] -2.21416425 -4.09984392  4.89093918  1.26855658 -0.48486319  4.89093918</span></span>
+<span id="cb10-58"><a href="#cb10-58" tabindex="-1"></a><span class="co">#&gt; [109]  4.89093918  3.75936933  3.66386129  3.66386129 -0.21818926  0.27760699</span></span>
+<span id="cb10-59"><a href="#cb10-59" tabindex="-1"></a><span class="co">#&gt; [115] -0.46953990 -0.69900740 -4.33966153 -4.33966153 -1.37155811  4.34909933</span></span>
+<span id="cb10-60"><a href="#cb10-60" tabindex="-1"></a><span class="co">#&gt; [121] -1.28647275 -1.28647275 -3.65745222 -1.73791661 -6.66415329 -6.66415329</span></span>
+<span id="cb10-61"><a href="#cb10-61" tabindex="-1"></a><span class="co">#&gt; [127] -6.66415329 -2.86837731 -0.20834505  4.36700654  2.33741733  2.33741733</span></span>
+<span id="cb10-62"><a href="#cb10-62" tabindex="-1"></a><span class="co">#&gt; [133]  1.19888469 -0.89822451 -0.89822451</span></span>
+<span id="cb10-63"><a href="#cb10-63" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-64"><a href="#cb10-64" tabindex="-1"></a><span class="co">#&gt; $l</span></span>
+<span id="cb10-65"><a href="#cb10-65" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span>
+<span id="cb10-66"><a href="#cb10-66" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-67"><a href="#cb10-67" tabindex="-1"></a><span class="co">#&gt; $m</span></span>
+<span id="cb10-68"><a href="#cb10-68" tabindex="-1"></a><span class="co">#&gt; [1] 8</span></span>
+<span id="cb10-69"><a href="#cb10-69" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-70"><a href="#cb10-70" tabindex="-1"></a><span class="co">#&gt; attr(,"class")</span></span>
+<span id="cb10-71"><a href="#cb10-71" tabindex="-1"></a><span class="co">#&gt; [1] "nppi"</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

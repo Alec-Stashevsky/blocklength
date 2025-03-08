@@ -24,7 +24,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">blocklength</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
       </span>
     </div>
 
@@ -40,6 +40,24 @@
   </a>
   <ul class="dropdown-menu" role="menu"><li>
       <a href="../articles/tuning-parameters.html">Tuning Block-Length Selection Methods</a>
+    </li>
+  </ul></li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    News
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li class="dropdown-header">Releases</li>
+    <li>
+      <a href="https://alecstashevsky.com/post/blocklength-0.2.0/" class="external-link">blocklength 0.2.0</a>
+    </li>
+    <li>
+      <a href="https://alecstashevsky.com/post/blocklength-0.1.4/" class="external-link">blocklength 0.1.4</a>
+    </li>
+    <li class="divider">
+    <li>
+      <a href="../news/index.html">Changelog</a>
     </li>
   </ul></li>
 <li>
@@ -61,7 +79,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Lahiri, Furukawa, and Lee (2007) Nonparametric Plug-In "NPPI" Rule to Select the Optimal Block-Length</h1>
-    <small class="dont-index">Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/main/R/nppi.R" class="external-link"><code>R/nppi.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/v0.2.2/R/nppi.R" class="external-link"><code>R/nppi.R</code></a></small>
     <div class="hidden name"><code>nppi.Rd</code></div>
     </div>
 
@@ -211,12 +229,15 @@ zero (default is <code>1e-8</code>).</p></dd>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">nppi</span><span class="op">(</span>data <span class="op">=</span> <span class="va">sim</span>, stat_function <span class="op">=</span> <span class="va">mean</span>, num_bootstrap <span class="op">=</span> <span class="fl">500</span>, m <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Setting l to recomended value: 3</span>
 <span class="r-plt img"><img src="nppi-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="nppi-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">optimal_block_length</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4.583894e-06</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use S3 method to plot JAB diagnostic</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="nppi-3.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="nppi-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

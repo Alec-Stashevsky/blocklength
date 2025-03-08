@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">blocklength</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
       </span>
     </div>
 
@@ -33,6 +33,24 @@
   </a>
   <ul class="dropdown-menu" role="menu"><li>
       <a href="../articles/tuning-parameters.html">Tuning Block-Length Selection Methods</a>
+    </li>
+  </ul></li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    News
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li class="dropdown-header">Releases</li>
+    <li>
+      <a href="https://alecstashevsky.com/post/blocklength-0.2.0/" class="external-link">blocklength 0.2.0</a>
+    </li>
+    <li>
+      <a href="https://alecstashevsky.com/post/blocklength-0.1.4/" class="external-link">blocklength 0.1.4</a>
+    </li>
+    <li class="divider">
+    <li>
+      <a href="../news/index.html">Changelog</a>
     </li>
   </ul></li>
 <li>
@@ -54,17 +72,22 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/v0.2.2/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="development version" id="blocklength-development-version">blocklength (development version)<a class="anchor" aria-label="anchor" href="#blocklength-development-version"></a></h2>
+<h2 class="page-header" data-toc-text="0.2.2" id="blocklength-022">blocklength 0.2.2<small>2025-03-08</small><a class="anchor" aria-label="anchor" href="#blocklength-022"></a></h2>
+<div class="section level3">
+<h3 id="minor-changes-0-2-2">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-2-2"></a></h3>
+<ul><li>The <code><a href="../reference/plot.nppi.html">plot.nppi()</a></code> function now returns an additional plot for JAB Pseudo Value Stability.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-2-2">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-2"></a></h3>
+<ul><li>In <code><a href="../reference/nppi.html">nppi()</a></code> there was an inconsistency in dimensionality between the <code>jab_point_values</code> and the <code>jab_pseudo_values</code> due to how NA values were handled. This is fixed such that both vectors will always have the same length.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.1" id="blocklength-021">blocklength 0.2.1<small>2025-03-08</small><a class="anchor" aria-label="anchor" href="#blocklength-021"></a></h2>
-</div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.2.1" id="blocklength-021-1">blocklength 0.2.1<small>2025-03-08</small><a class="anchor" aria-label="anchor" href="#blocklength-021-1"></a></h2>
 <div class="section level3">
 <h3 id="minor-changes-0-2-1">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-2-1"></a></h3>
 <ul><li>The <code><a href="../reference/nppi.html">nppi()</a></code> function now returns an additional item in the <code>nppi</code> object: <code>jab_pseudo_values</code> which include the <em>ith MBJ pseudo-value</em> used in the JAB variance estimator.</li>
