@@ -8,7 +8,7 @@ test_that("nppi function returns expected structure", {
   expect_s3_class(result, "nppi")  # Ensure correct S3 class
 
   # Check that key elements exist
-  expect_named(result, c("optimal_block_length", "bias", "variance", "jab_point_values", "l", "m"))
+  expect_named(result, c("optimal_block_length", "bias", "variance", "jab_point_values", "jab_pseudo_values", "l", "m"))
 
   # Check that the values are numeric
   expect_true(is.numeric(result$optimal_block_length))

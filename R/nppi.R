@@ -42,8 +42,9 @@
 #'    using the JAB method.}
 #'   \item{jab_point_values}{The point estimates of the statistic for each
 #'    deletion block in the JAB variance estimation. Used for diagnostic plots}
-#'    \item{l}{The initial block size used for bias estimation.}
-#'    \item{m}{The number of blocks to delete in the JAB variance estimation.}
+#'   \item{jab_pseudo_values}{The pseudo-values of each JAB point value.}
+#'   \item{l}{The initial block size used for bias estimation.}
+#'   \item{m}{The number of blocks to delete in the JAB variance estimation.}
 #' }
 #'
 #' @section References:
@@ -157,6 +158,7 @@ nppi <- function(
       bias = bias_result$bias,
       variance = variance_result$jab_variance,
       jab_point_values = variance_result$jab_point_values,
+      jab_pseudo_values = variance_result$jab_pseudo_values,
       l=l,
       m=m
     ),
@@ -243,8 +245,9 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
     apply(bs, 1, paste, collapse = ",")
   })
 
-  # Initialize vector to hold JAB point values
+  # Initialize vector to hold JAB point values and pseudo-values
   jab_point_values <- numeric(M)
+  jab_tilde_n <- numeric(M)
 
   # For each deletion block (of m consecutive original blocks)
   for (i in seq_len(M)) {
@@ -273,6 +276,7 @@ jab_variance_estimator <- function(resampled_blocks, original_blocks, stat_funct
 
   return(list(
     jab_variance = jab_variance,
-    jab_point_values = jab_point_values
+    jab_point_values = jab_point_values,
+    jab_pseudo_values = jab_tilde_n
   ))
 }
