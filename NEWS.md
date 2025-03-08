@@ -9,7 +9,7 @@
 
 ## Bug Fixes
 
-* In `nppi()` there was an inconsistency in dimensionality between the `jab_point_values` and the `jab_pseudo_values` due to how NA values were handled. This is not fixed such that both vectors will always have the same length.
+* In `nppi()` there was an inconsistency in dimensionality between the `jab_point_values` and the `jab_pseudo_values` due to how NA values were handled. This is fixed such that both vectors will always have the same length.
 
 
 # blocklength 0.2.1
