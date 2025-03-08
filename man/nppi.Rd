@@ -59,8 +59,9 @@ A object of class \code{nppi} with the following components:
    using the JAB method.}
   \item{jab_point_values}{The point estimates of the statistic for each
    deletion block in the JAB variance estimation. Used for diagnostic plots}
-   \item{l}{The initial block size used for bias estimation.}
-   \item{m}{The number of blocks to delete in the JAB variance estimation.}
+  \item{jab_pseudo_values}{The pseudo-values of each JAB point value.}
+  \item{l}{The initial block size used for bias estimation.}
+  \item{m}{The number of blocks to delete in the JAB variance estimation.}
 }
 }
 \description{
