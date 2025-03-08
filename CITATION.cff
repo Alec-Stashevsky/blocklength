@@ -9,8 +9,11 @@ type: software
 license: GPL-2.0-or-later
 title: 'blocklength: Select an Optimal Block-Length to Bootstrap Dependent Data (Block
   Bootstrap)'
-version: 0.2.0.9000
+version: 0.2.1.9000
 doi: 10.32614/CRAN.package.blocklength
+identifiers:
+- type: url
+  value: https://alec-stashevsky.github.io/blocklength
 abstract: A set of functions to select the optimal block-length for a dependent bootstrap
   (block-bootstrap). Includes the Hall, Horowitz, and Jing (1995) <https://doi.org/10.1093/biomet/82.3.561>
   subsampling-based cross-validation method, the Politis and White (2004) <https://doi.org/10.1081/ETC-120028836>
@@ -26,7 +29,7 @@ authors:
 repository: https://CRAN.R-project.org/package=blocklength
 repository-code: https://github.com/Alec-Stashevsky/blocklength
 url: https://alecstashevsky.com/r/blocklength
-date-released: '2025-02-15'
+date-released: '2025-03-08'
 contact:
 - family-names: Stashevsky
   given-names: Alec
