@@ -57,3 +57,4 @@ rsconnect/
 .DS_Store
 tests/testthat/Rplots.pdf
 revdep/
+port_pkdown_to_hugo_website.sh
