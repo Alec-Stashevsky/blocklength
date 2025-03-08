@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">blocklength</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -54,11 +54,22 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/v0.2.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="development version" id="blocklength-development-version">blocklength (development version)<a class="anchor" aria-label="anchor" href="#blocklength-development-version"></a></h2>
+<h2 class="page-header" data-toc-text="0.2.1" id="blocklength-021">blocklength 0.2.1<a class="anchor" aria-label="anchor" href="#blocklength-021"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.1" id="blocklength-021-1">blocklength 0.2.1<a class="anchor" aria-label="anchor" href="#blocklength-021-1"></a></h2>
+<div class="section level3">
+<h3 id="minor-changes-0-2-1">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-2-1"></a></h3>
+<ul><li>The <code><a href="../reference/nppi.html">nppi()</a></code> function now returns an additional item in the <code>nppi</code> object: <code>jab_pseudo_values</code> which include the <em>ith MBJ pseudo-value</em> used in the JAB variance estimator.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-2-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-1"></a></h3>
+<ul><li>In <code><a href="../reference/nppi.html">nppi()</a></code> there was an incorrect computation of the JAB variance estimator, which did use the <em>ith MBJ pseudo-value</em> in place of the the <em>ith MBJ point value</em>. This is now fixed.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.0" id="blocklength-020">blocklength 0.2.0<small>2025-02-17</small><a class="anchor" aria-label="anchor" href="#blocklength-020"></a></h2>

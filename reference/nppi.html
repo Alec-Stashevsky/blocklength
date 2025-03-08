@@ -24,7 +24,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">blocklength</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -61,7 +61,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Lahiri, Furukawa, and Lee (2007) Nonparametric Plug-In "NPPI" Rule to Select the Optimal Block-Length</h1>
-    <small class="dont-index">Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/main/R/nppi.R" class="external-link"><code>R/nppi.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/Alec-Stashevsky/blocklength/blob/v0.2.1/R/nppi.R" class="external-link"><code>R/nppi.R</code></a></small>
     <div class="hidden name"><code>nppi.Rd</code></div>
     </div>
 
@@ -163,10 +163,13 @@ zero (default is <code>1e-8</code>).</p></dd>
 <dd><p>The point estimates of the statistic for each
    deletion block in the JAB variance estimation. Used for diagnostic plots</p></dd>
 
-   <dt>l</dt>
+  <dt>jab_pseudo_values</dt>
+<dd><p>The pseudo-values of each JAB point value.</p></dd>
+
+  <dt>l</dt>
 <dd><p>The initial block size used for bias estimation.</p></dd>
 
-   <dt>m</dt>
+  <dt>m</dt>
 <dd><p>The number of blocks to delete in the JAB variance estimation.</p></dd>
 
 
@@ -210,7 +213,7 @@ zero (default is <code>1e-8</code>).</p></dd>
 <span class="r-plt img"><img src="nppi-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">optimal_block_length</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0001767721</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4.583894e-06</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use S3 method to plot JAB diagnostic</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
