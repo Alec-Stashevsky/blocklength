@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Select an Optimal Block-Length to Bootstrap Dependent Data (Block Bootstrap) • blocklength</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -135,56 +134,56 @@
 <col width="25%">
 <col width="25%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th align="left"></th>
 <th align="left">NPPI (Lahiri et al., 2007)</th>
 <th align="left">PWSD (Politis &amp; White, 2004)</th>
 <th align="left">HHJ (Hall, Horowitz &amp; Jing, 1995)</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="left"><strong>Method Type</strong></td>
 <td align="left">Nonparametric resampling</td>
 <td align="left">Spectral density estimation</td>
 <td align="left">Subsampling-based cross-validation</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><strong>Computational Cost</strong></td>
 <td align="left">Medium (bootstrap resampling &amp; jackknife)</td>
 <td align="left">Low (direct ACF computation)</td>
 <td align="left">High (subsampling &amp; cross-validation)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><strong>Primary Goal</strong></td>
 <td align="left">Minimize MSE of bootstrap estimator</td>
 <td align="left">Estimate block length using spectral density</td>
 <td align="left">Minimize MSE via cross-validation</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><strong>Variance Estimation</strong></td>
 <td align="left">Moving Blocks Jackknife-After-Bootstrap (JAB)</td>
 <td align="left">Implicitly estimated via spectral density</td>
 <td align="left">Uses subsample-based variance estimation</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><strong>Bias Estimation</strong></td>
 <td align="left">Directly estimates bias from bootstrap</td>
 <td align="left">Indirectly accounts for bias via ACF decay</td>
 <td align="left">Uses subsample-based bias estimation</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><strong>Best for</strong></td>
 <td align="left">General-purpose estimators, small sample sizes, and quantile estimation</td>
 <td align="left">Block-length selection for circular and stationary bootstrap, time series with strong autocorrelation</td>
 <td align="left">Estimating functionals with strong dependencies</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><strong>Estimation Capacity</strong></td>
 <td align="left">Bootstrap bias, variance, distribution function, and quantile estimation</td>
 <td align="left">Bootstrap sample mean only</td>
 <td align="left">Bootstrap variance and distribution function estimation</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><strong>Dependency*</strong></td>
 <td align="left">User-defined parameters for initial block-length <code>l</code> and number of deletion blocks <code>m</code>
 </td>
@@ -431,7 +430,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Alec Stashevsky <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2538-4947" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Alec Stashevsky <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2538-4947" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -458,7 +457,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer>

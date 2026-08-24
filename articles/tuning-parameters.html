@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tuning Block-Length Selection Methods • blocklength</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -116,8 +115,7 @@
     
     
 <p>This vignette builds a framework for tuning the block-selection
-algorithms in <code>blocklength.</code> Both the <span class="citation">Hall, Horowitz, and Jing (1995)</span> (“HHJ”) and
-<span class="citation">Politis and White (2004)</span> (“PWSD”) methods
+algorithms in <code>blocklength.</code> Both the <span class="citation">Hall et al. (1995)</span> (“HHJ”) and <span class="citation">Politis and White (2004)</span> (“PWSD”) methods
 require the user to select somewhat arbitrary parameters which may
 affect the reliability of the block-length optimization. We will go
 through examples that present <em>problematic</em> output and understand
@@ -158,8 +156,7 @@ tuning parameters. The first is the size of the subsample series to
 perform the cross-validation over. This is the argument
 <code>sub_sample</code>, or the parameter
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
-in <span class="citation">Hall, Horowitz, and Jing (1995)</span>. At
-this stage
+in <span class="citation">Hall et al. (1995)</span>. At this stage
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
 is unknown, but there are some restrictions
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
@@ -175,7 +172,7 @@ where
 is the length of the series provided in argument <code>series</code>,
 <em>i.e.</em> <code>length(series)</code>. More specifically, it must be
 that</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>m</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mi>n</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mi>m</mi><mo>=</mo><mi>o</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> as </mtext><mspace width="0.333em"></mspace></mrow><mi>n</mi><mo>→</mo><mi>∞</mi><mspace width="0.222em"></mspace><mi>.</mi></mrow><annotation encoding="application/x-tex"> m^{-1} + n^{-1}m  = o(1) \text{ as } n \rightarrow \infty \ . </annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>m</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo>+</mo><msup><mi>n</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>m</mi><mo>=</mo><mi>o</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> as </mtext><mspace width="0.333em"></mspace></mrow><mi>n</mi><mo>→</mo><mi>∞</mi><mspace width="0.222em"></mspace><mi>.</mi></mrow><annotation encoding="application/x-tex"> m^{-1} + n^{-1}m  = o(1) \text{ as } n \rightarrow \infty \ . </annotation></semantics></math></p>
 <p>As a default, <code>sub_sample = NULL</code> which sets
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><msup><mi>n</mi><mrow><mn>1</mn><mi>/</mi><mn>5</mn></mrow></msup><mo>*</mo><msup><mi>n</mi><mrow><mn>1</mn><mi>/</mi><mi>k</mi></mrow></msup></mrow><annotation encoding="application/x-tex">m = n^{1 / 5} * n^{1 / k}</annotation></semantics></math>
 satisfying the above restrictions. Users can override this by directly
@@ -191,8 +188,7 @@ is almost entirely arbitrary, the second tuning parameter for
 <code><a href="../reference/hhj.html">hhj()</a></code> is less so. This is the
 <code>pilot_block_length</code> argument, or the parameter
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>l</mi><annotation encoding="application/x-tex">l</annotation></semantics></math>
-in <span class="citation">Hall, Horowitz, and Jing (1995)</span> also
-denoted as
+in <span class="citation">Hall et al. (1995)</span> also denoted as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>l</mi><mi>n</mi><mo>*</mo></msubsup><annotation encoding="application/x-tex">l^{*}_n</annotation></semantics></math>
 in the <span class="citation">Lahiri (2003)</span> treatment. The
 <code>pilot_block_length</code> is the block-length used to perform the
@@ -237,7 +233,7 @@ Glazebrook (1911)</span>.</p>
 block-length of the subsample
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>l</mi><mo accent="true">̂</mo></mover><mi>m</mi></msub><annotation encoding="application/x-tex">\hat{l}_m</annotation></semantics></math>
 which is then scaled up to the full series such that</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo>=</mo><msub><mover><mi>l</mi><mo accent="true">̂</mo></mover><mi>m</mi></msub><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mi>/</mi><mi>m</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mn>1</mn><mi>/</mi><mi>k</mi></mrow></msup><mo>,</mo><mspace width="0.222em"></mspace><mtext mathvariant="normal">where</mtext><mspace width="0.222em"></mspace><mi>k</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>5</mn><mo stretchy="false" form="postfix">}</mo><mspace width="0.222em"></mspace><mo>,</mo></mrow><annotation encoding="application/x-tex">l = \hat{l}_m (n/m)^{1/k}, \ \text{where} \ k = \{3, 4, 5\} \ ,</annotation></semantics></math>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo>=</mo><msub><mover><mi>l</mi><mo accent="true">̂</mo></mover><mi>m</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mi>/</mi><mi>m</mi><msup><mo stretchy="false" form="postfix">)</mo><mrow><mn>1</mn><mi>/</mi><mi>k</mi></mrow></msup><mo>,</mo><mspace width="0.222em"></mspace><mtext mathvariant="normal">where</mtext><mspace width="0.222em"></mspace><mi>k</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>5</mn><mo stretchy="false" form="postfix">}</mo><mspace width="0.222em"></mspace><mo>,</mo></mrow><annotation encoding="application/x-tex">l = \hat{l}_m (n/m)^{1/k}, \ \text{where} \ k = \{3, 4, 5\} \ ,</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
 depends on the context of the object of estimation.</p>
@@ -276,14 +272,14 @@ is the smallest positive integer such that the following
 <code>K_N</code> consecutive lags appear insignificant in respect to
 some level of significance, discussed later. By default,
 <code>K_N  = NULL</code> which sets
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>K</mi><mi>N</mi></msub><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>5</mn><mo>,</mo><mo stretchy="false" form="prefix">⌈</mo><mspace width="0.222em"></mspace><msub><mo>log</mo><mn>10</mn></msub><mi>N</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">⌉</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">K_N = max(5, \lceil \ \log_{10}N \ \rceil)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>K</mi><mi>N</mi></msub><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo stretchy="false" form="prefix">(</mo><mn>5</mn><mo>,</mo><mo stretchy="false" form="prefix">⌈</mo><mspace width="0.222em"></mspace><msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mn>10</mn></msub><mi>N</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">⌉</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">K_N = max(5, \lceil \ \log_{10}N \ \rceil)</annotation></semantics></math>
 per the suggestion of <span class="citation">Politis and White
 (2004)</span>. Note
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>K</mi><mi>N</mi></msub><annotation encoding="application/x-tex">K_N</annotation></semantics></math>
 must be some non-decreasing integer valued function of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
 such that
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>K</mi><mi>N</mi></msub><mo>=</mo><mi>o</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>log</mo><mn>10</mn></msub><mi>N</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">K_N = o(\log_{10}N)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>K</mi><mi>N</mi></msub><mo>=</mo><mi>o</mi><mo stretchy="false" form="prefix">(</mo><msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mn>10</mn></msub><mi>N</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">K_N = o(\log_{10}N)</annotation></semantics></math>
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
 is again the length of the series supplied to <code>data =</code>,
@@ -313,7 +309,7 @@ by inspecting the <code>$parameters</code> component of
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://alecstashevsky.com/r/blocklength" class="external-link">blocklength</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span></span></code></pre></div>
 <p>Now, we generate a stationary
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>R</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">AR(1)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>R</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">AR(1)</annotation></semantics></math>
 time series and select an optimal block-length using the PWSD
 method:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -380,7 +376,7 @@ is above some critical value
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ρ</mi><mrow><mi>c</mi><mi>r</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>l</mi></mrow></msub><annotation encoding="application/x-tex">\rho_{critical}</annotation></semantics></math>,
 then that lag is considered <em>significant.</em> This critical value is
 defined as</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ρ</mi><mrow><mi>c</mi><mi>r</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>l</mi></mrow></msub><mo>=</mo><mi>c</mi><msqrt><mrow><msub><mo>log</mo><mn>10</mn></msub><mi>N</mi><mi>/</mi><mi>N</mi></mrow></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">\rho_{critical} = c\sqrt{\log_{10}N / N}.</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ρ</mi><mrow><mi>c</mi><mi>r</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>l</mi></mrow></msub><mo>=</mo><mi>c</mi><msqrt><mrow><msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mn>10</mn></msub><mi>N</mi><mi>/</mi><mi>N</mi></mrow></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">\rho_{critical} = c\sqrt{\log_{10}N / N}.</annotation></semantics></math></p>
 <p><span class="citation">Politis and White (2004)</span> suggest a
 value of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">c = 2</annotation></semantics></math>
@@ -406,7 +402,7 @@ plot.</p>
 <span><span class="co"># Expand confidence level and plot again</span></span>
 <span><span class="va">b1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pwsd.html">pwsd</a></span><span class="op">(</span><span class="va">sim</span>, c <span class="op">=</span> <span class="fl">4</span>, correlogram <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b1</span>, main <span class="op">=</span> <span class="st">"c = 4"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tuning-parameters_files/figure-html/Correlogram-1.svg" width="47%"><img src="tuning-parameters_files/figure-html/Correlogram-2.svg" width="47%"></p>
+<p><img src="tuning-parameters_files/figure-html/Correlogram-1.svg" class="r-plt" alt="" width="47%"><img src="tuning-parameters_files/figure-html/Correlogram-2.svg" class="r-plt" alt="" width="47%"></p>
 </div>
 </div>
 <div class="section level2">
@@ -447,7 +443,7 @@ plot will exhibit a convex shape, such as the plot depicted below:</p>
 <span><span class="co">#&gt;  Chosen block length: 11  After iteration: 1</span></span>
 <span><span class="co">#&gt;  Converged at block length (l): 11</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tuning-parameters_files/figure-html/Convex%20MSE-1.svg" width="47%"><img src="tuning-parameters_files/figure-html/Convex%20MSE-2.svg" width="47%"></p>
+<p><img src="tuning-parameters_files/figure-html/Convex%20MSE-1.svg" class="r-plt" alt="" width="47%"><img src="tuning-parameters_files/figure-html/Convex%20MSE-2.svg" class="r-plt" alt="" width="47%"></p>
 <p>However, this is often times not the case and the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>S</mi><mi>E</mi></mrow><annotation encoding="application/x-tex">MSE</annotation></semantics></math>
 plot may appear concave. An example of a <em>problematic</em>
@@ -466,7 +462,7 @@ plot is illustrated below.</p>
 <span><span class="co">#&gt;  Chosen block length: 25  After iteration: 1</span></span>
 <span><span class="co">#&gt;  Converged at block length (l): 25</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">b3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tuning-parameters_files/figure-html/Concave%20MSE-1.svg" width="47%"><img src="tuning-parameters_files/figure-html/Concave%20MSE-2.svg" width="47%"></p>
+<p><img src="tuning-parameters_files/figure-html/Concave%20MSE-1.svg" class="r-plt" alt="" width="47%"><img src="tuning-parameters_files/figure-html/Concave%20MSE-2.svg" class="r-plt" alt="" width="47%"></p>
 <p>Here we see the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>S</mi><mi>E</mi></mrow><annotation encoding="application/x-tex">MSE</annotation></semantics></math>
 function is minimized by taking the largest block-length available, in
@@ -505,7 +501,7 @@ and subsequently the optimal block-length
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>b</mi><mo accent="true">̂</mo></mover><mrow><mi>o</mi><mi>p</mi><mi>t</mi></mrow></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">\hat{b}_{opt},</annotation></semantics></math>
 are large. By looking at the correlogram and the significance bands
 corresponding to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>±</mo><mspace width="0.222em"></mspace><mi>c</mi><msqrt><mrow><msub><mo>log</mo><mn>10</mn></msub><mi>N</mi><mi>/</mi><mi>N</mi></mrow></msqrt><mo>,</mo></mrow><annotation encoding="application/x-tex">\pm \  c\sqrt{\log_{10}{N}/N},</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>±</mi><mspace width="0.222em"></mspace><mi>c</mi><msqrt><mrow><msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mn>10</mn></msub><mi>N</mi><mi>/</mi><mi>N</mi></mrow></msqrt><mo>,</mo></mrow><annotation encoding="application/x-tex">\pm \  c\sqrt{\log_{10}{N}/N},</annotation></semantics></math>
 we can asses how sensitive the selection of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>m</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{m}</annotation></semantics></math>
 is to the tuning parameters.</p>
@@ -519,7 +515,7 @@ lags <em>after</em> the lag
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>m</mi><mo accent="true">̂</mo></mover><mi>.</mi></mrow><annotation encoding="application/x-tex">\hat{m}.</annotation></semantics></math></p>
 <p>To illustrate this, consider a <em>problematic</em> correlogram
 arising from an
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>R</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">AR(1)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>R</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">AR(1)</annotation></semantics></math>
 simulation of 500 observations with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><mn>0.3</mn><mspace width="0.222em"></mspace><mo>,</mo></mrow><annotation encoding="application/x-tex">\rho = 0.3 \ ,</annotation></semantics></math>
 named <code>pcorr</code> in the code below. Note <code>pcorr</code> has
@@ -534,7 +530,7 @@ the vignette is built.</p>
 <span><span class="va">b4</span><span class="op">$</span><span class="va">parameters</span><span class="op">[</span>, <span class="st">"m_hat"</span><span class="op">]</span></span>
 <span><span class="co">#&gt; m_hat </span></span>
 <span><span class="co">#&gt;     3</span></span></code></pre></div>
-<p><img src="tuning-parameters_files/figure-html/Problematic%20Correlogram-1.svg" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="tuning-parameters_files/figure-html/Problematic%20Correlogram-1.svg" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>If we are to follow the <span class="citation">Politis and White
 (2004)</span> rule for estimating
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>m</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{m}</annotation></semantics></math>
@@ -566,7 +562,7 @@ then we would be led to
 <span><span class="va">b5</span><span class="op">$</span><span class="va">parameters</span><span class="op">[</span>, <span class="st">"m_hat"</span><span class="op">]</span></span>
 <span><span class="co">#&gt; m_hat </span></span>
 <span><span class="co">#&gt;     9</span></span></code></pre></div>
-<p><img src="tuning-parameters_files/figure-html/Problematic%20Correlogram%202-1.svg" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="tuning-parameters_files/figure-html/Problematic%20Correlogram%202-1.svg" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>Alternatively, when we keep
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>K</mi><mi>N</mi></msub><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">K_N = 5</annotation></semantics></math>
 but change
@@ -583,7 +579,7 @@ wider bands of significance:</p>
 <span><span class="va">b6</span><span class="op">$</span><span class="va">parameters</span><span class="op">[</span>, <span class="st">"m_hat"</span><span class="op">]</span></span>
 <span><span class="co">#&gt; m_hat </span></span>
 <span><span class="co">#&gt;     1</span></span></code></pre></div>
-<p><img src="tuning-parameters_files/figure-html/Problematic%20Correlogram%203-1.svg" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="tuning-parameters_files/figure-html/Problematic%20Correlogram%203-1.svg" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>Here we can see that moving these significance bands farther apart
 changes the estimation to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>m</mi><mo accent="true">̂</mo></mover><mo>=</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">\hat{m} = 1.</annotation></semantics></math>
@@ -622,7 +618,7 @@ by setting the argument to <code>m_hat = 30</code> or
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References:<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-10.1093/biomet/82.3.561" class="csl-entry">
 Hall, Peter, Joel L. Horowitz, and Bing-Yi Jing. 1995. <span>“<span class="nocase">On blocking rules for the bootstrap with dependent
 data</span>.”</span> <em>Biometrika</em> 82 (3): 561–74. <a href="https://doi.org/10.1093/biomet/82.3.561" class="external-link">https://doi.org/10.1093/biomet/82.3.561</a>.
@@ -668,7 +664,7 @@ or Physical Character</em> 210 (459-470): 307–57. <a href="https://doi.org/10.
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer>
